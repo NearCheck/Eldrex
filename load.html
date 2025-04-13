@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verified by LanDecs</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            transition: background-color 0.8s cubic-bezier(0.215, 0.61, 0.355, 1);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .ui-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+        }
+
+        .shield-container {
+            position: relative;
+            width: 250px;
+            height: 250px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px;
+        }
+
+        .shield-icon {
+            font-size: 50px;
+            opacity: 0;
+            transform: scale(0.5) rotateY(180deg);
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            z-index: 3;
+            transform-style: preserve-3d;
+            backface-visibility: hidden;
+        }
+
+        .shield-icon .back {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            backface-visibility: hidden;
+            transform: rotateY(180deg);
+        }
+
+        .shield-icon.active {
+            opacity: 1;
+            transform: scale(1) rotateY(0deg);
+        }
+
+        .shield-icon.flip {
+            transform: scale(1) rotateY(180deg);
+        }
+
+        .progress-container {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            opacity: 0;
+            transition: opacity 0.6s ease-out;
+            transform-style: preserve-3d;
+        }
+
+        .progress-container.active {
+            opacity: 1;
+        }
+
+        .progress-circle {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 100%;
+            clip: rect(0, 130px, 260px, 0);
+            transform: rotate(0deg);
+            transition: transform 0.01s linear;
+            backface-visibility: hidden;
+        }
+
+        .progress-circle-inner {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            width: calc(80% - 30px);
+            height: calc(80% - 30px);
+            border-radius: 100%;
+            transform: translateZ(1px);
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 40px;
+            max-width: 580px;
+            margin-bottom: 90px;
+            overflow-y: auto;
+            text-align: center;
+            margin-top: 30px;
+            opacity: 0;
+            transform: translateY(40px) scale(0.95);
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            pointer-events: auto;
+            will-change: transform, opacity;
+        }
+
+        .info-card.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .info-card h1 {
+            margin-bottom: 20px;
+            font-weight: 600;
+            font-size: 32px;
+            letter-spacing: -0.5px;
+        }
+
+        .info-card p {
+            margin-bottom: 30px;
+            line-height: 1.6;
+            font-size: 18px;
+            font-weight: 400;
+        }
+
+
+        .verified-badge {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 16px;
+            margin-top: 20px;
+            font-weight: 500;
+            gap: 8px;
+        }
+
+        .verified-badge i {
+            font-size: 14px;
+        }
+
+        /* Dark/Light mode adaptations */
+        body.light-mode {
+            background-color: #fefefe;
+            color: #1a1a1a;
+        }
+
+        body.dark-mode {
+            background-color: #050505;
+            color: #fefefe;
+        }
+
+        body.light-mode .progress-circle {
+            border: 8px solid rgba(0, 0, 0, 0.08);
+        }
+
+        body.dark-mode .progress-circle {
+            border: 8px solid rgba(255, 255, 255, 0.08);
+        }
+
+        body.light-mode .progress-circle-inner {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7));
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
+        }
+
+        body.dark-mode .progress-circle-inner {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.7));
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+        }
+
+        body.light-mode .info-card {
+            background: rgba(255, 255, 255, 0.75);
+            color: #1a1a1a;
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.1);
+        }
+
+        body.dark-mode .info-card {
+            background: rgba(0, 0, 0, 0.6);
+            color: #fefefe;
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3);
+        }
+
+        body.light-mode .back-button {
+            color: #1a1a1a;
+        }
+
+        body.dark-mode .back-button {
+            color: #fefefe;
+        }
+
+        /* Wind effect indicator */
+        .wind-direction {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.6s ease-out;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .wind-direction.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .wind-direction i {
+            font-size: 24px;
+            animation: windFloat 2s ease-in-out infinite;
+        }
+
+        @keyframes windFloat {
+
+            0%,
+            100% {
+                transform: translateX(0) rotate(0deg);
+            }
+
+            50% {
+                transform: translateX(5px) rotate(5deg);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .shield-container {
+                width: 180px;
+                height: 180px;
+            }
+
+            .progress-container {
+                width: 90px;
+                height: 90px;
+            }
+
+            .shield-icon {
+                font-size: 50px;
+                border-radius: 100px;
+            }
+
+            .info-card {
+                max-width: 90%;
+                padding: 30px;
+            }
+
+            .info-card h1 {
+                font-size: 28px;
+            }
+
+            .info-card p {
+                font-size: 16px;
+            }
+
+            .back-button {
+                padding: 14px 28px;
+                font-size: 16px;
+            }
+        }
+
+        /* Particle explosion effect overlay */
+        .explosion-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            z-index: 5;
+            opacity: 0;
+            pointer-events: none;
+            mix-blend-mode: overlay;
+            transition: opacity 0.3s ease-out;
+        }
+
+        /* Performance optimizations */
+        .will-change {
+            will-change: transform, opacity;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="canvas-container"></div>
+    <div class="explosion-overlay"></div>
+    <div class="wind-direction"><i class="fas fa-wind"></i></div>
+
+    <div class="ui-container" style="margin-top: 100px;">
+        <div class="shield-container">
+            <div class="progress-container">
+                <div class="progress-circle" id="progress-circle-1"></div>
+                <div class="progress-circle" id="progress-circle-2"></div>
+                <div class="progress-circle-inner"></div>
+            </div>
+            <i class="fas fa-shield shield-icon">
+                <div class="back"><i class="fas fa-check"></i></div>
+            </i>
+        </div>
+
+        <div class="info-card" style="overflow-y: auto; top: 0;">
+            <h1 style="font-size: 20px;">Because Who You Are Should Never Be Questioned.</h1>
+            <p style=" font-size: 10px;">This profile has been officially verified by LanDecs, affirming the authenticity and integrity of the individual—Eldrex Delos Reyes Bula —and the content associated with this account. All elements contained within, including its design, code, and information architecture, are protected under LanDecs standards and may not be copied, altered, or redistributed without explicit permission. Personal information presented here, including linked resources and professional insights, has been voluntarily shared by the user for the purpose of transparency, creativity, and contribution to meaningful connections. LanDecs upholds a strict policy against any form of unauthorized access, misuse, or illegal exploitation of this data. The rights, privacy, and creative ownership of the user are paramount, and any violation will be met with appropriate actions. This verification stands as a commitment to authenticity, accountability, and respect for intellectual property in a safe and ethical digital space.</p>
+            <button class="back-button">Longpress</button>
+            <p style="font-size: 10px; bottom: 0;">Just a moment—holding this will take you home.</p>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cannon.js/0.6.2/cannon.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+
+    <script>
+        const HIGH_PERFORMANCE_MODE = true;
+        let PARTICLE_COUNT = window.innerWidth < 768 ? 800 : 2000; // Increased particle count
+
+        function updateColorScheme() {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.body.classList.add('dark-mode');
+                document.body.classList.remove('light-mode');
+            } else {
+                document.body.classList.add('light-mode');
+                document.body.classList.remove('dark-mode');
+            }
+        }
+
+        updateColorScheme();
+
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateColorScheme);
+
+        // Three.js setup
+        const container = document.getElementById('canvas-container');
+        let width = container.clientWidth;
+        let height = container.clientHeight;
+
+        // Scene
+        const scene = new THREE.Scene();
+
+        // Camera with smooth movement
+        const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+        camera.position.z = 40;
+        const cameraTarget = new THREE.Vector3();
+        const cameraOffset = new THREE.Vector3(0, 0, 40);
+
+        // Renderer with performance settings
+        const renderer = new THREE.WebGLRenderer({
+            antialias: true,
+            alpha: true,
+            powerPreference: HIGH_PERFORMANCE_MODE ? "high-performance" : "default"
+        });
+        renderer.setSize(width, height);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.outputEncoding = THREE.sRGBEncoding;
+        if (HIGH_PERFORMANCE_MODE) {
+            renderer.physicallyCorrectLights = true;
+        }
+        container.appendChild(renderer.domElement);
+
+        // Physics world with advanced settings
+        const world = new CANNON.World();
+        world.gravity.set(0, 0, 0);
+        world.broadphase = new CANNON.SAPBroadphase(world);
+        world.solver.iterations = 10;
+        world.solver.tolerance = 0.1;
+        world.allowSleep = true;
+        world.defaultContactMaterial.friction = 0.1;
+        world.defaultContactMaterial.restitution = 0.7;
+
+        // Wind force parameters
+        const windForce = new CANNON.Vec3();
+        let windAngle = 0;
+        let windStrength = 0;
+        const maxWindStrength = 5;
+
+        // Particle parameters
+        const PARTICLE_SIZE = 0.08; // Smaller particles for more density
+        const PARTICLE_COLOR_LIGHT = 0x111111;
+        const PARTICLE_COLOR_DARK = 0xeeeeee;
+        const PARTICLE_MASS = 0.3; // Reduced mass for better spreading
+
+        // Particles
+        let particles = [];
+        let particleBodies = [];
+        let particleGeometry, particleMaterial, particleSystem;
+
+        // Create particles with advanced physics
+        function createParticles() {
+            // Clear existing particles if any
+            if (particleSystem) scene.remove(particleSystem);
+            particles = [];
+            particleBodies = [];
+
+            // Geometry with instancing for performance
+            particleGeometry = new THREE.BufferGeometry();
+            const positions = new Float32Array(PARTICLE_COUNT * 3);
+            const colors = new Float32Array(PARTICLE_COUNT * 3);
+            const sizes = new Float32Array(PARTICLE_COUNT);
+
+            // Material with dynamic properties
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            particleMaterial = new THREE.PointsMaterial({
+                size: PARTICLE_SIZE,
+                sizeAttenuation: true,
+                color: isDarkMode ? PARTICLE_COLOR_DARK : PARTICLE_COLOR_LIGHT,
+                transparent: true,
+                opacity: 0.9,
+                blending: THREE.AdditiveBlending,
+                depthWrite: false
+            });
+
+            // Create particles in a torus (donut) shape for initial circular formation
+            const torusRadius = 10; // Larger radius for more spread
+            const tubeRadius = 3;
+
+            for (let i = 0; i < PARTICLE_COUNT; i++) {
+                // Position in torus
+                const theta = Math.random() * Math.PI * 2;
+                const phi = Math.random() * Math.PI * 2;
+
+                const x = (torusRadius + tubeRadius * Math.cos(theta)) * Math.cos(phi);
+                const y = (torusRadius + tubeRadius * Math.cos(theta)) * Math.sin(phi);
+                const z = tubeRadius * Math.sin(theta);
+
+                positions[i * 3] = x;
+                positions[i * 3 + 1] = y;
+                positions[i * 3 + 2] = z;
+
+                // Color variation
+                const colorValue = isDarkMode ?
+                    0.7 + Math.random() * 0.3 : // Brighter in dark mode
+                    0.1 + Math.random() * 0.2; // Darker in light mode
+
+                colors[i * 3] = colorValue;
+                colors[i * 3 + 1] = colorValue;
+                colors[i * 3 + 2] = colorValue;
+
+                // Size variation
+                sizes[i] = PARTICLE_SIZE * (0.5 + Math.random() * 0.8);
+
+                // Physics body with advanced properties
+                const shape = new CANNON.Sphere(PARTICLE_SIZE * 0.4);
+                const body = new CANNON.Body({
+                    mass: PARTICLE_MASS * (0.7 + Math.random() * 0.6), // More mass variation
+                    position: new CANNON.Vec3(x, y, z),
+                    shape: shape,
+                    linearDamping: 0.15, // Less damping for more spread
+                    angularDamping: 0.15,
+                    material: new CANNON.Material({
+                        friction: 0.05, // Less friction
+                        restitution: 0.4 // More bounce
+                    })
+                });
+
+                // Add slight initial velocity for organic motion
+                body.velocity.set(
+                    (Math.random() - 0.5) * 0.8,
+                    (Math.random() - 0.5) * 0.8,
+                    (Math.random() - 0.5) * 0.8
+                );
+
+                particleBodies.push(body);
+                world.addBody(body);
+            }
+
+            particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            particleGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+            particleGeometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+
+            particleSystem = new THREE.Points(particleGeometry, particleMaterial);
+            scene.add(particleSystem);
+        }
+
+        // Apply wind force to particles
+        function applyWindForce() {
+            windAngle += 0.01;
+            windStrength = Math.sin(Date.now() * 0.001) * maxWindStrength;
+
+            windForce.set(
+                Math.cos(windAngle) * windStrength,
+                Math.sin(windAngle * 0.5) * windStrength,
+                Math.sin(windAngle * 0.3) * windStrength * 0.5
+            );
+
+            particleBodies.forEach(body => {
+                // Apply wind force relative to particle position
+                const windEffect = new CANNON.Vec3().copy(windForce);
+                windEffect.x *= 1 + (body.position.y / 25);
+                windEffect.y *= 1 + (body.position.z / 25);
+
+                // Update velocity directly
+                body.velocity.x += windEffect.x * 0.06;
+                body.velocity.y += windEffect.y * 0.06;
+                body.velocity.z += windEffect.z * 0.06;
+
+                // Add some turbulence
+                body.velocity.x += (Math.random() - 0.5) * 0.3;
+                body.velocity.y += (Math.random() - 0.5) * 0.3;
+            });
+        }
+
+        // Animation timeline with Apple-inspired easing
+        const timeline = gsap.timeline({
+            paused: true
+        });
+
+        // Apple FaceID-inspired flip animation
+        function faceIDFlipAnimation(element) {
+            const duration = 0.6;
+            const ease = "power2.inOut";
+
+            // Scale down slightly
+            gsap.to(element, {
+                scale: 0.95,
+                duration: duration * 0.3,
+                ease: "power2.out",
+                onComplete: () => {
+                    // Flip animation
+                    gsap.to(element, {
+                        rotateY: 180,
+                        duration: duration * 0.4,
+                        ease: ease,
+                        onComplete: () => {
+                            // Scale back up
+                            gsap.to(element, {
+                                scale: 1,
+                                duration: duration * 0.3,
+                                ease: "elastic.out(1, 0.5)"
+                            });
+                        }
+                    });
+                }
+            });
+        }
+
+        // Initial animation sequence with advanced choreography
+        function setupAnimations() {
+            // Create particles first
+            createParticles();
+
+            // Start with particles hidden (scale down)
+            gsap.set(particleSystem.scale, {
+                x: 0.1,
+                y: 0.1,
+                z: 0.1
+            });
+
+            // Stage 1: Particles emerge in circular formation
+            timeline.to(particleSystem.scale, {
+                x: 1,
+                y: 1,
+                z: 1,
+                duration: 1.8,
+                ease: "elastic.out(1, 0.5)"
+            }, 0);
+
+            // Stage 2: Wind effect begins
+            timeline.to('.wind-direction', {
+                opacity: 1,
+                scale: 1,
+                duration: 0.8,
+                ease: "power2.out"
+            }, 1.5);
+
+            // Stage 3: Wind affects particles
+            timeline.add(() => {
+                // Start wind force
+                gsap.to(windForce, {
+                    duration: 2,
+                    x: maxWindStrength * 1.5,
+                    y: maxWindStrength * 0.7,
+                    z: maxWindStrength * 0.3,
+                    ease: "sine.inOut",
+                    onUpdate: applyWindForce
+                });
+            }, 2);
+
+            // Stage 4: Show shield icon with elegant entrance
+            timeline.to('.shield-icon', {
+                opacity: 1,
+                scale: 1,
+                rotateY: 0,
+                duration: 1.2,
+                ease: "back.out(1.7)",
+                onComplete: () => {
+                    // Start pulsing animation for shield
+                    gsap.to('.shield-icon', {
+                        scale: 1.05,
+                        duration: 1.5,
+                        repeat: -1,
+                        yoyo: true,
+                        ease: "sine.inOut"
+                    });
+                }
+            }, 3);
+
+            // Stage 5: Show progress circles with Apple-style animation
+            timeline.to('.progress-container', {
+                opacity: 1,
+                duration: 0.8,
+                ease: "power2.out"
+            }, 3.5);
+
+            // Stage 6: Animate progress circles with smooth acceleration
+            timeline.to('#progress-circle-1', {
+                rotate: 360,
+                duration: 2.4,
+                ease: "power2.inOut"
+            }, 4);
+
+            timeline.to('#progress-circle-2', {
+                rotate: 360,
+                duration: 2.4,
+                ease: "power2.inOut"
+            }, 4);
+
+            // Stage 7: FaceID flip animation for shield
+            timeline.add(() => {
+                faceIDFlipAnimation('.shield-icon');
+            }, 6.5);
+
+            // Stage 8: Explode particles with dramatic effect (but keep them spread out)
+            timeline.add(() => {
+                // Flash effect
+                gsap.to('.explosion-overlay', {
+                    opacity: 0.8,
+                    duration: 0.1,
+                    onComplete: () => {
+                        gsap.to('.explosion-overlay', {
+                            opacity: 0,
+                            duration: 0.3
+                        });
+                    }
+                });
+
+                // Apply explosive force to all particles
+                const explosionCenter = new CANNON.Vec3(0, 0, 0);
+                const explosionPower = 30; // Stronger explosion
+
+                particleBodies.forEach(body => {
+                    const direction = new CANNON.Vec3().copy(body.position).normalize();
+                    const distance = body.position.distanceTo(explosionCenter);
+                    const force = explosionPower * (1 + Math.random() * 0.7) / Math.max(1, distance * 0.4);
+
+                    // Set velocity directly for explosion
+                    body.velocity.x = direction.x * force * (0.8 + Math.random() * 0.4);
+                    body.velocity.y = direction.y * force * (0.8 + Math.random() * 0.4);
+                    body.velocity.z = direction.z * force * (0.8 + Math.random() * 0.4);
+
+                    // Add some randomness to keep particles spread out
+                    body.velocity.x += (Math.random() - 0.5) * 8;
+                    body.velocity.y += (Math.random() - 0.5) * 8;
+                    body.velocity.z += (Math.random() - 0.5) * 8;
+                });
+
+                // Camera shake effect
+                gsap.to(camera.position, {
+                    x: "+=" + (Math.random() - 0.5) * 2,
+                    y: "+=" + (Math.random() - 0.5) * 2,
+                    duration: 0.3,
+                    repeat: 3,
+                    yoyo: true,
+                    ease: "sine.inOut"
+                });
+
+                // Push UI elements up
+                gsap.to('.shield-container', {
+                    y: "-=50",
+                    duration: 0.8,
+                    ease: "back.out(1.7)"
+                });
+            }, 7.5);
+
+            // Stage 9: Keep particles spread out (no reformation)
+            timeline.add(() => {
+                // Add some gentle movement to keep particles alive
+                particleBodies.forEach(body => {
+                    body.velocity.x += (Math.random() - 0.5) * 0.5;
+                    body.velocity.y += (Math.random() - 0.5) * 0.5;
+                    body.velocity.z += (Math.random() - 0.5) * 0.5;
+                });
+            }, 8.5);
+
+            // Stage 10: Show info card with elegant entrance
+            timeline.to('.info-card', {
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                duration: 1.2,
+                ease: "back.out(1.7)"
+            }, 9);
+
+            // Start the timeline
+            timeline.play();
+        }
+
+        // Handle window resize with debounce
+        let resizeTimeout;
+
+        function onWindowResize() {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                width = container.clientWidth;
+                height = container.clientHeight;
+
+                camera.aspect = width / height;
+                camera.updateProjectionMatrix();
+
+                renderer.setSize(width, height);
+            }, 100);
+        }
+
+        // Smooth camera movement
+        function updateCamera() {
+            // Calculate average particle position for camera target
+            const avgPosition = new THREE.Vector3();
+            if (particleBodies.length > 0) {
+                particleBodies.forEach(body => {
+                    avgPosition.x += body.position.x;
+                    avgPosition.y += body.position.y;
+                    avgPosition.z += body.position.z;
+                });
+                avgPosition.divideScalar(particleBodies.length);
+            }
+
+            // Smooth camera follow
+            cameraTarget.lerp(avgPosition, 0.05);
+            camera.position.copy(cameraTarget).add(cameraOffset);
+            camera.lookAt(cameraTarget);
+        }
+
+        // Animation loop with performance optimizations
+        let lastTime = 0;
+        const frameRate = 60;
+        const frameInterval = 1000 / frameRate;
+
+        function animate(currentTime) {
+            requestAnimationFrame(animate);
+
+            // Throttle physics updates for consistent behavior
+            const delta = Math.min(currentTime - lastTime, 100) / 1000;
+            lastTime = currentTime;
+
+            // Update physics
+            if (delta > 0) {
+                world.step(delta);
+
+                // Update particle positions
+                const positions = particleGeometry.attributes.position.array;
+                for (let i = 0; i < particleBodies.length; i++) {
+                    const body = particleBodies[i];
+                    positions[i * 3] = body.position.x;
+                    positions[i * 3 + 1] = body.position.y;
+                    positions[i * 3 + 2] = body.position.z;
+
+                    // Reset forces for next frame
+                    body.force.set(0, 0, 0);
+                }
+                particleGeometry.attributes.position.needsUpdate = true;
+
+                // Apply wind force if active
+                if (timeline.progress() > 0.15 && timeline.progress() < 0.5) {
+                    applyWindForce();
+                }
+            }
+
+            // Smooth camera movement
+            updateCamera();
+
+            // Rotate particle system slightly for dynamic effect
+            particleSystem.rotation.y += 0.002;
+            particleSystem.rotation.x += 0.001;
+
+            renderer.render(scene, camera);
+        }
+
+        // Initialize with performance checks
+        function init() {
+            // Check device capabilities
+            const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+            if (isMobile) {
+                // Reduce particle count on mobile (but still keep it high)
+                PARTICLE_COUNT = Math.floor(PARTICLE_COUNT * 0.7);
+            }
+
+            setupAnimations();
+            animate();
+
+            // Event listeners
+            window.addEventListener('resize', onWindowResize);
+
+            // Back button with ripple effect
+            const backButton = document.querySelector('.back-button');
+            backButton.addEventListener('click', (e) => {
+                // Ripple effect
+                const ripple = document.createElement('span');
+                ripple.className = 'ripple';
+                backButton.appendChild(ripple);
+
+                const rect = backButton.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+
+                ripple.style.width = ripple.style.height = `${size}px`;
+                ripple.style.left = `${x}px`;
+                ripple.style.top = `${y}px`;
+
+                setTimeout(() => {
+                    ripple.remove();
+                    window.location.href = '/';
+                }, 600);
+            });
+        }
+
+        // Start the app
+        init();
+    </script>
+    <script>
+        // ... [keep all previous code until the back button section] ...
+
+        // Initialize with performance checks
+        function init() {
+            // Check device capabilities
+            const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+            if (isMobile) {
+                // Reduce particle count on mobile (but still keep it high)
+                PARTICLE_COUNT = Math.floor(PARTICLE_COUNT * 0.7);
+            }
+
+            setupAnimations();
+            animate();
+
+            // Event listeners
+            window.addEventListener('resize', onWindowResize);
+
+            // Premium back button with long press effect
+            const backButton = document.querySelector('.back-button');
+            let pressTimer;
+            const pressDuration = 2000; // 3 seconds feels more natural
+            let isPressed = false;
+
+            // Create circular progress element
+            const progressCircle = document.createElement('div');
+            progressCircle.className = 'progress-circle';
+            backButton.appendChild(progressCircle);
+
+            // Create particle container for button disintegration
+            const buttonParticles = document.createElement('div');
+            buttonParticles.className = 'button-particles';
+            document.body.appendChild(buttonParticles); // Higher z-index
+
+            // Touch/mouse start
+            const startPress = (e) => {
+                e.preventDefault();
+                if (isPressed) return;
+                isPressed = true;
+
+                // Visual feedback
+                backButton.classList.add('pressing');
+                gsap.to(backButton, {
+                    scale: 0.95,
+                    duration: 0.3,
+                    ease: "back.out(1.7)"
+                });
+
+                // Start progress animation
+                gsap.to(progressCircle, {
+                    strokeDashoffset: 0,
+                    duration: pressDuration / 1000,
+                    ease: "linear",
+                    onComplete: completePress
+                });
+
+                // Set timer as backup
+                pressTimer = setTimeout(completePress, pressDuration);
+            };
+
+            // Touch/mouse end
+            const cancelPress = (e) => {
+                if (!isPressed) return;
+                e.preventDefault();
+
+                clearTimeout(pressTimer);
+                isPressed = false;
+
+                // Reset animations
+                backButton.classList.remove('pressing');
+                gsap.killTweensOf(progressCircle);
+                gsap.to(backButton, {
+                    scale: 1,
+                    duration: 0.5,
+                    ease: "elastic.out(1, 0.5)"
+                });
+                gsap.to(progressCircle, {
+                    strokeDashoffset: 283,
+                    duration: 0.3,
+                    ease: "power2.out"
+                });
+            };
+
+            // Complete press action
+            function completePress() {
+                if (!isPressed) return;
+
+                // Animate button disintegration
+                gsap.to(backButton, {
+                    opacity: 0,
+                    scale: 0.8,
+                    duration: 0.4,
+                    ease: "power2.in",
+                    onComplete: createButtonParticles
+                });
+            }
+
+            // Create micro particles from button
+            function createButtonParticles() {
+                const rect = backButton.getBoundingClientRect();
+                const buttonCenter = {
+                    x: rect.left + rect.width / 2,
+                    y: rect.top + rect.height / 2
+                };
+
+                // Create 200 tiny white particles (more than before)
+                const particles = [];
+                for (let i = 0; i < 200; i++) {
+                    const size = 1 + Math.random() * 2; // 1-3px (smaller than sand)
+                    const particle = document.createElement('div');
+                    particle.className = 'button-particle';
+                    particle.style.cssText = `
+                    width: ${size}px;
+                    height: ${size}px;
+                    background: white;
+                    position: fixed;
+                    border-radius: 50%;
+                    left: ${buttonCenter.x}px;
+                    top: ${buttonCenter.y}px;
+                    pointer-events: none;
+                    transform: translate(-50%, -50%);
+                    opacity: ${0.7 + Math.random() * 0.3};
+                    z-index: 100;
+                `;
+
+                    buttonParticles.appendChild(particle);
+
+                    // Random velocity with upward bias
+                    particles.push({
+                        element: particle,
+                        x: 0,
+                        y: 0,
+                        vx: (Math.random() - 0.5) * 8,
+                        vy: (Math.random() - 0.7) * 10, // Strong upward force
+                        life: 2 + Math.random() * 1,
+                        size: size
+                    });
+                }
+
+                // Apply wind effect to particles
+                const windDirection = {
+                    x: Math.random() > 0.5 ? 1 : -1,
+                    y: -0.5 // Generally upward
+                };
+
+                // Animate particles with wind physics
+                const startTime = Date.now();
+
+                function updateParticles() {
+                    const elapsed = (Date.now() - startTime) / 1000;
+
+                    // Apply wind force that increases over time
+                    const windStrength = elapsed * 0.5;
+
+                    particles.forEach(p => {
+                        if (p.life <= 0) return;
+
+                        // Apply physics
+                        p.vy += 0.1; // Gentle gravity
+                        p.vx += windDirection.x * windStrength * (p.size / 3); // Smaller particles affected more
+                        p.vy += windDirection.y * windStrength * 0.7;
+
+                        p.x += p.vx;
+                        p.y += p.vy;
+                        p.life -= 0.01;
+
+                        // Update position and fade out
+                        p.element.style.transform = `translate(${p.x}px, ${p.y}px) scale(${p.life})`;
+                        p.element.style.opacity = p.life * 0.7;
+
+                        // Remove dead particles
+                        if (p.life <= 0) {
+                            p.element.remove();
+                        }
+                    });
+
+                    // Continue animation if any particles remain
+                    if (particles.some(p => p.life > 0)) {
+                        requestAnimationFrame(updateParticles);
+                    } else {
+                        // Clean up and redirect
+                        buttonParticles.remove();
+                        window.location.href = 'index.html';
+                    }
+                }
+
+                // Start animation
+                updateParticles();
+
+                // Also trigger main particle system wind
+                triggerStrongWindEffect();
+            }
+
+            // Create a strong wind effect in main particle system
+            function triggerStrongWindEffect() {
+                // Set wind to strong horizontal flow
+                gsap.to(windForce, {
+                    x: 15 * (Math.random() > 0.5 ? 1 : -1), // Strong left/right wind
+                    y: -8, // Upward component
+                    duration: 2,
+                    onUpdate: () => {
+                        particleBodies.forEach(body => {
+                            // Apply wind force with turbulence
+                            body.velocity.x += windForce.x * 0.05 + (Math.random() - 0.5) * 0.5;
+                            body.velocity.y += windForce.y * 0.05 + (Math.random() - 0.5) * 0.3;
+                        });
+                    }
+                });
+            }
+
+            // Add event listeners
+            backButton.addEventListener('pointerdown', startPress);
+            backButton.addEventListener('touchstart', startPress);
+            backButton.addEventListener('pointerup', cancelPress);
+            backButton.addEventListener('touchend', cancelPress);
+            backButton.addEventListener('pointerleave', cancelPress);
+
+            // Ensure button remains clickable
+            backButton.style.cursor = 'pointer';
+        }
+
+        // Start the app
+        init();
+    </script>
+
+    <style>
+        /* Button Styles */
+        .back-button {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-origin: center;
+            z-index: 10;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+            color: inherit;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 50px;
+            font-size: 18px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            font-weight: 500;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            will-change: transform;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .back-button.pressing {
+            transform: scale(0.95) !important;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.2));
+        }
+
+        /* Progress Circle */
+        .progress-circle {
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            width: calc(100% + 10px);
+            height: calc(100% + 10px);
+            border-radius: 50px;
+            border: 2px solid transparent;
+            border-top-color: rgba(255, 255, 255, 0.8);
+            pointer-events: none;
+            stroke-dasharray: 283;
+            stroke-dashoffset: 283;
+            transform: rotate(-90deg);
+            mix-blend-mode: overlay;
+            z-index: 11;
+        }
+
+        /* Particle Container */
+        .button-particles {
+            position: fixed;
+            border: none;
+            pointer-events: none;
+            z-index: 1000;
+            /* Above everything */
+        }
+
+        /* Hover/Active States */
+        .back-button:hover {
+            border: none;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .back-button:active {
+            transform: scale(0.97);
+        }
+
+        /* Dynamic Pulse Effect */
+        @keyframes pulse-glow {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.3);
+            }
+
+            70% {
+                box-shadow: 0 0 0 15px rgba(255, 255, 255, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+            }
+        }
+
+        .back-button {
+            animation: pulse-glow 3s infinite;
+        }
+    </style>
+</body>
+
+</html>
