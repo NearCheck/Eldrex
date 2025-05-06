@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Me - Eldrex</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0071e3;
+            --primary-hover: #0062c4;
+            --text-primary: #1d1d1f;
+            --text-secondary: #555;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f5f5f7;
+            --bg-tertiary: #e6e6ea;
+            --shadow-color: rgba(0, 0, 0, 0.08);
+            --card-bg: #ffffff;
+            --quote-bg: #f8f8fa;
+            --border-radius: 2rem;
+            --transition-all: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            --header-height: 70px;
+            --skeleton-color: rgba(0, 0, 0, 0.05);
+            --skeleton-animation: skeleton-loading 1.5s ease-in-out infinite;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --primary: #0a84ff;
+                --primary-hover: #399cff;
+                --text-primary: #f5f5f7;
+                --text-secondary: #a1a1a6;
+                --bg-primary: #1c1c1e;
+                --bg-secondary: #2c2c2e;
+                --bg-tertiary: #3a3a3c;
+                --shadow-color: rgba(0, 0, 0, 0.3);
+                --card-bg: #2c2c2e;
+                --quote-bg: #3a3a3c;
+                --skeleton-color: rgba(255, 255, 255, 0.05);
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+            transition: var(--transition-all);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding-top: var(--header-height);
+            touch-action: pan-y;
+        }
+
+        /* Skeleton loading animation */
+        @keyframes skeleton-loading {
+            0% {
+                background-position: 200% 0;
+            }
+            100% {
+                background-position: -200% 0;
+            }
+        }
+
+        .skeleton {
+            background: linear-gradient(90deg, var(--skeleton-color) 25%, rgba(0, 0, 0, 0.1) 50%, var(--skeleton-color) 75%);
+            background-size: 400% 100%;
+            animation: var(--skeleton-animation);
+            border-radius: 4px;
+            color: transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skeleton::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--skeleton-color);
+            z-index: -1;
+        }
+
+        /* Loading spinner */
+        .loader {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(0, 113, 227, 0.2);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loading-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--bg-primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .loading-container.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loading-logo {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: scale(0.8);
+            animation: fadeInScale 0.8s 0.2s forwards;
+        }
+
+        @keyframes fadeInScale {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .loading-text {
+            margin-top: 20px;
+            color: var(--text-secondary);
+            font-size: 1rem;
+            opacity: 0;
+            animation: fadeIn 0.6s 0.4s forwards;
+        }
+
+        .header-container {
+            box-shadow: 0 2px 30px var(--shadow-color);
+            padding: 1rem 3rem;
+            position: fixed;
+            top: 0.50;
+            left: 0;
+            right: 0;
+            margin: 20px;
+            margin-top: -30px;
+            border-radius: 50px;
+            z-index: 100;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            transition: var(--transition-all);
+            height: var(--header-height);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            justify-content: space-between;
+        }
+
+        .profile-avatar {
+            width: 40px;
+            height: 40px;
+            margin-right: 5px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary);
+            transition: var(--transition-all);
+            cursor: pointer;
+        }
+
+        .profile-avatar:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.2);
+        }
+
+        .back-button {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            width: fit-content;
+            padding: 0.5rem 1rem;
+            border-radius: 100px;
+            background: transparent;
+            border: 1px solid transparent;
+        }
+
+        .back-button:hover {
+            color: var(--primary-hover);
+            transform: translateX(-4px);
+            background: rgba(0, 113, 227, 0.1);
+            border-color: rgba(0, 113, 227, 0.2);
+        }
+
+        .back-button svg {
+            width: 18px;
+            height: 18px;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .back-button:hover svg {
+            transform: translateX(-3px);
+        }
+
+        main {
+            padding: 2rem;
+            flex: 1;
+            opacity: 0;
+            animation: fadeIn 0.8s 0.6s forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .hero {
+            text-align: center;
+            margin: 3rem 0 4rem;
+            position: relative;
+            overflow: hidden;
+            padding: 2rem 0;
+        }
+
+        .hero-tag {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            display: inline-block;
+            position: relative;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: slideUpFadeIn 0.6s 0.8s forwards;
+        }
+
+        @keyframes slideUpFadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-tag::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 2px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            line-height: 1.2;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideUpFadeIn 0.6s 1s forwards;
+        }
+
+        .tagline {
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            font-weight: 400;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideUpFadeIn 0.6s 1.2s forwards;
+        }
+
+        .tagline::before,
+        .tagline::after {
+            content: '"';
+            color: var(--primary);
+            opacity: 0.3;
+            font-size: 1.5em;
+            vertical-align: middle;
+            line-height: 0;
+        }
+
+        .tagline::before {
+            margin-right: 0.5rem;
+        }
+
+        .tagline::after {
+            margin-left: 0.5rem;
+        }
+
+        .about-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            background: var(--card-bg);
+            border-radius: 40px;
+            box-shadow: 0 20px 60px var(--shadow-color);
+            padding: 2.5rem;
+            transition: var(--transition-all);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0, 113, 227, 0.1);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: slideUpFadeIn 0.6s 1.4s forwards;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            position: relative;
+            display: inline-block;
+            color: var(--primary);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 3px;
+            transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .about-container:hover .section-title::after {
+            width: 100px;
+        }
+
+        .about-content {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .read-more-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.75rem 1.5rem;
+            margin-top: 0.5rem;
+            border-radius: 100px;
+            transition: var(--transition-all);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .read-more-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 113, 227, 0.1);
+            border-radius: 100px;
+            z-index: -1;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .read-more-btn:hover {
+            color: var(--primary-hover);
+        }
+
+        .read-more-btn:hover::before {
+            transform: scaleX(1);
+        }
+
+        .read-more-btn svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .read-more-btn.active svg {
+            transform: rotate(180deg);
+        }
+
+        .hidden-content {
+            overflow: hidden;
+            max-height: 0;
+            transition: max-height 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .hidden-content.active {
+            max-height: 1000px;
+        }
+
+        .quotes-section {
+            max-width: 800px;
+            margin: 4rem auto;
+            background: var(--card-bg);
+            border-radius: 40px;
+            box-shadow: 0 20px 60px var(--shadow-color);
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0, 113, 227, 0.1);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: slideUpFadeIn 0.6s 1.6s forwards;
+        }
+
+        .quotes-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            position: relative;
+        }
+
+        .quote {
+            font-style: italic;
+            color: var(--text-primary);
+            padding: 2rem;
+            border-radius: calc(40px - 0.5rem);
+            background: var(--quote-bg);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+            z-index: 1;
+            opacity: 0;
+            touch-action: pan-y;
+            user-select: none;
+        }
+
+        .quote:nth-child(1) {
+            animation: slideUpFadeIn 0.6s 1.8s forwards;
+        }
+
+        .quote:nth-child(2) {
+            animation: slideUpFadeIn 0.6s 2.0s forwards;
+        }
+
+        .quote:nth-child(3) {
+            animation: slideUpFadeIn 0.6s 2.2s forwards;
+        }
+
+        .quote:nth-child(4) {
+            animation: slideUpFadeIn 0.6s 2.4s forwards;
+        }
+
+        .quote:nth-child(5) {
+            animation: slideUpFadeIn 0.6s 2.6s forwards;
+        }
+
+        .quote:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--shadow-color);
+        }
+
+        .quote::before {
+            content: '"';
+            font-size: 6rem;
+            position: absolute;
+            left: 1rem;
+            top: 0;
+            color: rgba(0, 113, 227, 0.05);
+            line-height: 1;
+            z-index: -1;
+            font-family: serif;
+        }
+
+        .quote-author {
+            display: block;
+            text-align: right;
+            font-weight: 600;
+            color: var(--primary);
+            margin-top: 1rem;
+            font-style: normal;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            background: var(--card-bg);
+            margin-top: 3rem;
+            border-top: 1px solid rgba(0, 113, 227, 0.1);
+            transition: var(--transition-all);
+            opacity: 0;
+            animation: fadeIn 0.6s 2.8s forwards;
+        }
+
+        /* Smooth scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Focus styles for accessibility */
+        button:focus,
+        a:focus {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            main {
+                padding: 1rem;
+            }
+
+            .about-container,
+            .quotes-section {
+                padding: 1.5rem;
+                border-radius: 30px;
+            }
+
+            .quote {
+                padding: 1.5rem;
+                border-radius: 25px;
+            }
+
+            .header-container {
+                padding: 1rem;
+                margin: 10px;
+                margin-top: -20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-container {
+                padding: 0.75rem;
+                margin: 5px;
+                margin-top: -15px;
+            }
+
+            .hero {
+                margin: 2rem 0 3rem;
+            }
+
+            .back-button {
+                padding: 0.5rem;
+            }
+
+            .about-container,
+            .quotes-section {
+                border-radius: 20px;
+            }
+        }
+
+        ::selection {
+            background: rgba(0, 113, 227, 0.3);
+            color: var(--text-primary);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Loading screen -->
+    <div class="loading-container">
+        <div class="loader"></div>
+        <div class="loading-text">Loading...</div>
+    </div>
+
+    <div class="header-container" style="margin: 20px; margin-top: -30px;">
+        <div class="header-content">
+            <a href="javascript:history.back()" class="back-button" aria-label="Go back">
+                <i class="fas fa-chevron-left"></i>
+                Back
+            </a>
+            <img src="https://ucarecdn.com/f7a97b92-31bd-4e03-a3f4-af5c99c95453/-/preview/750x1000/" alt="Profile Avatar" class="profile-avatar">
+        </div>
+    </div>
+
+    <main>
+        <div class="hero">
+            <div class="hero-tag">Featured</div>
+            <p class="tagline">I serve people, not a company</p>
+        </div>
+
+        <div class="about-container" style="border-radius: 30px;">
+            <h2 class="section-title">About Me</h2>
+            <p class="about-content">
+                Hi, I'm Eldrex Delos Reyes Bula. I'm a simple person who loves to think and learn new things. I don't talk a lot, but I always think deeply. I like to understand how things work and how to make them better, especially if it can help people. I care about privacy, respect, and making things easy and fair for everyone.
+            </p>
+            <div class="hidden-content">
+                <p class="about-content">
+                    I'm not the type of person who wants to show off or compete. I just want to do what I believe is right. I enjoy learning, not just about technology, but also about life, people's minds, and how to design things that feel good to use. I get inspired by small things and I always try to understand the reason behind everything.
+                </p>
+                <p class="about-content">
+                    Even when life is hard, I try to stay calm, focused, and humble. I know I'm still young and still learning, but every day I want to grow and do better. I believe that even small ideas can make a big difference if you put your heart into it.
+                </p>
+                <p class="about-content">
+                    In the end, I just want to help make the world a little kinder, safer, and more honest for everyone.
+                </p>
+            </div>
+            <button class="read-more-btn" aria-expanded="false" aria-controls="hidden-content">
+                <span>Read More</span>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+            </button>
+        </div>
+
+        <div class="quotes-section" style="border-radius: 30px;">
+            <h2 class="section-title">Quotes~</h2>
+            <div class="quotes-container">
+                <!-- Quotes will be dynamically inserted here -->
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        © <span id="current-year"></span> landecs
+    </footer>
+
+    <script>
+        // Initial quotes data
+        const quotes = [
+            {
+                text: "Crazy? Maybe. But I'd rather learn passionately than memorize mindlessly.",
+                author: "Eldrex Delos Reyes Bula"
+            },
+            {
+                text: "The more we think, the more risks we understand, but sometimes we're quick to regret instead of embracing them.",
+                author: "Eldrex Delos Reyes Bula"
+            },
+            {
+                text: "Think before you speak, understand before you judge, because the person in front of you may be the one you admire the most.",
+                author: "Eldrex Delos Reyes Bula"
+            },
+            {
+                text: "I admire many innovators, but my goal is not to follow them—I aspire to achieve what they have.",
+                author: "Eldrex Delos Reyes Bula"
+            },
+            {
+                text: "Still Be the Blue",
+                author: "Eldrex Delos Reyes Bula"
+            },
+            {
+                text: "I serve people not a company",
+                author: "Eldrex Delos Reyes Bula"
+            },
+            {
+                text: "Numbers may define you, but it's your will to give them meaning.",
+                author: "Eldrex Delos Reyes Bula"
+            },
+            {
+                text: "A man who can do what he wants, does what he wants.",
+                author: "Eldrex Delos Reyes Bula"
+            }
+        ];
+
+        function createQuoteElement(quote, index) {
+            const quoteElement = document.createElement('div');
+            quoteElement.className = 'quote';
+            quoteElement.dataset.quoteId = index;
+            quoteElement.innerHTML = `
+                "${quote.text}"
+                <span class="quote-author">— ${quote.author}</span>
+            `;
+            
+            // Stagger the animation for each quote
+            quoteElement.style.animation = `slideUpFadeIn 0.6s ${1.8 + (index * 0.2)}s forwards`;
+            
+            return quoteElement;
+        }
+
+        // Function to display all quotes
+        function displayQuotes() {
+            const quotesContainer = document.querySelector('.quotes-container');
+            
+            // Clear existing quotes
+            quotesContainer.innerHTML = '';
+            
+            // Create and append quote elements for each quote
+            quotes.forEach((quote, index) => {
+                const quoteElement = createQuoteElement(quote, index);
+                quotesContainer.appendChild(quoteElement);
+            });
+        }
+
+        // Wait for the DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set current year safely
+            const yearElement = document.getElementById('current-year');
+            if (yearElement) {
+                yearElement.textContent = new Date().getFullYear();
+            }
+
+            // Simulate loading with a timeout (in a real app, you'd wait for assets to load)
+            setTimeout(() => {
+                const loadingContainer = document.querySelector('.loading-container');
+                if (loadingContainer) {
+                    loadingContainer.classList.add('hidden');
+                }
+            }, 1500);
+
+            // Read More/Less functionality with enhanced accessibility
+            const readMoreBtn = document.querySelector('.read-more-btn');
+            const hiddenContent = document.querySelector('.hidden-content');
+
+            if (readMoreBtn && hiddenContent) {
+                const toggleContent = (isExpanded) => {
+                    if (isExpanded) {
+                        hiddenContent.classList.remove('active');
+                        readMoreBtn.innerHTML = `
+                            <span>Read More</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        `;
+                        readMoreBtn.classList.remove('active');
+                        readMoreBtn.setAttribute('aria-expanded', 'false');
+                    } else {
+                        hiddenContent.classList.add('active');
+                        readMoreBtn.innerHTML = `
+                            <span>Read Less</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        `;
+                        readMoreBtn.classList.add('active');
+                        readMoreBtn.setAttribute('aria-expanded', 'true');
+
+                        // Smooth scroll to ensure the expanded content is visible
+                        setTimeout(() => {
+                            readMoreBtn.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'nearest'
+                            });
+                        }, 300);
+                    }
+                };
+
+                readMoreBtn.addEventListener('click', () => {
+                    const isExpanded = hiddenContent.classList.contains('active');
+                    toggleContent(isExpanded);
+                });
+
+                // Handle keyboard navigation
+                readMoreBtn.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        const isExpanded = hiddenContent.classList.contains('active');
+                        toggleContent(isExpanded);
+                    }
+                });
+            }
+
+            // Handle page navigation with smooth transitions
+            window.addEventListener('beforeunload', () => {
+                if (document.body) {
+                    document.body.style.opacity = '0';
+                    document.body.style.transition = 'opacity 0.3s ease';
+                }
+            });
+
+            // Display all quotes when page loads
+            displayQuotes();
+        });
+    </script>
+</body>
+
+</html>
