@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Access Restricted</title>
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="denied.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to Content</a>
+    <canvas id="physics-canvas"></canvas>
+    
+    <div class="container" id="main-content" tabindex="-1">
+        <div class="glass-card">
+            <h1>Access Restricted</h1>
+            <p>We've detected unauthorized activity. For security reasons, this action is not permitted.</p>
+            <button class="btn" onclick="window.location.href='index.html'">Return to Safety</button>
+<p style="font-size: 10px; margin-top: 10px;"> powered by LanSec</p>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.18.0/matter.min.js"></script>
+    <script src="denied.js"></script>
+</body>
+</html>
