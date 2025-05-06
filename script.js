@@ -497,144 +497,143 @@
 
 
         // Sophisticated quotes
-const quotes = [
-    {
-        text: "Numbers may define you, but it's your will to give them meaning.",
-        author: "Eldrex Delos Reyes Bula"
-    },
-    {
-        text: "A man who can do what he wants, does what he wants.",
-        author: "Eldrex Delos Reyes Bula"
-    },
-    {
-        text: "Change is our only goal, and that’s why we're here—to create a new story and become part of history.",
-        author: "Eldrex Delos Reyes Bula"
-    },
-    {
-        text: "An old book might look like trash, yet it has the power to change lives, even if people can’t see its worth at first glance.",
-        author: "Eldrex Delos Reyes Bula"
-    },
-    {
-        text: "If life is a labyrinth of illusions, then perhaps my purpose is not to escape, but to wander. To question without answer, to search without end—this may be the only truth we ever know.",
-        author: "Eldrex Delos Reyes Bula"
-    },
-    {
-        text: "To exist is to question; to question is to live. And if all else is illusion, let my curiosity be real.",
-        author: "Eldrex Delos Reyes Bula"
-    },
-    {
-        text: "What we deny within ourselves becomes the force that controls us, and what we allow to grow becomes the power that frees us.",
-        author: "Eldrex Delos Reyes Bula"
-    },
-    {
-        text: "Time won’t wait for you, so make sure you don’t wait for it.",
-        author: "Eldrex Delos Reyes Bula"
-    },
-    {
-        text: "It may feel easier to wear a mask of false emotions than to reveal your true self to others.",
-        author: "Eldrex Delos Reyes Bula"
-    },
-    {
-        text: "I’m in love—not with you, but with the essence of who you are.",
-        author: "Eldrex Delos Reyes Bula"
-    },
-    {
-        text: "Curiosity drives me, yet understanding eludes me. I am drawn to truth like a moth to flame, yet I am burned by my limitations. Am I cursed to seek, but never to find?",
-        author: "Eldrex Delos Reyes Bula"
-    },
-    {
-        text: "Loyalty is not about staying—it’s about choosing what serves you best. But if ever you return, know that I’ll still be here, ready to listen.",
-        author: "Eldrex Delos Reyes Bula"
-    },
-    {
-        text: "Focus isn’t about being perfect—it’s about showing up, trying, and taking one step at a time. Every small effort brings you closer to your dreams.",
-        author: "Eldrex Delos Reyes Bula"
-    },
-    {
-        text: "Life offers only two choices: failure or success. The journey you take depends on the choices you make.",
-        author: "Eldrex Delos Reyes Bula"
-    },
-    {
-        text: "If nothing else can do it for you, take that first step for yourself.",
-        author: "Eldrex Delos Reyes Bula"
-    },
-    {
-        text: "All of what we consider in this reality could be creations of our imaginative minds.",
-        author: "Eldrex Delos Reyes Bula"
-    },
-    {
-        text: "Everything you see around you is the creation of someone who may seem less intelligent than you, but in their pursuit of curiosity, they possess a unique kind of wisdom.",
-        author: "Eldrex Delos Reyes Bula"
-    },
-    {
-        text: "People speak boldly of their dreams, yet often fail to act upon them. They remain seated, waiting, as if bound by invisible chains, commanded and diminished, unaware that their true freedom lies in their own hands.",
-        author: "Eldrex Delos Reyes Bula"
-    },
-    {
-        text: "My base is my castle, until the AI comes knocking.",
-        author: "Eldrex Delos Reyes Bula"
-    },
-    {
-        text: "Warfare is won by wit, not just weapons.",
-        author: "Eldrex Delos Reyes Bula"
-    },
-    {
-        text: "What's the input, and what's the output of my existence?",
-        author: "Eldrex Delos Reyes Bula"
-    },
-    {
-        text: "We created devices and tools to understand human nature, but what if we ourselves are part of a complex simulation? Perhaps what we see and know is merely a construct of human design—leaving us to wonder if we are being told the whole truth.",
-        author: "Eldrex Delos Reyes Bula"
-    },
-    {
-        text: "Sometimes, it's people themselves who make things seem impossible.",
-        author: "Eldrex Delos Reyes Bula"
-    },
-    {
-        text: "If the pursuit of answers to our existence leads only to more uncertainty, can true understanding ever be achieved, or is the journey itself the only meaningful part of the process?",
-        author: "Eldrex Delos Reyes Bula"
-    },
-    {
-        text: "Is truth merely a reflection of the lies we choose to believe?",
-        author: "Eldrex Delos Reyes Bula"
-    },
-    {
-        text: "What if the answers we seek were never meant to be found, but to push us further into the unknown?",
-        author: "Eldrex Delos Reyes Bula"
-    },
-    {
-        text: "A mother's love transcends physical gestures and outward expressions. It's the profound depth of her heart, the warmth of her soul, and the unwavering devotion that resonates deeply within you.",
-        author: "Eldrex Delos Reyes Bula"
-    },
-    {
-        text: "Her eyes don’t just shine—they speak in ways words never could. Her voice isn’t just a sound—it’s a warmth that lingers. And when she holds me, it’s more than a touch; it’s home.",
-        author: "Eldrex Delos Reyes Bula"
-    },
-    {
-        text: "His hands tell stories of strength, his presence feels like greatness itself. But it’s his eyes—they hold the depth of a thousand unspoken words. And his voice? It’s the kind of perfection that isn’t heard, but felt.",
-        author: "Eldrex Delos Reyes Bula"
-    },
-    {
-        text: "Love isn’t something you define—it’s something you recognize when it’s real. It’s a gift you never knew you needed until it finds you.",
-        author: "Eldrex Delos Reyes Bula"
-    },
-    {
-        text: "I tell myself I can move on, but the truth is—I compare everyone to you. And no one comes close. You’re not just special; you’re the kind of incredible that can’t be replaced.",
-        author: "Eldrex Delos Reyes Bula"
-    },
-    {
-        text: "I serve people not a company.",
-        author: "Eldrex Delos Reyes Bula"
-    },
-    {
-        text: "Still be the Blue",
-        author: "Eldrex Delos Reyes Bula"
-    },
-    {
-        text: "Fly again, My blue",
-        author: "Eldrex Delos Reyes Bula"
-    }
-];
+        const quotes = [{
+                text: "Numbers may define you, but it's your will to give them meaning.",
+                author: "Eldrex Delos Reyes Bula"
+            },
+            {
+                text: "A man who can do what he wants, does what he wants.",
+                author: "Eldrex Delos Reyes Bula"
+            },
+            {
+                text: "Change is our only goal, and that’s why we're here—to create a new story and become part of history.",
+                author: "Eldrex Delos Reyes Bula"
+            },
+            {
+                text: "An old book might look like trash, yet it has the power to change lives, even if people can’t see its worth at first glance.",
+                author: "Eldrex Delos Reyes Bula"
+            },
+            {
+                text: "If life is a labyrinth of illusions, then perhaps my purpose is not to escape, but to wander. To question without answer, to search without end—this may be the only truth we ever know.",
+                author: "Eldrex Delos Reyes Bula"
+            },
+            {
+                text: "To exist is to question; to question is to live. And if all else is illusion, let my curiosity be real.",
+                author: "Eldrex Delos Reyes Bula"
+            },
+            {
+                text: "What we deny within ourselves becomes the force that controls us, and what we allow to grow becomes the power that frees us.",
+                author: "Eldrex Delos Reyes Bula"
+            },
+            {
+                text: "Time won’t wait for you, so make sure you don’t wait for it.",
+                author: "Eldrex Delos Reyes Bula"
+            },
+            {
+                text: "It may feel easier to wear a mask of false emotions than to reveal your true self to others.",
+                author: "Eldrex Delos Reyes Bula"
+            },
+            {
+                text: "I’m in love—not with you, but with the essence of who you are.",
+                author: "Eldrex Delos Reyes Bula"
+            },
+            {
+                text: "Curiosity drives me, yet understanding eludes me. I am drawn to truth like a moth to flame, yet I am burned by my limitations. Am I cursed to seek, but never to find?",
+                author: "Eldrex Delos Reyes Bula"
+            },
+            {
+                text: "Loyalty is not about staying—it’s about choosing what serves you best. But if ever you return, know that I’ll still be here, ready to listen.",
+                author: "Eldrex Delos Reyes Bula"
+            },
+            {
+                text: "Focus isn’t about being perfect—it’s about showing up, trying, and taking one step at a time. Every small effort brings you closer to your dreams.",
+                author: "Eldrex Delos Reyes Bula"
+            },
+            {
+                text: "Life offers only two choices: failure or success. The journey you take depends on the choices you make.",
+                author: "Eldrex Delos Reyes Bula"
+            },
+            {
+                text: "If nothing else can do it for you, take that first step for yourself.",
+                author: "Eldrex Delos Reyes Bula"
+            },
+            {
+                text: "All of what we consider in this reality could be creations of our imaginative minds.",
+                author: "Eldrex Delos Reyes Bula"
+            },
+            {
+                text: "Everything you see around you is the creation of someone who may seem less intelligent than you, but in their pursuit of curiosity, they possess a unique kind of wisdom.",
+                author: "Eldrex Delos Reyes Bula"
+            },
+            {
+                text: "People speak boldly of their dreams, yet often fail to act upon them. They remain seated, waiting, as if bound by invisible chains, commanded and diminished, unaware that their true freedom lies in their own hands.",
+                author: "Eldrex Delos Reyes Bula"
+            },
+            {
+                text: "My base is my castle, until the AI comes knocking.",
+                author: "Eldrex Delos Reyes Bula"
+            },
+            {
+                text: "Warfare is won by wit, not just weapons.",
+                author: "Eldrex Delos Reyes Bula"
+            },
+            {
+                text: "What's the input, and what's the output of my existence?",
+                author: "Eldrex Delos Reyes Bula"
+            },
+            {
+                text: "We created devices and tools to understand human nature, but what if we ourselves are part of a complex simulation? Perhaps what we see and know is merely a construct of human design—leaving us to wonder if we are being told the whole truth.",
+                author: "Eldrex Delos Reyes Bula"
+            },
+            {
+                text: "Sometimes, it's people themselves who make things seem impossible.",
+                author: "Eldrex Delos Reyes Bula"
+            },
+            {
+                text: "If the pursuit of answers to our existence leads only to more uncertainty, can true understanding ever be achieved, or is the journey itself the only meaningful part of the process?",
+                author: "Eldrex Delos Reyes Bula"
+            },
+            {
+                text: "Is truth merely a reflection of the lies we choose to believe?",
+                author: "Eldrex Delos Reyes Bula"
+            },
+            {
+                text: "What if the answers we seek were never meant to be found, but to push us further into the unknown?",
+                author: "Eldrex Delos Reyes Bula"
+            },
+            {
+                text: "A mother's love transcends physical gestures and outward expressions. It's the profound depth of her heart, the warmth of her soul, and the unwavering devotion that resonates deeply within you.",
+                author: "Eldrex Delos Reyes Bula"
+            },
+            {
+                text: "Her eyes don’t just shine—they speak in ways words never could. Her voice isn’t just a sound—it’s a warmth that lingers. And when she holds me, it’s more than a touch; it’s home.",
+                author: "Eldrex Delos Reyes Bula"
+            },
+            {
+                text: "His hands tell stories of strength, his presence feels like greatness itself. But it’s his eyes—they hold the depth of a thousand unspoken words. And his voice? It’s the kind of perfection that isn’t heard, but felt.",
+                author: "Eldrex Delos Reyes Bula"
+            },
+            {
+                text: "Love isn’t something you define—it’s something you recognize when it’s real. It’s a gift you never knew you needed until it finds you.",
+                author: "Eldrex Delos Reyes Bula"
+            },
+            {
+                text: "I tell myself I can move on, but the truth is—I compare everyone to you. And no one comes close. You’re not just special; you’re the kind of incredible that can’t be replaced.",
+                author: "Eldrex Delos Reyes Bula"
+            },
+            {
+                text: "I serve people not a company.",
+                author: "Eldrex Delos Reyes Bula"
+            },
+            {
+                text: "Still be the Blue",
+                author: "Eldrex Delos Reyes Bula"
+            },
+            {
+                text: "Fly again, My blue",
+                author: "Eldrex Delos Reyes Bula"
+            }
+        ];
         // Initialize carousel
         function initCarousel() {
             const carousel = document.getElementById('quotesCarousel');
@@ -782,48 +781,116 @@ const quotes = [
 
 
 
-// script.js - Internet Connection Detection with Premium UI
-document.addEventListener('DOMContentLoaded', function() {
-    // Premium connection detection with multiple fallbacks
-    function checkConnection() {
-        // Multi-layered detection approach
-        Promise.race([
-            fetch('https://www.google.com/favicon.ico', { 
-                method: 'HEAD',
-                mode: 'no-cors',
-                cache: 'no-store'
-            }),
-            new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 3000))
-        ])
-        .then(() => {
-            // Connection exists
-            if (window.location.pathname.endsWith('no.html')) {
-                // Smooth transition back to index.html
-                document.body.classList.add('page-exit-animation');
-                setTimeout(() => {
-                    window.location.href = 'index.html';
-                }, 800);
-            }
-        })
-        .catch(() => {
-            // No connection detected
-            if (!window.location.pathname.endsWith('no.html')) {
-                // Premium transition to offline page
-                document.body.classList.add('page-exit-animation');
-                setTimeout(() => {
-                    window.location.href = 'no.html';
-                }, 800);
-            }
-        });
-    }
+        // script.js - Internet Connection Detection with Premium UI
+        document.addEventListener('DOMContentLoaded', function() {
+            // Premium connection detection with multiple fallbacks
+            function checkConnection() {
+                // Multi-layered detection approach
+                Promise.race([
+                        fetch('https://www.google.com/favicon.ico', {
+                            method: 'HEAD',
+                            mode: 'no-cors',
+                            cache: 'no-store'
+                        }),
+                        new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 3000))
+                    ])
+                    .then(() => {
 
-    // Initial check
-    checkConnection();
-    
-    // Continuous monitoring (every 10 seconds)
-    setInterval(checkConnection, 10000);
-    
-    // Also check when connection state changes
-    window.addEventListener('online', checkConnection);
-    window.addEventListener('offline', checkConnection);
-});
+                        if (window.location.pathname.endsWith('no.html')) {
+                            document.body.classList.add('page-exit-animation');
+                            setTimeout(() => {
+                                window.location.href = 'index.html';
+                            }, 800);
+                        }
+                    })
+                    .catch(() => {
+                        if (!window.location.pathname.endsWith('no.html')) {
+                            // Premium transition to offline page
+                            document.body.classList.add('page-exit-animation');
+                            setTimeout(() => {
+                                window.location.href = 'no.html';
+                            }, 800);
+                        }
+                    });
+            }
+
+            checkConnection();
+
+            // Continuous monitoring (every 10 seconds)
+            setInterval(checkConnection, 10000);
+
+            window.addEventListener('online', checkConnection);
+            window.addEventListener('offline', checkConnection);
+        });
+
+
+        document.getElementById('dust-name').addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            window.location.href = "blocked.html"; // Redirect if right-clicked
+        });
+
+        document.querySelector('#dust-name img').setAttribute('draggable', 'false');
+
+document.addEventListener('DOMContentLoaded', function() {
+                    const profilePicture = document.getElementById('profile-picture');
+                    const imgElement = profilePicture.querySelector('img');
+                    const shieldBadge = document.getElementById('shieldBadge');
+                    const images = [
+                        "https://ucarecdn.com/f7a97b92-31bd-4e03-a3f4-af5c99c95453/-/preview/750x1000/",
+                        "https://ucarecdn.com/16d4d51c-3864-4320-a393-d6af0e9d0e98/-/preview/617x588/", // Replace with your second image
+                        "https://ucarecdn.com/c07a4845-c61a-4ab8-9408-77c7300191fc/-/preview/1000x1000/" // Replace with your third image
+                    ];
+
+                    let currentImageIndex = 0;
+
+                    // Add tutorial class to shield badge for first-time visitors
+                    if (!localStorage.getItem('shieldTutorialSeen')) {
+                        shieldBadge.classList.add('tutorial');
+                        localStorage.setItem('shieldTutorialSeen', 'true');
+
+                        // Remove tutorial animation after 5 seconds
+                        setTimeout(() => {
+                            shieldBadge.classList.remove('tutorial');
+                        }, 5000);
+                    }
+
+                    // Set up melting/transition effect
+                    function transitionToNextImage() {
+                        imgElement.classList.add('melting');
+
+                        setTimeout(() => {
+                            currentImageIndex = (currentImageIndex + 1) % images.length;
+                            imgElement.src = images[currentImageIndex];
+                            imgElement.classList.remove('melting');
+                            imgElement.classList.add('appearing');
+
+                            setTimeout(() => {
+                                imgElement.classList.remove('appearing');
+                            }, 1000);
+                        }, 1500);
+                    }
+
+                    // Auto-transition every 8 seconds
+                    setInterval(transitionToNextImage, 8000);
+
+                    // Also transition on hover after 2 seconds
+                    let hoverTimer;
+                    profilePicture.addEventListener('mouseenter', () => {
+                        hoverTimer = setTimeout(transitionToNextImage, 2000);
+                    });
+
+                    profilePicture.addEventListener('mouseleave', () => {
+                        clearTimeout(hoverTimer);
+                    });
+
+                    // Shield badge hover effect
+                    shieldBadge.addEventListener('mouseenter', () => {
+                        shieldBadge.style.transform = 'scale(1.1)';
+                        shieldBadge.style.filter = 'drop-shadow(0 0 8px rgba(81, 203, 238, 0.8))';
+                    });
+
+                    shieldBadge.addEventListener('mouseleave', () => {
+                        shieldBadge.style.transform = 'scale(1)';
+                        shieldBadge.style.filter = 'none';
+                    });
+                });
