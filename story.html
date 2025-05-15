@@ -1,0 +1,1503 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Cage I Lived In</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f5f5f7;
+            --text-color: #1d1d1f;
+            --primary-color: #0071e3;
+            --secondary-color: #86868b;
+            --card-bg: #ffffff;
+            --border-radius: 20px;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            --transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            --success-color: #34c759;
+            --warning-color: #ff9500;
+            --danger-color: #ff3b30;
+            --card-bg-rgb: 255, 255, 255;
+            --text-color-rgb: 29, 29, 31;
+            --primary-color-rgb: 0, 113, 227;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #121212;
+                --text-color: #f5f5f7;
+                --primary-color: #0a84ff;
+                --secondary-color: #8e8e93;
+                --card-bg: #1e1e1e;
+                --shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+                --card-bg-rgb: 30, 30, 30;
+                --text-color-rgb: 245, 245, 247;
+                --primary-color-rgb: 10, 132, 255;
+            }
+        }
+
+        /* Psychological color variations */
+        .theme-compassion {
+            --primary-color: #5856d6;
+            /* Purple - evokes compassion */
+        }
+
+        .theme-hope {
+            --primary-color: #5ac8fa;
+            /* Light blue - evokes hope */
+        }
+
+        .theme-strength {
+            --primary-color: #ff2d55;
+            /* Strong red - evokes strength */
+        }
+
+        .theme-peace {
+            --primary-color: #4cd964;
+            /* Green - evokes peace */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.7;
+            padding-bottom: 100px;
+            transition: background-color 0.6s ease, color 0.6s ease;
+            overflow-x: hidden;
+        }
+
+        /* Skeleton loading */
+        .skeleton {
+            background: linear-gradient(90deg,
+                    rgba(var(--text-color-rgb), 0.08) 25%,
+                    rgba(var(--text-color-rgb), 0.12) 50%,
+                    rgba(var(--text-color-rgb), 0.08) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 4px;
+            color: transparent !important;
+        }
+
+        .skeleton-circle {
+            border-radius: 50%;
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: 200% 0;
+            }
+
+            100% {
+                background-position: -200% 0;
+            }
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            background-color: rgba(var(--card-bg-rgb), 0.7);
+            z-index: 1000;
+            padding: 18px 24px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid rgba(var(--text-color-rgb), 0.08);
+            transition: all 0.5s ease;
+        }
+
+        .back-button {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 500;
+            transition: var(--transition);
+            font-size: 1rem;
+            padding: 6px 12px;
+            border-radius: 10px;
+        }
+
+        .back-button:hover {
+            background-color: rgba(var(--primary-color-rgb), 0.1);
+            transform: translateX(-4px);
+        }
+
+        .back-button:active {
+            transform: translateX(-4px) scale(0.96);
+        }
+
+        .back-button svg {
+            margin-right: 8px;
+            width: 20px;
+            height: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .back-button:hover svg {
+            transform: translateX(-2px);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 24px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s 0.4s forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .story-header {
+            margin: 40px 0 30px;
+            text-align: center;
+        }
+
+        .story-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            letter-spacing: -0.03em;
+            line-height: 1.2;
+            background: linear-gradient(to right, var(--text-color), var(--primary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s 0.6s forwards;
+        }
+
+        .story-date {
+            color: var(--secondary-color);
+            font-size: 0.95rem;
+            margin-bottom: 40px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s 0.8s forwards;
+        }
+
+        .story-content {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 48px;
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+            transition: var(--transition);
+            border: 1px solid rgba(var(--text-color-rgb), 0.05);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s 1s forwards;
+        }
+
+        .story-content p {
+            margin-bottom: 28px;
+            font-size: 1.15rem;
+            line-height: 1.8;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeInUp 0.6s forwards;
+        }
+
+        /* Animate paragraphs sequentially */
+        .story-content p:nth-child(1) {
+            animation-delay: 1.2s;
+        }
+
+        .story-content p:nth-child(2) {
+            animation-delay: 1.4s;
+        }
+
+        .story-content p:nth-child(3) {
+            animation-delay: 1.6s;
+        }
+
+        .story-content p:nth-child(4) {
+            animation-delay: 1.8s;
+        }
+
+        .story-content p:nth-child(5) {
+            animation-delay: 2.0s;
+        }
+
+        .story-content p:nth-child(6) {
+            animation-delay: 2.2s;
+        }
+
+        .story-content p:nth-child(7) {
+            animation-delay: 2.4s;
+        }
+
+        .story-content p:nth-child(8) {
+            animation-delay: 2.6s;
+        }
+
+        .story-content p:nth-child(9) {
+            animation-delay: 2.8s;
+        }
+
+        .story-content p:nth-child(10) {
+            animation-delay: 3.0s;
+        }
+
+        .story-content p:nth-child(11) {
+            animation-delay: 3.2s;
+        }
+
+        .story-content p:nth-child(12) {
+            animation-delay: 3.4s;
+        }
+
+        .story-content p:nth-child(13) {
+            animation-delay: 3.6s;
+        }
+
+        .story-content p:nth-child(14) {
+            animation-delay: 3.8s;
+        }
+
+        .story-content p:nth-child(15) {
+            animation-delay: 4.0s;
+        }
+
+        .story-content p:nth-child(16) {
+            animation-delay: 4.2s;
+        }
+
+        .story-content p:nth-child(17) {
+            animation-delay: 4.4s;
+        }
+
+        .story-content p:nth-child(18) {
+            animation-delay: 4.6s;
+        }
+
+        .story-content p:nth-child(19) {
+            animation-delay: 4.8s;
+        }
+
+        .story-content p:nth-child(20) {
+            animation-delay: 5.0s;
+        }
+
+        .story-content p:nth-child(21) {
+            animation-delay: 5.2s;
+        }
+
+        .story-content p:nth-child(22) {
+            animation-delay: 5.4s;
+        }
+
+        .story-content p:nth-child(23) {
+            animation-delay: 5.6s;
+        }
+
+        .story-content p:nth-child(24) {
+            animation-delay: 5.8s;
+        }
+
+        .story-content p:nth-child(25) {
+            animation-delay: 6.0s;
+        }
+
+        .notice {
+            font-size: 0.92rem;
+            color: var(--secondary-color);
+            text-align: center;
+            margin-top: 50px;
+            padding: 24px;
+            border-top: 1px solid rgba(var(--text-color-rgb), 0.1);
+            opacity: 0;
+            animation: fadeIn 1s 6.2s forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Floating action button */
+        .fab-container {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 16px;
+        }
+
+        .fab-main {
+            width: 56px;
+            height: 56px;
+            border-radius: 28px;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(var(--primary-color-rgb), 0.3);
+            transition: all 0.5s cubic-bezier(0.2, 0.8, 0.4, 1);
+            position: relative;
+            overflow: hidden;
+            border: none;
+        }
+
+        .fab-main:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(var(--primary-color-rgb), 0.4);
+        }
+
+        .fab-main:active {
+            transform: scale(0.95);
+        }
+
+        .fab-main svg {
+            width: 24px;
+            height: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .fab-main.active {
+            width: 200px;
+        }
+
+        .fab-main.active .fab-icon {
+            opacity: 0;
+            transform: rotate(90deg);
+        }
+
+        .fab-main.active .fab-close {
+            opacity: 1;
+            transform: rotate(0deg);
+        }
+
+        .fab-icon,
+        .fab-close {
+            position: absolute;
+            transition: all 0.4s cubic-bezier(0.2, 0.8, 0.4, 1);
+        }
+
+        .fab-close {
+            opacity: 0;
+            transform: rotate(-90deg);
+        }
+
+        .fab-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+            padding-top: 12px;
+            opacity: 0;
+            height: 0;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.2, 0.8, 0.4, 1);
+        }
+
+        .fab-main.active+.fab-options {
+            opacity: 1;
+            height: auto;
+        }
+
+        .fab-option {
+            width: 100%;
+            padding: 14px 20px;
+            background-color: var(--card-bg);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(var(--text-color-rgb), 0.05);
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transform: translateY(10px);
+            opacity: 0;
+        }
+
+        .fab-main.active+.fab-options .fab-option {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .fab-option:nth-child(1) {
+            transition-delay: 0.1s;
+        }
+
+        .fab-option:nth-child(2) {
+            transition-delay: 0.2s;
+        }
+
+        .fab-option:nth-child(3) {
+            transition-delay: 0.3s;
+        }
+
+        .fab-option:nth-child(4) {
+            transition-delay: 0.4s;
+        }
+
+        .fab-option:hover {
+            background-color: rgba(var(--primary-color-rgb), 0.1);
+            transform: translateX(-4px) !important;
+        }
+
+        .fab-option:active {
+            transform: scale(0.98) !important;
+        }
+
+        .fab-option svg {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+
+        /* Modals */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s cubic-bezier(0.2, 0.8, 0.4, 1);
+        }
+
+        .modal.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 32px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow);
+            transform: translateY(30px) scale(0.95);
+            transition: all 0.5s cubic-bezier(0.2, 0.8, 0.4, 1);
+            border: 1px solid rgba(var(--text-color-rgb), 0.05);
+        }
+
+        .modal.show .modal-content {
+            transform: translateY(0) scale(1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: var(--secondary-color);
+            font-size: 1.8rem;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .close-modal:hover {
+            background-color: rgba(var(--text-color-rgb), 0.1);
+        }
+
+        .modal-body {
+            line-height: 1.7;
+        }
+
+        /* Summary typing animation */
+        .typing-text {
+            border-right: 2px solid var(--primary-color);
+            white-space: pre-wrap;
+            overflow: hidden;
+            animation: blinkCursor 0.7s infinite;
+        }
+
+        @keyframes blinkCursor {
+
+            from,
+            to {
+                border-color: transparent;
+            }
+
+            50% {
+                border-color: var(--primary-color);
+            }
+        }
+
+        /* Language selector */
+        .language-selector {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .language-btn {
+            padding: 12px 16px;
+            background-color: rgba(var(--primary-color-rgb), 0.1);
+            border-radius: 12px;
+            border: none;
+            color: var(--text-color);
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .language-btn:hover {
+            background-color: rgba(var(--primary-color-rgb), 0.2);
+        }
+
+        .language-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .language-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* TTS controls */
+        .tts-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .tts-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background-color: rgba(var(--primary-color-rgb), 0.1);
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tts-btn:hover {
+            background-color: rgba(var(--primary-color-rgb), 0.2);
+            transform: scale(1.05);
+        }
+
+        .tts-btn:active {
+            transform: scale(0.95);
+        }
+
+        .tts-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .tts-btn.play {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .progress-container {
+            flex: 1;
+            height: 4px;
+            background-color: rgba(var(--text-color-rgb), 0.1);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: var(--primary-color);
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+
+        /* Physics animations */
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-12px);
+            }
+        }
+
+        .floating {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(0.8);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+
+        .ripple-effect {
+            position: absolute;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.4);
+            transform: scale(0);
+            animation: ripple 0.8s linear;
+            pointer-events: none;
+        }
+
+        /* Theme selector */
+        .theme-selector {
+            position: fixed;
+            bottom: 24px;
+            left: 24px;
+            z-index: 100;
+            display: flex;
+            gap: 8px;
+        }
+
+        .theme-btn {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid var(--card-bg);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.2);
+        }
+
+        .theme-default {
+            background: linear-gradient(135deg, #0071e3, #34c759);
+        }
+
+        .theme-compassion-btn {
+            background: #5856d6;
+        }
+
+        .theme-hope-btn {
+            background: #5ac8fa;
+        }
+
+        .theme-strength-btn {
+            background: #ff2d55;
+        }
+
+        .theme-peace-btn {
+            background: #4cd964;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .story-title {
+                font-size: 2.2rem;
+            }
+
+            .story-content {
+                padding: 32px;
+            }
+
+            .story-content p {
+                font-size: 1.05rem;
+            }
+
+            .fab-container {
+                bottom: 16px;
+                right: 16px;
+            }
+
+            .theme-selector {
+                bottom: 16px;
+                left: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .story-title {
+                font-size: 1.8rem;
+            }
+
+            .story-content {
+                padding: 24px;
+                border-radius: 16px;
+            }
+
+            header {
+                padding: 14px 16px;
+            }
+
+            .back-button {
+                font-size: 0.9rem;
+                padding: 4px 8px;
+            }
+
+            .container {
+                padding: 0 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Skeleton Loading -->
+    <div id="skeleton-loading" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-color); z-index: 2000; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+        <div style="width: 80%; max-width: 500px;">
+            <div class="skeleton" style="height: 50px; width: 70%; margin: 0 auto 20px; border-radius: 12px;"></div>
+            <div class="skeleton" style="height: 20px; width: 40%; margin: 0 auto 40px; border-radius: 8px;"></div>
+            <div class="skeleton" style="height: 300px; width: 100%; border-radius: 20px; margin-bottom: 20px;"></div>
+            <div class="skeleton" style="height: 15px; width: 80%; margin: 0 auto; border-radius: 6px;"></div>
+        </div>
+    </div>
+
+    <header>
+        <a href="specific_page.html" class="back-button">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+            Back
+        </a>
+    </header>
+
+    <div class="container">
+        <div class="story-header">
+            <h1 class="story-title floating">The Cage I Lived In</h1>
+            <div class="story-date">March 22, 2021</div>
+        </div>
+
+        <div class="story-content">
+            <p>There are moments in life you never forget. For me, it began on a rainy day in 2021. We were planting rice in the fields—just me and my family. The sky was heavy, but our hearts were light. I can still remember the smiles, the laughter, the feeling of being safe and surrounded by love. I was just twelve years old, full of questions about the world beyond our simple life, unaware that soon I would be walking into something that would forever change me.</p>
+
+            <p>March 22, 2021. That date is etched into my memory. Kuya Ricky came to our home. He said he was sent by Lola Eday—Arsenia Galendes Sy, the owner of Hunter Electronics. She was offering me a chance: to live with her, to help at her store and house, and in return, she would support my education and give me a monthly allowance. It sounded like a blessing. My family, though hesitant, agreed. I packed my clothes, said goodbye, and left with Kuya Ricky, not knowing I was stepping into what would become a nightmare that lasted over four years.</p>
+
+            <p>At first, everything seemed fine. Lola was kind, generous with her words, and supportive. I thought I was lucky. But that kindness was short-lived. Slowly, her true nature began to show. The rules started piling up—rules for how to walk, how to breathe, how to speak, even how to smile. I wasn't treated like a student or even a person; I was treated like a tool. I was only a child, but my days were filled with cleaning, cooking, and working long hours in her electronics store. I had school from Monday to Friday, but after classes, I wasn't going home to rest—I was going back to labor.</p>
+
+            <p>I worked from early morning until late at night. Opening the store at 7:30 AM, dealing with customers, cleaning old wires, sorting dusty stock, and maintaining a store that never felt like mine. I wasn't allowed to laugh, to talk to the other workers, or even visit my family. She said no one could visit me either. For years, I lived like that. Isolated. Exhausted. Angry. And yet, I stayed quiet. I tried to endure it.</p>
+
+            <p>But no matter how hard I worked, nothing was ever enough for her. One small mistake would lead to hours of shouting. She humiliated me often—her words sharp and unforgiving. She accused people without proof, lied about promises, and manipulated those around her for money and power. Even her staff and customers were not spared. She only cared about herself—her success, her name, her money.</p>
+
+            <p>Then came another betrayal. In 2024, I had to leave for school practice. Lola was furious. Around that same time, her new boyfriend arrived from India—Sunil Talaviya. She gave him money, lavished him with attention, and treated me like I was invisible. One day, I came back from school, and she shouted at me in front of everyone:</p>
+
+            <p>"Wala ka namang magawa dito sa tindahan ko! Umalis ka na lang!"</p>
+
+            <p>I tried to explain:</p>
+
+            <p>"May practice kami sa PE. Syempre, pahahalagahan ko 'yung pag-aaral ko. Hindi ako tanga para ipagpalit 'yon sa tindahan mong basura."</p>
+
+            <p>Her response cut deep:</p>
+
+            <p>"Walang hiya ka! Tawagin mo tatay mo, kunin ka na!"</p>
+
+            <p>But I didn't call my father. I left on my own. No salary. No thanks. Nothing.</p>
+
+            <p>And then, like a cycle I couldn't escape, she tried to pull me back again in March 2025. She secretly made an offer to my father—300 pesos daily, just for working Saturdays and Sundays. My father, maybe hoping for something better, agreed. But once I returned, the rules changed again. I was suddenly working every day, both in the store and in her house. My salary dropped to 100 pesos a day. Only half of it was even given to me—she said she'd keep the rest "for my studies," accusing me of lending money to my siblings.</p>
+
+            <p>Enough was enough.</p>
+
+            <p>On May 10, 2025, I made a decision that finally gave me hope. Lola Martha—Lola Eday's sister—offered me a chance to live with her. She had worked all over the world and treated me with kindness and respect. I told my father, mother, inay and aunties I would go with her. I lied and said my course wasn't available in Can-avid, just to justify my decision. But the truth was simpler: I didn't want to live in a cage anymore. I couldn't let my education, my dreams, my spirit be destroyed in a place that felt more like a prison than a home.</p>
+
+            <p>And then came May 19, 2025.</p>
+
+            <p>The day everything changed.</p>
+
+            <p>The moment I woke up with no shouting, no fear. The moment I realized what it meant to love myself. To choose peace. To breathe freely. To live.</p>
+
+            <p>Finding real friends wasn't easy either. I've always been someone who chooses carefully. But then I met my Socratic Squad—a group of six friends who shared the same dreams, priorities, and values. We laughed, we cried, we debated, we researched, we grew. Three boys and three girls: Yrik Timosan, Gabryl Olegario, Jasmin Librando Tegio, Ara Bella Opalalic Rivera, Shereen Robredillo, and me, Eldrex Delos Reyes Bula. For three years, we stood by each other as thinkers, as fighters, and as family.</p>
+
+            <p>And I'll never forget the first friend who showed me what friendship looked like: Miguel Abuda. My Grade 10 best friend. The first boy who made me feel like I wasn't alone.</p>
+
+            <p>Looking back, I don't regret the past. It hurt, yes. It scarred me, drained me, made me question my worth. But it also taught me resilience, strength, and the value of freedom. I learned that not everyone who promises to help you has good intentions. I learned that surviving doesn't mean staying silent. And most of all, I learned that it's okay to walk away when something breaks you.</p>
+
+            <p>This is my story—not just of suffering, but of survival. Not just of tears, but of triumph.</p>
+
+            <p>So if you're reading this, and you're in your own kind of cage—whether it's a person, a place, or a situation—please know: you are not weak for wanting to be free. You are not selfish for choosing yourself. Freedom is not a luxury; it's a right.</p>
+
+            <p>And you—like me—deserve to live a life where you can finally breathe.</p>
+        </div>
+
+        <div class="notice">
+            Please note that some details in this story may be incomplete or unclear due to memory gaps. I have done my best to recall and share the events as accurately and sincerely as possible, based on what I remember.
+        </div>
+    </div>
+
+    <!-- Theme Selector -->
+    <div class="theme-selector">
+        <div class="theme-btn theme-default" onclick="setTheme('default')" title="Default Theme"></div>
+        <div class="theme-btn theme-compassion-btn" onclick="setTheme('compassion')" title="Compassion Theme"></div>
+        <div class="theme-btn theme-hope-btn" onclick="setTheme('hope')" title="Hope Theme"></div>
+        <div class="theme-btn theme-strength-btn" onclick="setTheme('strength')" title="Strength Theme"></div>
+        <div class="theme-btn theme-peace-btn" onclick="setTheme('peace')" title="Peace Theme"></div>
+    </div>
+
+    <!-- Floating Action Button -->
+    <div class="fab-container">
+        <button class="fab-main" id="fab-main">
+            <svg class="fab-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
+            <svg class="fab-close" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+
+        <div class="fab-options">
+            <button class="fab-option" id="summary-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+                Summary
+            </button>
+            <button class="fab-option" id="translate-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+                </svg>
+                Translate
+            </button>
+            <button class="fab-option" id="tts-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15.536a5 5 0 001.414 1.414m2.828-9.9a9 9 0 012.728-2.728" />
+                </svg>
+                Listen
+            </button>
+            <a class="fab-option" href="#">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+                Share
+            </a>
+        </div>
+    </div>
+
+    <!-- Summary Modal -->
+    <div class="modal" id="summary-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Story Summary</h3>
+                <button class="close-modal" id="close-summary">&times;</button>
+            </div>
+            <div class="modal-body" id="summary-text">
+                <!-- Summary will be typed here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Translation Modal -->
+    <div class="modal" id="translate-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Translate Story</h3>
+                <button class="close-modal" id="close-translate">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Select language to translate the story:</p>
+                <div class="language-selector">
+                    <button class="language-btn active" data-lang="en">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+                        </svg>
+                        English (Original)
+                    </button>
+                    <button class="language-btn" data-lang="tl">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+                        </svg>
+                        Tagalog
+                    </button>
+                    <button class="language-btn" data-lang="war">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+                        </svg>
+                        Waray-Waray
+                    </button>
+                    <button class="language-btn" data-lang="es">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+                        </svg>
+                        Español
+                    </button>
+                </div>
+                <div id="translation-result" style="margin-top: 20px; padding: 15px; background-color: rgba(var(--text-color-rgb), 0.05); border-radius: 12px; min-height: 100px;">
+                    <p style="color: var(--secondary-color); text-align: center;">Select a language to view translation</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Text-to-Speech Modal -->
+    <div class="modal" id="tts-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Listen to Story</h3>
+                <button class="close-modal" id="close-tts">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Listen to the story being read aloud:</p>
+                <div class="tts-controls">
+                    <button class="tts-btn" id="play-tts">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </button>
+                    <div class="progress-container">
+                        <div class="progress-bar" id="tts-progress"></div>
+                    </div>
+                    <button class="tts-btn" id="stop-tts">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 10a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z" />
+                        </svg>
+                    </button>
+                </div>
+                <div style="margin-top: 20px;">
+                    <label for="voice-select" style="display: block; margin-bottom: 8px; font-size: 0.9rem;">Select Voice:</label>
+                    <select id="voice-select" style="width: 100%; padding: 10px; border-radius: 8px; background-color: rgba(var(--text-color-rgb), 0.05); border: 1px solid rgba(var(--text-color-rgb), 0.1); color: var(--text-color);">
+                        <!-- Voices will be populated by JavaScript -->
+                    </select>
+                </div>
+                <div style="margin-top: 20px;">
+                    <label for="rate-select" style="display: block; margin-bottom: 8px; font-size: 0.9rem;">Speed:</label>
+                    <input type="range" id="rate-select" min="0.5" max="2" step="0.1" value="1" style="width: 100%;">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        // Main App Module
+        const StoryApp = (() => {
+            // DOM Elements
+            const elements = {
+                skeletonLoading: document.getElementById('skeleton-loading'),
+                fabMain: document.getElementById('fab-main'),
+                summaryBtn: document.getElementById('summary-btn'),
+                summaryModal: document.getElementById('summary-modal'),
+                closeSummary: document.getElementById('close-summary'),
+                translateBtn: document.getElementById('translate-btn'),
+                translateModal: document.getElementById('translate-modal'),
+                closeTranslate: document.getElementById('close-translate'),
+                ttsBtn: document.getElementById('tts-btn'),
+                ttsModal: document.getElementById('tts-modal'),
+                closeTts: document.getElementById('close-tts'),
+                playTtsBtn: document.getElementById('play-tts'),
+                stopTtsBtn: document.getElementById('stop-tts'),
+                progressBar: document.getElementById('tts-progress'),
+                voiceSelect: document.getElementById('voice-select'),
+                rateSelect: document.getElementById('rate-select'),
+                translationResult: document.getElementById('translation-result'),
+                summaryText: document.getElementById('summary-text'),
+                themeButtons: document.querySelectorAll('.theme-btn'),
+                languageButtons: document.querySelectorAll('.language-btn'),
+                storyContent: document.querySelector('.story-content'),
+                header: document.querySelector('header')
+            };
+
+            // App State
+            const state = {
+                currentTheme: localStorage.getItem('selectedTheme') || 'default',
+                speechSynthesis: window.speechSynthesis,
+                speechUtterance: null,
+                speechPaused: false,
+                voices: [],
+                currentTranslationLang: 'en',
+                isSpeaking: false,
+                scrollPosition: 0
+            };
+
+            // Initialize the app
+            const init = () => {
+                // Set initial theme
+                setTheme(state.currentTheme);
+
+                // Set RGB CSS variables
+                setRgbVariables();
+
+                // Event listeners
+                setupEventListeners();
+
+                // Load skeleton
+                setTimeout(() => {
+                    elements.skeletonLoading.style.opacity = '0';
+                    setTimeout(() => {
+                        elements.skeletonLoading.style.display = 'none';
+                    }, 500);
+                }, 1500);
+
+                // Load voices when they become available
+                state.speechSynthesis.onvoiceschanged = loadVoices;
+            };
+
+            // Set RGB CSS variables
+            const setRgbVariables = () => {
+                const getRgbValues = (property) => {
+                    const value = getComputedStyle(document.documentElement).getPropertyValue(property);
+                    return value.match(/\d+/g).slice(0, 3).join(',');
+                };
+
+                document.documentElement.style.setProperty('--card-bg-rgb', getRgbValues('--card-bg'));
+                document.documentElement.style.setProperty('--text-color-rgb', getRgbValues('--text-color'));
+                document.documentElement.style.setProperty('--primary-color-rgb', getRgbValues('--primary-color'));
+            };
+
+            // Theme functionality
+            const setTheme = (theme) => {
+                document.body.className = theme;
+                state.currentTheme = theme;
+                localStorage.setItem('selectedTheme', theme);
+            };
+
+            // Load available voices for TTS
+            const loadVoices = () => {
+                state.voices = state.speechSynthesis.getVoices();
+                elements.voiceSelect.innerHTML = '';
+
+                // Filter only English and Filipino voices for better quality
+                const filteredVoices = state.voices.filter(voice =>
+                    voice.lang.includes('en-') || voice.lang.includes('fil-') || voice.lang.includes('tl-')
+                );
+
+                // If no filtered voices, fallback to all voices
+                const voicesToUse = filteredVoices.length > 0 ? filteredVoices : state.voices;
+
+                voicesToUse.forEach(voice => {
+                    const option = document.createElement('option');
+                    option.textContent = `${voice.name} (${voice.lang})`;
+                    option.setAttribute('data-name', voice.name);
+                    elements.voiceSelect.appendChild(option);
+                });
+
+                // Try to find a preferred voice
+                const preferredVoices = ['Filipino', 'Tagalog', 'English', 'Microsoft David', 'Google US English'];
+                for (const voiceName of preferredVoices) {
+                    const foundVoice = voicesToUse.find(v => v.name.includes(voiceName));
+                    if (foundVoice) {
+                        elements.voiceSelect.value = foundVoice.name;
+                        break;
+                    }
+                }
+            };
+
+            // Text-to-Speech functionality
+            const speak = () => {
+                if (state.speechSynthesis.speaking && !state.speechPaused) {
+                    state.speechSynthesis.pause();
+                    state.speechPaused = true;
+                    updateTtsButton('paused');
+                    return;
+                }
+
+                if (state.speechPaused) {
+                    state.speechSynthesis.resume();
+                    state.speechPaused = false;
+                    updateTtsButton('playing');
+                    return;
+                }
+
+                // Stop any current speech
+                stopSpeech();
+
+                const selectedVoiceName = elements.voiceSelect.selectedOptions[0].getAttribute('data-name');
+                const selectedVoice = state.voices.find(voice => voice.name === selectedVoiceName);
+                const rate = parseFloat(elements.rateSelect.value);
+                const storyText = elements.storyContent.textContent;
+
+                state.speechUtterance = new SpeechSynthesisUtterance(storyText);
+
+                if (selectedVoice) {
+                    state.speechUtterance.voice = selectedVoice;
+                }
+
+                state.speechUtterance.rate = rate;
+                state.speechUtterance.pitch = 1;
+                state.speechUtterance.volume = 1;
+
+                // Event handlers
+                state.speechUtterance.onboundary = (event) => {
+                    if (event.name === 'word') {
+                        const progress = (event.charIndex / storyText.length) * 100;
+                        elements.progressBar.style.width = `${progress}%`;
+                    }
+                };
+
+                state.speechUtterance.onend = () => {
+                    updateTtsButton('stopped');
+                    elements.progressBar.style.width = '100%';
+                    setTimeout(() => {
+                        elements.progressBar.style.width = '0%';
+                    }, 500);
+                    state.isSpeaking = false;
+                };
+
+                state.speechUtterance.onpause = () => {
+                    updateTtsButton('paused');
+                };
+
+                state.speechUtterance.onresume = () => {
+                    updateTtsButton('playing');
+                };
+
+                updateTtsButton('playing');
+                state.speechSynthesis.speak(state.speechUtterance);
+                state.isSpeaking = true;
+            };
+
+            const stopSpeech = () => {
+                state.speechSynthesis.cancel();
+                updateTtsButton('stopped');
+                elements.progressBar.style.width = '0%';
+                state.speechPaused = false;
+                state.isSpeaking = false;
+            };
+
+            const updateTtsButton = (state) => {
+                const iconPaths = {
+                    playing: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" />',
+                    paused: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />',
+                    stopped: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />'
+                };
+
+                elements.playTtsBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">${iconPaths[state]}</svg>`;
+
+                if (state === 'playing') {
+                    elements.playTtsBtn.classList.add('play');
+                } else {
+                    elements.playTtsBtn.classList.remove('play');
+                }
+            };
+
+            // Translation functionality
+            const translateStory = async (lang) => {
+                state.currentTranslationLang = lang;
+                elements.translationResult.innerHTML = createSkeletonLoader(3);
+
+                if (lang === 'en') {
+                    elements.translationResult.innerHTML = '<p style="color: var(--secondary-color); text-align: center;">This is the original English version</p>';
+                    return;
+                }
+
+                try {
+                    // First try LibreTranslate
+                    const response = await fetchWithTimeout(`https://libretranslate.de/translate`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            q: elements.storyContent.textContent,
+                            source: 'en',
+                            target: lang
+                        }),
+                        timeout: 10000 // 10 seconds timeout
+                    });
+
+                    const data = await response.json();
+
+                    if (data.translatedText) {
+                        elements.translationResult.innerHTML = `<p style="white-space: pre-wrap;">${data.translatedText}</p>`;
+                    } else {
+                        throw new Error('Translation failed');
+                    }
+                } catch (error) {
+                    console.error('LibreTranslate error:', error);
+                    // Fallback to MyMemory API if LibreTranslate fails
+                    try {
+                        const fallbackResponse = await fetchWithTimeout(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(elements.storyContent.textContent)}&langpair=en|${lang}`, {
+                            timeout: 10000
+                        });
+
+                        const fallbackData = await fallbackResponse.json();
+
+                        if (fallbackData.responseData && fallbackData.responseData.translatedText) {
+                            elements.translationResult.innerHTML = `<p style="white-space: pre-wrap;">${fallbackData.responseData.translatedText}</p>`;
+                        } else {
+                            throw new Error('Fallback translation failed');
+                        }
+                    } catch (fallbackError) {
+                        console.error('MyMemory translation error:', fallbackError);
+                        elements.translationResult.innerHTML = '<p style="color: var(--danger-color);">Translation service unavailable. Please try again later or check your internet connection.</p>';
+                    }
+                }
+            };
+
+            // Helper function for fetch with timeout
+            const fetchWithTimeout = (url, options = {}) => {
+                const {
+                    timeout = 8000, ...fetchOptions
+                } = options;
+
+                return new Promise((resolve, reject) => {
+                    const timer = setTimeout(() => {
+                        reject(new Error('Request timed out'));
+                    }, timeout);
+
+                    fetch(url, fetchOptions)
+                        .then(response => {
+                            clearTimeout(timer);
+                            resolve(response);
+                        })
+                        .catch(err => {
+                            clearTimeout(timer);
+                            reject(err);
+                        });
+                });
+            };
+
+            // Create skeleton loader for translations
+            const createSkeletonLoader = (lines) => {
+                let skeletonHTML = '';
+                const widths = ['100%', '80%', '90%', '70%', '85%'];
+
+                for (let i = 0; i < lines; i++) {
+                    skeletonHTML += `<div class="skeleton" style="height: 20px; width: ${widths[i % widths.length]}; margin-bottom: 10px;"></div>`;
+                }
+
+                return skeletonHTML;
+            };
+
+            // Type summary effect
+            const typeSummary = () => {
+                const fullText = `This is the powerful story of a young person's journey through exploitation and eventual liberation. At age 12, the narrator was offered an opportunity that seemed like a blessing - education and support in exchange for helping at a relative's electronics store. What followed was four years of emotional abuse, excessive labor, isolation from family, and broken promises.
+
+The turning point came when the narrator found the courage to leave this toxic environment, supported by kind relatives and true friends. The story beautifully captures the transformation from victim to survivor, emphasizing the importance of self-worth, resilience, and the right to freedom. It's a testament to the human spirit's ability to overcome adversity and find hope.
+
+Key themes include: the cycle of abuse, the value of education, finding genuine friendship, and the courage to choose oneself. The narrator's journey serves as an inspiration to others who may be trapped in their own "cages," reminding them that freedom is a fundamental right.`;
+
+                elements.summaryText.innerHTML = '';
+                elements.summaryText.classList.add('typing-text');
+
+                let i = 0;
+                const typing = setInterval(() => {
+                    if (i < fullText.length) {
+                        elements.summaryText.innerHTML += fullText.charAt(i);
+                        i++;
+                        elements.summaryText.scrollTop = elements.summaryText.scrollHeight;
+                    } else {
+                        clearInterval(typing);
+                        elements.summaryText.classList.remove('typing-text');
+                    }
+                }, 10); // Faster typing speed
+            };
+
+            // Ripple effect
+            const createRipple = (event) => {
+                const button = event.currentTarget;
+                const circle = document.createElement("span");
+                const diameter = Math.max(button.clientWidth, button.clientHeight);
+                const radius = diameter / 2;
+
+                circle.style.width = circle.style.height = `${diameter}px`;
+                circle.style.left = `${event.clientX - button.getBoundingClientRect().left - radius}px`;
+                circle.style.top = `${event.clientY - button.getBoundingClientRect().top - radius}px`;
+                circle.classList.add("ripple-effect");
+
+                const ripple = button.getElementsByClassName("ripple-effect")[0];
+                if (ripple) {
+                    ripple.remove();
+                }
+
+                button.appendChild(circle);
+
+                // Remove ripple after animation completes
+                setTimeout(() => {
+                    circle.remove();
+                }, 800);
+            };
+
+            // Scroll effects
+            const updateElementsOnScroll = (scrollPos) => {
+                state.scrollPosition = scrollPos;
+
+                // Parallax effect for content
+                elements.storyContent.style.transform = `translateY(${scrollPos * 0.1}px)`;
+
+                // Scale FAB slightly when scrolling
+                const scale = 1 - Math.min(scrollPos * 0.0005, 0.05);
+                elements.fabMain.style.transform = `scale(${scale})`;
+
+                // Header shadow on scroll
+                if (scrollPos > 10) {
+                    elements.header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+                } else {
+                    elements.header.style.boxShadow = 'none';
+                }
+            };
+
+            // Event listeners setup
+            const setupEventListeners = () => {
+                // Theme buttons
+                elements.themeButtons.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const theme = btn.classList.contains('theme-default') ? 'default' :
+                            btn.classList.contains('theme-compassion-btn') ? 'compassion' :
+                            btn.classList.contains('theme-hope-btn') ? 'hope' :
+                            btn.classList.contains('theme-strength-btn') ? 'strength' : 'peace';
+                        setTheme(theme);
+                    });
+                });
+
+                // FAB main button
+                elements.fabMain.addEventListener('click', (e) => {
+                    elements.fabMain.classList.toggle('active');
+                    createRipple(e);
+                });
+
+                // Modal open buttons
+                elements.summaryBtn.addEventListener('click', (e) => {
+                    elements.fabMain.classList.remove('active');
+                    elements.summaryModal.classList.add('show');
+                    createRipple(e);
+                    typeSummary();
+                });
+
+                elements.translateBtn.addEventListener('click', (e) => {
+                    elements.fabMain.classList.remove('active');
+                    elements.translateModal.classList.add('show');
+                    createRipple(e);
+                });
+
+                elements.ttsBtn.addEventListener('click', (e) => {
+                    elements.fabMain.classList.remove('active');
+                    elements.ttsModal.classList.add('show');
+                    createRipple(e);
+                    loadVoices();
+                });
+
+                // Modal close buttons
+                elements.closeSummary.addEventListener('click', () => {
+                    elements.summaryModal.classList.remove('show');
+                });
+
+                elements.closeTranslate.addEventListener('click', () => {
+                    elements.translateModal.classList.remove('show');
+                });
+
+                elements.closeTts.addEventListener('click', () => {
+                    elements.ttsModal.classList.remove('show');
+                    stopSpeech();
+                });
+
+                // Close modals when clicking outside
+                [elements.summaryModal, elements.translateModal, elements.ttsModal].forEach(modal => {
+                    modal.addEventListener('click', (e) => {
+                        if (e.target === modal) {
+                            modal.classList.remove('show');
+                            if (modal === elements.ttsModal) {
+                                stopSpeech();
+                            }
+                        }
+                    });
+                });
+
+                // Language buttons
+                elements.languageButtons.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        elements.languageButtons.forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        translateStory(btn.getAttribute('data-lang'));
+                    });
+                });
+
+                // TTS controls
+                elements.playTtsBtn.addEventListener('click', speak);
+                elements.stopTtsBtn.addEventListener('click', stopSpeech);
+
+                // Rate control
+                elements.rateSelect.addEventListener('input', () => {
+                    if (state.isSpeaking && state.speechUtterance) {
+                        state.speechUtterance.rate = parseFloat(elements.rateSelect.value);
+                    }
+                });
+
+                // Scroll event with debounce
+                let isScrolling;
+                window.addEventListener('scroll', () => {
+                    state.scrollPosition = window.scrollY;
+                    window.clearTimeout(isScrolling);
+                    isScrolling = setTimeout(() => {
+                        updateElementsOnScroll(state.scrollPosition);
+                    }, 66); // ~15fps
+                }, false);
+
+                // Pause TTS when modal closes
+                elements.ttsModal.addEventListener('modalClose', stopSpeech);
+
+                // Handle page visibility changes
+                document.addEventListener('visibilitychange', () => {
+                    if (document.hidden && state.isSpeaking) {
+                        state.speechSynthesis.pause();
+                        state.speechPaused = true;
+                        updateTtsButton('paused');
+                    }
+                });
+            };
+
+            // Public API
+            return {
+                init
+            };
+        })();
+
+        // Initialize the app when DOM is loaded
+        document.addEventListener('DOMContentLoaded', StoryApp.init);
+    </script>
+
+</body>
+
+</html>
