@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus Browser | Lightweight Experience</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #6c5ce7;
+            --secondary-color: #00cec9;
+            --accent-color: #fd79a8;
+            --dark-color: #2d3436;
+            --light-color: #f9f9f9;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --blur-bg: rgba(255, 255, 255, 0.7);
+            --border-radius: 16px;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #a29bfe;
+            --secondary-color: #55efc4;
+            --accent-color: #ff7675;
+            --dark-color: #f9f9f9;
+            --light-color: #1e272e;
+            --text-color: #f9f9f9;
+            --text-light: #b2bec3;
+            --card-bg: rgba(30, 39, 46, 0.9);
+            --blur-bg: rgba(30, 39, 46, 0.7);
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light-color);
+            color: var(--text-color);
+            transition: var(--transition);
+            overflow-x: hidden;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* App Container */
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            max-width: 100vw;
+            position: relative;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: var(--card-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: var(--primary-color);
+        }
+
+        .logo i {
+            font-size: 1.5rem;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .header-btn {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            padding: 5px;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header-btn:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+            transform: rotate(15deg);
+        }
+
+        [data-theme="dark"] .header-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* Search Section */
+        .search-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .search-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: fadeIn 0.8s ease-out;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .search-container {
+            width: 100%;
+            max-width: 700px;
+            position: relative;
+            margin-bottom: 20px;
+            animation: fadeIn 0.8s ease-out 0.2s both;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 16px 65px 16px 25px;
+            border-radius: 50px;
+            border: none;
+            font-size: 1.1rem;
+            background-color: var(--card-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: var(--shadow);
+            color: var(--text-color);
+            transition: var(--transition);
+            font-family: 'Poppins', sans-serif;
+            border: 2px solid transparent;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(108, 92, 231, 0.2);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .search-icon:hover {
+            color: var(--primary-color);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .voice-search-btn {
+            position: absolute;
+            right: 65px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .voice-search-btn:hover {
+            color: var(--accent-color);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .search-options {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            animation: fadeIn 0.8s ease-out 0.4s both;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .search-option-btn {
+            padding: 10px 18px;
+            border-radius: 50px;
+            background-color: var(--card-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: none;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--text-color);
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .search-option-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* Quick Links */
+        .quick-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+            width: 100%;
+            animation: fadeIn 0.8s ease-out 0.6s both;
+        }
+
+        .quick-link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-color);
+            transition: var(--transition);
+            padding: 20px 15px;
+            border-radius: var(--border-radius);
+            background-color: var(--card-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .quick-link:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .quick-link-icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .quick-link:hover .quick-link-icon {
+            transform: scale(1.2);
+            color: var(--accent-color);
+        }
+
+        .quick-link-text {
+            font-size: 0.95rem;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        /* Tabs Section */
+        .tabs-section {
+            margin-top: 50px;
+            width: 100%;
+        }
+
+        .tabs-header {
+            display: flex;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            margin-bottom: 25px;
+        }
+
+        [data-theme="dark"] .tabs-header {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .tab-btn {
+            padding: 12px 25px;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--text-light);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .tab-btn.active {
+            color: var(--primary-color);
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 3px;
+            background-color: var(--primary-color);
+            border-radius: 3px;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Bookmarks */
+        .bookmarks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .bookmark-card {
+            background-color: var(--card-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            cursor: pointer;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .bookmark-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .bookmark-favicon {
+            width: 22px;
+            height: 22px;
+            margin-right: 12px;
+            border-radius: 4px;
+        }
+
+        .bookmark-title {
+            font-weight: 500;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+
+        .bookmark-url {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* History */
+        .history-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .history-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: var(--card-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            cursor: pointer;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .history-item:hover {
+            transform: translateX(10px);
+        }
+
+        .history-favicon {
+            width: 22px;
+            height: 22px;
+            margin-right: 18px;
+            border-radius: 4px;
+        }
+
+        .history-info {
+            flex: 1;
+        }
+
+        .history-title {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .history-url {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        .history-time {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-left: 15px;
+            white-space: nowrap;
+        }
+
+        /* Settings Panel */
+        .settings-panel {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 100%;
+            max-width: 400px;
+            height: 100vh;
+            background-color: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: var(--transition);
+            padding: 25px;
+            overflow-y: auto;
+        }
+
+        .settings-panel.open {
+            right: 0;
+        }
+
+        .settings-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="dark"] .settings-header {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .settings-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .close-settings {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+            transition: var(--transition);
+        }
+
+        .close-settings:hover {
+            transform: rotate(90deg);
+            color: var(--accent-color);
+        }
+
+        .settings-group {
+            margin-bottom: 35px;
+        }
+
+        .settings-group-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .settings-group-title i {
+            font-size: 1.1rem;
+        }
+
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        [data-theme="dark"] .setting-item {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .setting-label {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            margin-right: 15px;
+        }
+
+        .setting-name {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .setting-description {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            line-height: 1.4;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 26px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: var(--transition);
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: var(--transition);
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--primary-color);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(24px);
+        }
+
+        .theme-selector {
+            display: flex;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .theme-option {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: var(--transition);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .theme-option:hover {
+            transform: scale(1.1);
+        }
+
+        .theme-option.selected {
+            border: 3px solid var(--primary-color);
+            transform: scale(1.1);
+        }
+
+        .theme-light {
+            background: linear-gradient(135deg, #f9f9f9 50%, #ffffff 50%);
+        }
+
+        .theme-dark {
+            background: linear-gradient(135deg, #1e272e 50%, #2f3640 50%);
+        }
+
+        .theme-sunset {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+        }
+
+        .theme-ocean {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        /* Browser View */
+        .browser-view {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: var(--light-color);
+            z-index: 1001;
+            display: none;
+            flex-direction: column;
+            transition: var(--transition);
+        }
+
+        .browser-view.active {
+            display: flex;
+            animation: slideUp 0.4s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .browser-header {
+            display: flex;
+            align-items: center;
+            padding: 12px 18px;
+            background-color: var(--card-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+        }
+
+        .browser-nav-btn {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            color: var(--text-color);
+            margin-right: 12px;
+            cursor: pointer;
+            padding: 6px;
+            border-radius: 50%;
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .browser-nav-btn:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+            transform: scale(1.1);
+        }
+
+        [data-theme="dark"] .browser-nav-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .browser-nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .browser-url-bar {
+            flex: 1;
+            padding: 10px 18px;
+            border-radius: 50px;
+            border: none;
+            background-color: var(--blur-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            font-size: 0.95rem;
+            color: var(--text-color);
+            margin: 0 12px;
+            transition: var(--transition);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .browser-url-bar:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.2);
+        }
+
+        .browser-content {
+            flex: 1;
+            border: none;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Notifications */
+        .notification {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            padding: 18px 22px;
+            background-color: var(--card-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transform: translateX(150%);
+            transition: var(--transition);
+            z-index: 1002;
+            max-width: 350px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification-icon {
+            font-size: 1.4rem;
+            color: var(--primary-color);
+        }
+
+        .notification-info {
+            flex: 1;
+        }
+
+        .notification-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .notification-message {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            line-height: 1.4;
+        }
+
+        .close-notification {
+            background: none;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+            color: var(--text-light);
+            transition: var(--transition);
+        }
+
+        .close-notification:hover {
+            color: var(--accent-color);
+            transform: rotate(90deg);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .search-title {
+                font-size: 2.2rem;
+            }
+
+            .quick-links {
+                grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+                gap: 15px;
+            }
+
+            .bookmarks-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            }
+
+            .settings-panel {
+                max-width: 85%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .search-title {
+                font-size: 1.8rem;
+            }
+
+            .search-input {
+                padding: 14px 60px 14px 18px;
+                font-size: 1rem;
+            }
+
+            .search-icon {
+                right: 18px;
+            }
+
+            .voice-search-btn {
+                right: 55px;
+            }
+
+            .search-options {
+                gap: 8px;
+            }
+
+            .search-option-btn {
+                padding: 8px 14px;
+                font-size: 0.85rem;
+            }
+
+            .quick-links {
+                grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+                gap: 12px;
+            }
+
+            .quick-link {
+                padding: 15px 10px;
+            }
+
+            .quick-link-icon {
+                font-size: 1.6rem;
+                margin-bottom: 10px;
+            }
+
+            .quick-link-text {
+                font-size: 0.8rem;
+            }
+
+            .tab-btn {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        .floating {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .pulse {
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .spinner {
+            animation: spin 1.5s linear infinite;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-globe"></i>
+                <span>Nexus</span>
+            </div>
+            <div class="header-actions">
+                <button class="header-btn" id="settings-btn" title="Settings">
+                    <i class="fas fa-cog"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Search Section -->
+            <section class="search-section">
+                <h1 class="search-title floating">Nexus Browser</h1>
+                <div class="search-container">
+                    <input type="text" class="search-input" id="search-input" placeholder="Search or enter website address">
+                    <button class="voice-search-btn" id="voice-search-btn" title="Voice Search">
+                        <i class="fas fa-microphone"></i>
+                    </button>
+                    <div class="search-icon" id="search-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                </div>
+                <div class="search-options">
+                    <button class="search-option-btn" id="images-search-btn">
+                        <i class="fas fa-image"></i> Images
+                    </button>
+                    <button class="search-option-btn" id="videos-search-btn">
+                        <i class="fas fa-video"></i> Videos
+                    </button>
+                    <button class="search-option-btn" id="maps-search-btn">
+                        <i class="fas fa-map-marked-alt"></i> Maps
+                    </button>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="quick-links">
+                    <a href="https://gmail.com" class="quick-link" target="_blank">
+                        <div class="quick-link-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="quick-link-text">Gmail</div>
+                    </a>
+                    <a href="https://youtube.com" class="quick-link" target="_blank">
+                        <div class="quick-link-icon">
+                            <i class="fab fa-youtube"></i>
+                        </div>
+                        <div class="quick-link-text">YouTube</div>
+                    </a>
+                    <a href="https://drive.google.com" class="quick-link" target="_blank">
+                        <div class="quick-link-icon">
+                            <i class="fab fa-google-drive"></i>
+                        </div>
+                        <div class="quick-link-text">Drive</div>
+                    </a>
+                    <a href="https://calendar.google.com" class="quick-link" target="_blank">
+                        <div class="quick-link-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <div class="quick-link-text">Calendar</div>
+                    </a>
+                    <a href="https://maps.google.com" class="quick-link" target="_blank">
+                        <div class="quick-link-icon">
+                            <i class="fas fa-map-marked-alt"></i>
+                        </div>
+                        <div class="quick-link-text">Maps</div>
+                    </a>
+                    <a href="https://translate.google.com" class="quick-link" target="_blank">
+                        <div class="quick-link-icon">
+                            <i class="fas fa-language"></i>
+                        </div>
+                        <div class="quick-link-text">Translate</div>
+                    </a>
+                    <a href="https://github.com" class="quick-link" target="_blank">
+                        <div class="quick-link-icon">
+                            <i class="fab fa-github"></i>
+                        </div>
+                        <div class="quick-link-text">GitHub</div>
+                    </a>
+                    <a href="https://twitter.com" class="quick-link" target="_blank">
+                        <div class="quick-link-icon">
+                            <i class="fab fa-twitter"></i>
+                        </div>
+                        <div class="quick-link-text">Twitter</div>
+                    </a>
+                </div>
+            </section>
+
+            <!-- Tabs Section -->
+            <section class="tabs-section">
+                <div class="tabs-header">
+                    <button class="tab-btn active" data-tab="bookmarks">Bookmarks</button>
+                    <button class="tab-btn" data-tab="history">History</button>
+                </div>
+
+                <div class="tab-content active" id="bookmarks-tab">
+                    <div class="bookmarks-grid">
+                        <!-- Bookmarks will be loaded here -->
+                        <div class="bookmark-card">
+                            <div class="bookmark-title">
+                                <img src="https://www.google.com/favicon.ico" alt="Google" class="bookmark-favicon">
+                                Google
+                            </div>
+                            <div class="bookmark-url">google.com</div>
+                        </div>
+                        <div class="bookmark-card">
+                            <div class="bookmark-title">
+                                <img src="https://www.youtube.com/favicon.ico" alt="YouTube" class="bookmark-favicon">
+                                YouTube
+                            </div>
+                            <div class="bookmark-url">youtube.com</div>
+                        </div>
+                        <div class="bookmark-card">
+                            <div class="bookmark-title">
+                                <img src="https://www.wikipedia.org/favicon.ico" alt="Wikipedia" class="bookmark-favicon">
+                                Wikipedia
+                            </div>
+                            <div class="bookmark-url">wikipedia.org</div>
+                        </div>
+                        <div class="bookmark-card">
+                            <div class="bookmark-title">
+                                <img src="https://www.reddit.com/favicon.ico" alt="Reddit" class="bookmark-favicon">
+                                Reddit
+                            </div>
+                            <div class="bookmark-url">reddit.com</div>
+                        </div>
+                        <div class="bookmark-card">
+                            <div class="bookmark-title">
+                                <img src="https://www.netflix.com/favicon.ico" alt="Netflix" class="bookmark-favicon">
+                                Netflix
+                            </div>
+                            <div class="bookmark-url">netflix.com</div>
+                        </div>
+                        <div class="bookmark-card">
+                            <div class="bookmark-title">
+                                <img src="https://www.spotify.com/favicon.ico" alt="Spotify" class="bookmark-favicon">
+                                Spotify
+                            </div>
+                            <div class="bookmark-url">spotify.com</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="history-tab">
+                    <div class="history-list">
+                        <!-- History items will be loaded here -->
+                        <div class="history-item">
+                            <img src="https://www.google.com/favicon.ico" alt="Google" class="history-favicon">
+                            <div class="history-info">
+                                <div class="history-title">Google</div>
+                                <div class="history-url">https://www.google.com</div>
+                            </div>
+                            <div class="history-time">10 min ago</div>
+                        </div>
+                        <div class="history-item">
+                            <img src="https://www.youtube.com/favicon.ico" alt="YouTube" class="history-favicon">
+                            <div class="history-info">
+                                <div class="history-title">YouTube</div>
+                                <div class="history-url">https://www.youtube.com</div>
+                            </div>
+                            <div class="history-time">25 min ago</div>
+                        </div>
+                        <div class="history-item">
+                            <img src="https://www.github.com/favicon.ico" alt="GitHub" class="history-favicon">
+                            <div class="history-info">
+                                <div class="history-title">GitHub</div>
+                                <div class="history-url">https://www.github.com</div>
+                            </div>
+                            <div class="history-time">1 hour ago</div>
+                        </div>
+                        <div class="history-item">
+                            <img src="https://www.twitter.com/favicon.ico" alt="Twitter" class="history-favicon">
+                            <div class="history-info">
+                                <div class="history-title">Twitter</div>
+                                <div class="history-url">https://www.twitter.com</div>
+                            </div>
+                            <div class="history-time">2 hours ago</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Settings Panel -->
+        <div class="settings-panel" id="settings-panel">
+            <div class="settings-header">
+                <h2 class="settings-title">Settings</h2>
+                <button class="close-settings" id="close-settings">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <div class="settings-group">
+                <h3 class="settings-group-title"><i class="fas fa-palette"></i> Appearance</h3>
+                <div class="setting-item">
+                    <div class="setting-label">
+                        <span class="setting-name">Dark Mode</span>
+                        <span class="setting-description">Switch between light and dark theme</span>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="dark-mode-toggle">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="setting-item">
+                    <div class="setting-label">
+                        <span class="setting-name">Theme Color</span>
+                        <span class="setting-description">Choose your preferred color scheme</span>
+                    </div>
+                    <div class="theme-selector">
+                        <div class="theme-option theme-light selected" data-theme="light"></div>
+                        <div class="theme-option theme-dark" data-theme="dark"></div>
+                        <div class="theme-option theme-sunset" data-theme="sunset"></div>
+                        <div class="theme-option theme-ocean" data-theme="ocean"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="settings-group">
+                <h3 class="settings-group-title"><i class="fas fa-search"></i> Search Settings</h3>
+                <div class="setting-item">
+                    <div class="setting-label">
+                        <span class="setting-name">Search Suggestions</span>
+                        <span class="setting-description">Show search suggestions as you type</span>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="search-suggestions-toggle" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="settings-group">
+                <h3 class="settings-group-title"><i class="fas fa-tools"></i> Advanced</h3>
+                <div class="setting-item">
+                    <div class="setting-label">
+                        <span class="setting-name">Hardware Acceleration</span>
+                        <span class="setting-description">Improve performance with GPU</span>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="hardware-accel-toggle">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Browser View -->
+        <div class="browser-view" id="browser-view">
+            <div class="browser-header">
+                <button class="browser-nav-btn" id="back-btn" disabled>
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <button class="browser-nav-btn" id="forward-btn" disabled>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+                <button class="browser-nav-btn" id="refresh-btn">
+                    <i class="fas fa-sync-alt"></i>
+                </button>
+                <input type="text" class="browser-url-bar" id="browser-url-bar" value="https://www.google.com">
+                <button class="browser-nav-btn" id="close-browser-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <iframe class="browser-content" id="browser-content" src="about:blank"></iframe>
+        </div>
+
+        <!-- Notification -->
+        <div class="notification" id="notification">
+            <div class="notification-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <div class="notification-info">
+                <div class="notification-title">Success</div>
+                <div class="notification-message">Your settings have been saved successfully.</div>
+            </div>
+            <button class="close-notification" id="close-notification">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const settingsBtn = document.getElementById('settings-btn');
+        const closeSettingsBtn = document.getElementById('close-settings');
+        const settingsPanel = document.getElementById('settings-panel');
+        const darkModeToggle = document.getElementById('dark-mode-toggle');
+        const themeOptions = document.querySelectorAll('.theme-option');
+        const searchInput = document.getElementById('search-input');
+        const searchIcon = document.getElementById('search-icon');
+        const voiceSearchBtn = document.getElementById('voice-search-btn');
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        const browserView = document.getElementById('browser-view');
+        const browserContent = document.getElementById('browser-content');
+        const browserUrlBar = document.getElementById('browser-url-bar');
+        const backBtn = document.getElementById('back-btn');
+        const forwardBtn = document.getElementById('forward-btn');
+        const refreshBtn = document.getElementById('refresh-btn');
+        const closeBrowserBtn = document.getElementById('close-browser-btn');
+        const notification = document.getElementById('notification');
+        const closeNotificationBtn = document.getElementById('close-notification');
+
+        // Initialize
+        function init() {
+            // Check for saved theme preference
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.body.setAttribute('data-theme', savedTheme);
+            darkModeToggle.checked = savedTheme === 'dark';
+            
+            // Set active theme option
+            document.querySelector(`.theme-option[data-theme="${savedTheme}"]`).classList.add('selected');
+            
+            // Load default page in browser view
+            browserContent.src = 'https://www.google.com';
+        }
+
+        // Show settings panel
+        settingsBtn.addEventListener('click', () => {
+            settingsPanel.classList.add('open');
+        });
+
+        // Hide settings panel
+        closeSettingsBtn.addEventListener('click', () => {
+            settingsPanel.classList.remove('open');
+        });
+
+        // Dark mode toggle
+        darkModeToggle.addEventListener('change', () => {
+            const theme = darkModeToggle.checked ? 'dark' : 'light';
+            document.body.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            showNotification('Theme changed', `Switched to ${theme} mode`);
+        });
+
+        // Theme color selection
+        themeOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                // Remove selected class from all options
+                themeOptions.forEach(opt => opt.classList.remove('selected'));
+                // Add selected class to clicked option
+                option.classList.add('selected');
+
+                // Change theme based on data-theme attribute
+                const theme = option.getAttribute('data-theme');
+                document.body.setAttribute('data-theme', theme);
+                localStorage.setItem('theme', theme);
+                showNotification('Theme changed', `Applied ${theme} theme`);
+            });
+        });
+
+        // Tab switching
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons and contents
+                tabBtns.forEach(button => button.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+
+                // Add active class to clicked button and corresponding content
+                btn.classList.add('active');
+                const tabId = btn.getAttribute('data-tab');
+                document.getElementById(`${tabId}-tab`).classList.add('active');
+            });
+        });
+
+        // Search functionality
+        function performSearch(query, searchType = 'web') {
+            let searchUrl;
+
+            // Simple search implementation without API
+            switch (searchType) {
+                case 'images':
+                    searchUrl = `https://www.google.com/search?tbm=isch&q=${encodeURIComponent(query)}`;
+                    break;
+                case 'videos':
+                    searchUrl = `https://www.google.com/search?tbm=vid&q=${encodeURIComponent(query)}`;
+                    break;
+                case 'maps':
+                    searchUrl = `https://www.google.com/maps/search/${encodeURIComponent(query)}`;
+                    break;
+                default:
+                    searchUrl = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+            }
+
+            // Open in browser view
+            browserContent.src = searchUrl;
+            browserUrlBar.value = searchUrl;
+            browserView.classList.add('active');
+        }
+
+        searchIcon.addEventListener('click', () => {
+            const query = searchInput.value.trim();
+            if (query) {
+                performSearch(query);
+            }
+        });
+
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const query = searchInput.value.trim();
+                if (query) {
+                    performSearch(query);
+                }
+            }
+        });
+
+        // Voice search (mock implementation)
+        voiceSearchBtn.addEventListener('click', () => {
+            showNotification('Voice Search', 'Click the microphone to speak your search');
+        });
+
+        // Quick links would open in browser view
+        document.querySelectorAll('.quick-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const url = link.getAttribute('href');
+                browserContent.src = url;
+                browserUrlBar.value = url;
+                browserView.classList.add('active');
+            });
+        });
+
+        // Bookmarks would open in browser view
+        document.querySelectorAll('.bookmark-card').forEach(bookmark => {
+            bookmark.addEventListener('click', () => {
+                const url = `https://${bookmark.querySelector('.bookmark-url').textContent}`;
+                browserContent.src = url;
+                browserUrlBar.value = url;
+                browserView.classList.add('active');
+            });
+        });
+
+        // History items would open in browser view
+        document.querySelectorAll('.history-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const url = item.querySelector('.history-url').textContent;
+                browserContent.src = url;
+                browserUrlBar.value = url;
+                browserView.classList.add('active');
+            });
+        });
+
+        // Browser navigation
+        backBtn.addEventListener('click', () => {
+            // In a real implementation, this would go back in history
+            showNotification('Navigation', 'Back button pressed');
+        });
+
+        forwardBtn.addEventListener('click', () => {
+            // In a real implementation, this would go forward in history
+            showNotification('Navigation', 'Forward button pressed');
+        });
+
+        refreshBtn.addEventListener('click', () => {
+            browserContent.src = browserContent.src;
+            showNotification('Page Refresh', 'Page refreshed');
+        });
+
+        closeBrowserBtn.addEventListener('click', () => {
+            browserView.classList.remove('active');
+        });
+
+        browserUrlBar.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                let url = browserUrlBar.value.trim();
+                if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                    url = 'https://' + url;
+                }
+                browserContent.src = url;
+            }
+        });
+
+        // Show notification
+        function showNotification(title, message) {
+            const notificationTitle = notification.querySelector('.notification-title');
+            const notificationMessage = notification.querySelector('.notification-message');
+
+            notificationTitle.textContent = title;
+            notificationMessage.textContent = message;
+
+            notification.classList.add('show');
+
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        closeNotificationBtn.addEventListener('click', () => {
+            notification.classList.remove('show');
+        });
+
+        // Initialize the app
+        init();
+    </script>
+</body>
+</html>
