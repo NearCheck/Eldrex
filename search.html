@@ -91,8 +91,15 @@
         }
 
         @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-5px);
+            }
         }
 
         .header-actions {
@@ -164,6 +171,7 @@
                 opacity: 0;
                 transform: translateY(20px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -606,11 +614,11 @@
             border-radius: 50%;
         }
 
-        input:checked + .slider {
+        input:checked+.slider {
             background-color: var(--primary-color);
         }
 
-        input:checked + .slider:before {
+        input:checked+.slider:before {
             transform: translateX(24px);
         }
 
@@ -679,6 +687,7 @@
                 opacity: 0;
                 transform: translateY(20px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -888,8 +897,15 @@
 
         /* Animations */
         @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-12px); }
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-12px);
+            }
         }
 
         .floating {
@@ -897,8 +913,15 @@
         }
 
         @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
         }
 
         .pulse {
@@ -906,8 +929,13 @@
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         .spinner {
@@ -1225,6 +1253,13 @@
         const closeBrowserBtn = document.getElementById('close-browser-btn');
         const notification = document.getElementById('notification');
         const closeNotificationBtn = document.getElementById('close-notification');
+        const imagesSearchBtn = document.getElementById('images-search-btn');
+        const videosSearchBtn = document.getElementById('videos-search-btn');
+        const mapsSearchBtn = document.getElementById('maps-search-btn');
+
+        // Browser history stack
+        let historyStack = [];
+        let currentHistoryIndex = -1;
 
         // Initialize
         function init() {
@@ -1232,12 +1267,12 @@
             const savedTheme = localStorage.getItem('theme') || 'light';
             document.body.setAttribute('data-theme', savedTheme);
             darkModeToggle.checked = savedTheme === 'dark';
-            
+
             // Set active theme option
             document.querySelector(`.theme-option[data-theme="${savedTheme}"]`).classList.add('selected');
-            
+
             // Load default page in browser view
-            browserContent.src = 'https://www.google.com';
+            loadUrl('https://www.google.com');
         }
 
         // Show settings panel
@@ -1288,11 +1323,59 @@
             });
         });
 
+        // Improved URL validation and formatting
+        function formatUrl(url) {
+            // If it's already a valid URL with protocol, return it
+            if (/^https?:\/\//i.test(url)) {
+                return url;
+            }
+
+            // If it has a common domain suffix, add https://
+            if (/\.(com|org|net|io|gov|edu|me|co|info|biz|dev|ai)[\/\w-]*/i.test(url)) {
+                return `https://${url}`;
+            }
+
+            // Otherwise treat as a search query
+            return `https://www.google.com/search?q=${encodeURIComponent(url)}`;
+        }
+
+        // Load URL into browser view
+        function loadUrl(url) {
+            try {
+                const formattedUrl = formatUrl(url);
+                browserContent.src = formattedUrl;
+                browserUrlBar.value = formattedUrl;
+                browserView.classList.add('active');
+
+                // Add to history
+                historyStack.push(formattedUrl);
+                currentHistoryIndex = historyStack.length - 1;
+
+                // Update nav buttons
+                updateNavButtons();
+            } catch (error) {
+                showNotification('Error', `Could not load the URL: ${error.message}`);
+            }
+        }
+
+        // Update navigation buttons state
+        function updateNavButtons() {
+            backBtn.disabled = currentHistoryIndex <= 0;
+            forwardBtn.disabled = currentHistoryIndex >= historyStack.length - 1;
+        }
+
         // Search functionality
         function performSearch(query, searchType = 'web') {
             let searchUrl;
+            query = query.trim();
 
-            // Simple search implementation without API
+            // If it looks like a URL, navigate directly
+            if (/^(https?:\/\/|www\.|[\w-]+\.\w{2,})/.test(query)) {
+                loadUrl(query);
+                return;
+            }
+
+            // Otherwise perform a search
             switch (searchType) {
                 case 'images':
                     searchUrl = `https://www.google.com/search?tbm=isch&q=${encodeURIComponent(query)}`;
@@ -1307,12 +1390,10 @@
                     searchUrl = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
             }
 
-            // Open in browser view
-            browserContent.src = searchUrl;
-            browserUrlBar.value = searchUrl;
-            browserView.classList.add('active');
+            loadUrl(searchUrl);
         }
 
+        // Search event listeners
         searchIcon.addEventListener('click', () => {
             const query = searchInput.value.trim();
             if (query) {
@@ -1329,51 +1410,81 @@
             }
         });
 
-        // Voice search (mock implementation)
-        voiceSearchBtn.addEventListener('click', () => {
-            showNotification('Voice Search', 'Click the microphone to speak your search');
+        // Search type buttons
+        imagesSearchBtn.addEventListener('click', () => {
+            const query = searchInput.value.trim();
+            if (query) {
+                performSearch(query, 'images');
+            } else {
+                searchInput.focus();
+            }
         });
 
-        // Quick links would open in browser view
+        videosSearchBtn.addEventListener('click', () => {
+            const query = searchInput.value.trim();
+            if (query) {
+                performSearch(query, 'videos');
+            } else {
+                searchInput.focus();
+            }
+        });
+
+        mapsSearchBtn.addEventListener('click', () => {
+            const query = searchInput.value.trim();
+            if (query) {
+                performSearch(query, 'maps');
+            } else {
+                searchInput.focus();
+            }
+        });
+
+        // Voice search (mock implementation)
+        voiceSearchBtn.addEventListener('click', () => {
+            showNotification('Voice Search', 'Voice search is not implemented in this demo');
+        });
+
+        // Quick links open in browser view
         document.querySelectorAll('.quick-link').forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 const url = link.getAttribute('href');
-                browserContent.src = url;
-                browserUrlBar.value = url;
-                browserView.classList.add('active');
+                loadUrl(url);
             });
         });
 
-        // Bookmarks would open in browser view
+        // Bookmarks open in browser view
         document.querySelectorAll('.bookmark-card').forEach(bookmark => {
             bookmark.addEventListener('click', () => {
                 const url = `https://${bookmark.querySelector('.bookmark-url').textContent}`;
-                browserContent.src = url;
-                browserUrlBar.value = url;
-                browserView.classList.add('active');
+                loadUrl(url);
             });
         });
 
-        // History items would open in browser view
+        // History items open in browser view
         document.querySelectorAll('.history-item').forEach(item => {
             item.addEventListener('click', () => {
                 const url = item.querySelector('.history-url').textContent;
-                browserContent.src = url;
-                browserUrlBar.value = url;
-                browserView.classList.add('active');
+                loadUrl(url);
             });
         });
 
         // Browser navigation
         backBtn.addEventListener('click', () => {
-            // In a real implementation, this would go back in history
-            showNotification('Navigation', 'Back button pressed');
+            if (currentHistoryIndex > 0) {
+                currentHistoryIndex--;
+                browserContent.src = historyStack[currentHistoryIndex];
+                browserUrlBar.value = historyStack[currentHistoryIndex];
+                updateNavButtons();
+            }
         });
 
         forwardBtn.addEventListener('click', () => {
-            // In a real implementation, this would go forward in history
-            showNotification('Navigation', 'Forward button pressed');
+            if (currentHistoryIndex < historyStack.length - 1) {
+                currentHistoryIndex++;
+                browserContent.src = historyStack[currentHistoryIndex];
+                browserUrlBar.value = historyStack[currentHistoryIndex];
+                updateNavButtons();
+            }
         });
 
         refreshBtn.addEventListener('click', () => {
@@ -1387,11 +1498,8 @@
 
         browserUrlBar.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
-                let url = browserUrlBar.value.trim();
-                if (!url.startsWith('http://') && !url.startsWith('https://')) {
-                    url = 'https://' + url;
-                }
-                browserContent.src = url;
+                const url = browserUrlBar.value.trim();
+                loadUrl(url);
             }
         });
 
@@ -1418,4 +1526,5 @@
         init();
     </script>
 </body>
+
 </html>
