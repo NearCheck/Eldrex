@@ -1,107 +1,97 @@
-        :root {
-            --apple-black: #1D1D1F;
-            --apple-white: #F5F5F7;
-            --apple-blue: #0071E3;
-            --apple-gray: #86868B;
-        }
+:root {
+  --bg-dark: #111215;
+  --text-light: #f4f4f4;
+  --text-muted: #a5a5a5;
+  --primary: #0071e3;
+  --accent: #ff3e4d;
+}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-        body {
-            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: var(--apple-black);
-            color: var(--apple-white);
-            height: 100vh;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 2rem;
-        }
+html, body {
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--bg-dark);
+  color: var(--text-light);
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  text-align: center;
+}
 
-        .container {
-            max-width: 600px;
-            z-index: 10;
-        }
+.container {
+  max-width: 500px;
+  width: 100%;
+}
 
-        h1 {
-            font-size: clamp(2.5rem, 5vw, 3.5rem);
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(45deg, #FF9A9E 0%, #FAD0C4 99%, #FAD0C4 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
+.card {
+  background-color: #1a1b1f;
+  padding: 2.5rem 2rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
 
-        p {
-            font-size: clamp(1rem, 2vw, 1.2rem);
-            line-height: 1.6;
-            margin-bottom: 2.5rem;
-            color: var(--apple-gray);
-        }
+.icon {
+  font-size: 3rem;
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
 
-        .btn {
-            background: var(--apple-blue);
-            color: white;
-            border: none;
-            padding: 0.8rem 2.5rem;
-            font-size: 1.1rem;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 500;
-            margin-top: 1rem;
-        }
+h1 {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
 
-        .btn:hover, .btn:focus {
-            background: #0077ED;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0, 113, 227, 0.2);
-            outline: none;
-        }
+p {
+  font-size: 1rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
 
-        /* Physics Animation Canvas */
-        #physics-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
+.btn {
+  background-color: var(--primary);
+  color: #fff;
+  border: none;
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  font-weight: 500;
+}
 
-        /* Apple-like Glass Morphism */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-radius: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: clamp(1.5rem, 5vw, 3rem);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-            margin-bottom: 2rem;
-        }
+.btn:hover {
+  background-color: #0080f5;
+}
 
-        /* Skip to Content for Accessibility */
-        .skip-link {
-            position: absolute;
-            top: -40px;
-            left: 0;
-            background: var(--apple-blue);
-            color: white;
-            padding: 8px;
-            z-index: 100;
-            transition: top 0.3s;
-        }
+.powered {
+  font-size: 0.75rem;
+  margin-top: 2rem;
+  color: var(--text-muted);
+}
 
-        .skip-link:focus {
-            top: 0;
-        }
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.skip-link:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: 0.5rem;
+  background: var(--primary);
+  color: white;
+  z-index: 100;
+}

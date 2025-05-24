@@ -1,26 +1,189 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Access Restricted</title>
-    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="denied.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        :root {
+            --bg-light: #ffffff;
+            --text-dark: #1e1e1e;
+            --text-muted: #555555;
+            --primary: #0071e3;
+            --primary-hover: #0080f5;
+            --accent: #ff3e4d;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            line-height: 1.5;
+        }
+
+        main {
+            max-width: 480px;
+            width: 100%;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .icon {
+            font-size: 3rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            transition: var(--transition);
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        p {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            font-weight: 400;
+        }
+
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.9rem 2rem;
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+            max-width: 240px;
+            margin: 0 auto;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 113, 227, 0.3);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .ccto {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            bottom: 0;
+            margin-top: 12rem;
+            text-align: center;
+            opacity: 0.7;
+        }
+
+        .skip-link {
+            position: absolute;
+            left: -999px;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+        }
+
+        .skip-link:focus {
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            width: auto;
+            height: auto;
+            padding: 0.75rem 1.25rem;
+            background: var(--primary);
+            color: white;
+            border-radius: 6px;
+            font-weight: 500;
+            z-index: 100;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 1.5rem;
+            }
+
+            h1 {
+                font-size: 1.6rem;
+            }
+
+            .icon {
+                font-size: 2.5rem;
+                margin-bottom: 1.25rem;
+            }
+
+            .btn {
+                padding: 0.8rem 1.5rem;
+                max-width: 100%;
+            }
+        }
+    </style>
 </head>
+
 <body>
     <a href="#main-content" class="skip-link">Skip to Content</a>
-    <canvas id="physics-canvas"></canvas>
-    
-    <div class="container" id="main-content" tabindex="-1">
-        <div class="glass-card">
-            <h1>Access Restricted</h1>
-            <p>We've detected unauthorized activity. For security reasons, this action is not permitted.</p>
-            <button class="btn" onclick="window.location.href='index.html'">Return to Safety</button>
-<p style="font-size: 10px; margin-top: 10px;"> powered by LanSec</p>
-        </div>
-    </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.18.0/matter.min.js"></script>
-    <script src="denied.js"></script>
+    <main id="main-content" tabindex="-1">
+        <img src="restricted.svg" style="width: 100%; height: auto; margin-top: 5rem;" alt="Access Restricted Image" />
+        <h1 style="margin-top: -20px;">Access Restricted</h1>
+        <p>We've detected unauthorized activity. For security reasons, this action is not permitted.</p>
+        <button onclick="window.location.href='index.html'" class="btn">
+            Return to Safety
+        </button>
+        <div class="ccto">© landecs • Illustration credit: Canva (SVG)</div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const btn = document.querySelector('.btn');
+            const icon = document.querySelector('.icon');
+
+            btn.addEventListener('mouseenter', () => {
+                icon.style.transform = 'scale(1.1)';
+            });
+
+            btn.addEventListener('mouseleave', () => {
+                icon.style.transform = 'scale(1)';
+            });
+        });
+    </script>
 </body>
+
 </html>
