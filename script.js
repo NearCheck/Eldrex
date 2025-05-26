@@ -1,689 +1,486 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Main initialization
-    initParticles();
-    initMediaItems();
-    initLinkItems();
-    initButtons();
-    initNameHoverEffect();
-    initConnectionCheck();
-    initProfilePicture();
-    initEnhancedCard();
-    initVerificationIcon();
-    initFooterAnimation();
-
-    // Event listeners for window events
-    window.addEventListener('resize', handleWindowResize);
-    window.addEventListener('online', checkConnection);
-    window.addEventListener('offline', checkConnection);
-});
-
-// Three.js Particle System
-let particleSystem, particles, particleGeometry, particleMaterial;
-let scene, camera, renderer;
-let mouseX = 0, mouseY = 0;
-let windowHalfX = window.innerWidth / 2;
-let windowHalfY = window.innerHeight / 2;
+const _0x29625b = _0x4816;
+(function(_0xd3c38c, _0x25a908) {
+    const _0x20a5de = _0x4816,
+        _0x50fc91 = _0xd3c38c();
+    while (!![]) {
+        try {
+            const _0x80f1aa = -parseInt(_0x20a5de(0x16f)) / 0x1 + -parseInt(_0x20a5de(0x12f)) / 0x2 * (parseInt(_0x20a5de(0x15d)) / 0x3) + parseInt(_0x20a5de(0x15c)) / 0x4 + parseInt(_0x20a5de(0x1a4)) / 0x5 + parseInt(_0x20a5de(0x154)) / 0x6 + parseInt(_0x20a5de(0x149)) / 0x7 * (parseInt(_0x20a5de(0x14b)) / 0x8) + -parseInt(_0x20a5de(0x138)) / 0x9 * (parseInt(_0x20a5de(0x156)) / 0xa);
+            if (_0x80f1aa === _0x25a908) break;
+            else _0x50fc91['push'](_0x50fc91['shift']());
+        } catch (_0x3db21a) {
+            _0x50fc91['push'](_0x50fc91['shift']());
+        }
+    }
+}(_0x548e, 0xc5c93), document[_0x29625b(0x173)]('DOMContentLoaded', function() {
+    const _0x18f18d = _0x29625b;
+    initParticles(), initMediaItems(), initLinkItems(), initButtons(), initNameHoverEffect(), initConnectionCheck(), initProfilePicture(), initEnhancedCard(), initVerificationIcon(), initFooterAnimation(), window[_0x18f18d(0x173)](_0x18f18d(0x134), handleWindowResize), window[_0x18f18d(0x173)](_0x18f18d(0x17d), checkConnection), window[_0x18f18d(0x173)](_0x18f18d(0x18d), checkConnection);
+}));
+let particleSystem, particles, particleGeometry, particleMaterial, scene, camera, renderer, mouseX = 0x0,
+    mouseY = 0x0,
+    windowHalfX = window[_0x29625b(0x194)] / 0x2,
+    windowHalfY = window[_0x29625b(0x13e)] / 0x2;
 
 function initParticles() {
-    const canvas = document.getElementById('particles-canvas');
-    if (!canvas) return;
-
-    // Scene setup
-    scene = new THREE.Scene();
-    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
-    camera.position.z = 500;
-
-    // Renderer setup
-    renderer = new THREE.WebGLRenderer({
-        canvas: canvas,
-        antialias: true,
-        alpha: true
-    });
-    renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setSize(window.innerWidth, window.innerHeight);
-
-    // Particle system
-    const particleCount = 1000;
-    particleGeometry = new THREE.BufferGeometry();
-    particles = new Float32Array(particleCount * 3);
-
-    for (let i = 0; i < particleCount; i++) {
-        particles[i * 3] = (Math.random() - 0.5) * 2000;
-        particles[i * 3 + 1] = (Math.random() - 0.5) * 2000;
-        particles[i * 3 + 2] = (Math.random() - 0.5) * 2000;
+    const _0x12f239 = _0x29625b,
+        _0x2a40cd = document[_0x12f239(0x155)](_0x12f239(0x12a));
+    if (!_0x2a40cd) return;
+    scene = new THREE[(_0x12f239(0x165))](), camera = new THREE[(_0x12f239(0x19a))](0x4b, window['innerWidth'] / window[_0x12f239(0x13e)], 0x1, 0x2710), camera['position']['z'] = 0x1f4, renderer = new THREE[(_0x12f239(0x19e))]({
+        'canvas': _0x2a40cd,
+        'antialias': !![],
+        'alpha': !![]
+    }), renderer[_0x12f239(0x12d)](window['devicePixelRatio']), renderer['setSize'](window['innerWidth'], window[_0x12f239(0x13e)]);
+    const _0x619378 = 0x3e8;
+    particleGeometry = new THREE['BufferGeometry'](), particles = new Float32Array(_0x619378 * 0x3);
+    for (let _0x5712a9 = 0x0; _0x5712a9 < _0x619378; _0x5712a9++) {
+        particles[_0x5712a9 * 0x3] = (Math[_0x12f239(0x147)]() - 0.5) * 0x7d0, particles[_0x5712a9 * 0x3 + 0x1] = (Math['random']() - 0.5) * 0x7d0, particles[_0x5712a9 * 0x3 + 0x2] = (Math[_0x12f239(0x147)]() - 0.5) * 0x7d0;
     }
-
-    particleGeometry.setAttribute('position', new THREE.BufferAttribute(particles, 3));
-
-    particleMaterial = new THREE.PointsMaterial({
-        color: 0xffffff,
-        size: 1,
-        transparent: true,
-        opacity: 0,
-        blending: THREE.AdditiveBlending
-    });
-
-    particleSystem = new THREE.Points(particleGeometry, particleMaterial);
-    scene.add(particleSystem);
-
-    // Animate
-    animate();
+    particleGeometry[_0x12f239(0x151)](_0x12f239(0x13c), new THREE['BufferAttribute'](particles, 0x3)), particleMaterial = new THREE[(_0x12f239(0x157))]({
+        'color': 0xffffff,
+        'size': 0x1,
+        'transparent': !![],
+        'opacity': 0x0,
+        'blending': THREE[_0x12f239(0x135)]
+    }), particleSystem = new THREE['Points'](particleGeometry, particleMaterial), scene['add'](particleSystem), animate();
 }
 
 function animate() {
-    requestAnimationFrame(animate);
-
-    // Rotate particles slightly
-    if (particleSystem) {
-        particleSystem.rotation.x += 0.0001;
-        particleSystem.rotation.y += 0.0002;
-        renderer.render(scene, camera);
-    }
+    const _0x3e57b3 = _0x29625b;
+    requestAnimationFrame(animate), particleSystem && (particleSystem[_0x3e57b3(0x133)]['x'] += 0.0001, particleSystem[_0x3e57b3(0x133)]['y'] += 0.0002, renderer['render'](scene, camera));
 }
 
 function handleWindowResize() {
-    windowHalfX = window.innerWidth / 2;
-    windowHalfY = window.innerHeight / 2;
-
-    if (camera && renderer) {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-    }
+    const _0x4718cc = _0x29625b;
+    windowHalfX = window['innerWidth'] / 0x2, windowHalfY = window['innerHeight'] / 0x2, camera && renderer && (camera[_0x4718cc(0x18f)] = window[_0x4718cc(0x194)] / window['innerHeight'], camera[_0x4718cc(0x178)](), renderer[_0x4718cc(0x130)](window[_0x4718cc(0x194)], window[_0x4718cc(0x13e)]));
 }
 
-function explodeParticles(x, y, intensity = 10, duration = 1) {
+function explodeParticles(_0x55560c, _0x5aaa62, _0x1bb9ec = 0xa, _0xfc472e = 0x1) {
+    const _0x1155f0 = _0x29625b;
     if (!particleGeometry) return;
-
-    const particlePositions = particleGeometry.attributes.position.array;
-    const centerX = x - windowHalfX;
-    const centerY = -(y - windowHalfY);
-
-    gsap.to(particleMaterial, {
-        opacity: 0.8,
-        duration: duration * 0.2,
-        ease: "power2.out"
+    const _0x3e4ed9 = particleGeometry['attributes'][_0x1155f0(0x13c)][_0x1155f0(0x15e)],
+        _0xe95c85 = _0x55560c - windowHalfX,
+        _0x163c05 = -(_0x5aaa62 - windowHalfY);
+    gsap['to'](particleMaterial, {
+        'opacity': 0.8,
+        'duration': _0xfc472e * 0.2,
+        'ease': _0x1155f0(0x195)
     });
-
-    for (let i = 0; i < particlePositions.length / 3; i++) {
-        const dx = particlePositions[i * 3] - centerX;
-        const dy = particlePositions[i * 3 + 1] - centerY;
-        const dz = particlePositions[i * 3 + 2];
-        const distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
-
-        const dirX = dx / distance;
-        const dirY = dy / distance;
-        const dirZ = dz / distance;
-
-        const targetX = centerX + dirX * (Math.random() * 300 + 100) * intensity;
-        const targetY = centerY + dirY * (Math.random() * 300 + 100) * intensity;
-        const targetZ = dirZ * (Math.random() * 300 + 100) * intensity;
-
-        gsap.to(particlePositions, {
-            [i * 3]: targetX,
-            [i * 3 + 1]: targetY,
-            [i * 3 + 2]: targetZ,
-            duration: duration,
-            ease: "power2.out",
-            onUpdate: () => {
-                particleGeometry.attributes.position.needsUpdate = true;
+    for (let _0x32971a = 0x0; _0x32971a < _0x3e4ed9[_0x1155f0(0x1ae)] / 0x3; _0x32971a++) {
+        const _0xd4eafc = _0x3e4ed9[_0x32971a * 0x3] - _0xe95c85,
+            _0x4d8a7a = _0x3e4ed9[_0x32971a * 0x3 + 0x1] - _0x163c05,
+            _0x39bf5b = _0x3e4ed9[_0x32971a * 0x3 + 0x2],
+            _0x5a3f9c = Math[_0x1155f0(0x17e)](_0xd4eafc * _0xd4eafc + _0x4d8a7a * _0x4d8a7a + _0x39bf5b * _0x39bf5b),
+            _0x5476ac = _0xd4eafc / _0x5a3f9c,
+            _0x3f7843 = _0x4d8a7a / _0x5a3f9c,
+            _0x32f2f2 = _0x39bf5b / _0x5a3f9c,
+            _0xe14717 = _0xe95c85 + _0x5476ac * (Math[_0x1155f0(0x147)]() * 0x12c + 0x64) * _0x1bb9ec,
+            _0x215cd2 = _0x163c05 + _0x3f7843 * (Math['random']() * 0x12c + 0x64) * _0x1bb9ec,
+            _0x4c6b30 = _0x32f2f2 * (Math['random']() * 0x12c + 0x64) * _0x1bb9ec;
+        gsap['to'](_0x3e4ed9, {
+            [_0x32971a * 0x3]: _0xe14717,
+            [_0x32971a * 0x3 + 0x1]: _0x215cd2,
+            [_0x32971a * 0x3 + 0x2]: _0x4c6b30,
+            'duration': _0xfc472e,
+            'ease': 'power2.out',
+            'onUpdate': () => {
+                const _0x5ecbb0 = _0x1155f0;
+                particleGeometry[_0x5ecbb0(0x14d)][_0x5ecbb0(0x13c)]['needsUpdate'] = !![];
             }
         });
     }
-
-    gsap.to(particleMaterial, {
-        opacity: 0,
-        delay: duration * 0.8,
-        duration: duration * 0.2,
-        onComplete: () => {
-            // Reset particles to random positions
-            for (let i = 0; i < particlePositions.length / 3; i++) {
-                particlePositions[i * 3] = (Math.random() - 0.5) * 2000;
-                particlePositions[i * 3 + 1] = (Math.random() - 0.5) * 2000;
-                particlePositions[i * 3 + 2] = (Math.random() - 0.5) * 2000;
+    gsap['to'](particleMaterial, {
+        'opacity': 0x0,
+        'delay': _0xfc472e * 0.8,
+        'duration': _0xfc472e * 0.2,
+        'onComplete': () => {
+            const _0x129750 = _0x1155f0;
+            for (let _0x311bdb = 0x0; _0x311bdb < _0x3e4ed9[_0x129750(0x1ae)] / 0x3; _0x311bdb++) {
+                _0x3e4ed9[_0x311bdb * 0x3] = (Math['random']() - 0.5) * 0x7d0, _0x3e4ed9[_0x311bdb * 0x3 + 0x1] = (Math['random']() - 0.5) * 0x7d0, _0x3e4ed9[_0x311bdb * 0x3 + 0x2] = (Math[_0x129750(0x147)]() - 0.5) * 0x7d0;
             }
-            particleGeometry.attributes.position.needsUpdate = true;
+            particleGeometry[_0x129750(0x14d)][_0x129750(0x13c)]['needsUpdate'] = !![];
         }
     });
 }
 
-function pulseParticles(x, y) {
+function _0x548e() {
+    const _0x134134 = ['load.html', 'touchstart', 'offsetWidth', 'alt', 'random', 'src', '11879RVBLBp', 'true', '304kunYpM', 'then', 'attributes', 'IMG', 'endsWith', 'high-performance', 'setAttribute', 'trim', 'querySelectorAll', '6559596JxhiTP', 'getElementById', '5902670TkEfSQ', 'PointsMaterial', '.link-item', 'img', 'size', 'source', '2813352yTsDHa', '1377YBGjLT', 'array', '.media-item', 'touchend', 'race', 'ondragstart', 'sine.inOut', 'none', 'Scene', 'hidden', 'scale(1)', 'power2.inOut', 'classList', 'VIDEO', 'width', 'preventDefault', 'email-button', 'https://ucarecdn.com/f7a97b92-31bd-4e03-a3f4-af5c99c95453/-/preview/750x1000/', '306009RPnOeD', 'turbulence', 'height', 'Verified', 'addEventListener', 'stopPropagation', 'color', 'domElement', 'appearing', 'updateProjectionMatrix', '.restore-btn', 'https://ucarecdn.com/16d4d51c-3864-4320-a393-d6af0e9d0e98/-/preview/617x588/', '.minimize-btn', 'appendChild', 'online', 'sqrt', 'shieldTutorialSeen', 'delay', 'offsetHeight', 'tagName', 'count', 'sample-video.mp4', 'filter', 'Points', '.progress-circle', 'pointerEvents', 'contextmenu', 'min', 'no-cors', 'fixed', 'offline', 'page-exit-animation', 'aspect', 'zIndex', 'no.html', '5em', 'createElement', 'innerWidth', 'power2.out', 'now', 'body', 'devicePixelRatio', 'style', 'PerspectiveCamera', 'contains', 'forEach', 'sin', 'WebGLRenderer', 'cos', 'add', 'mouseenter', 'querySelector', 'onload', '7548185BWaPNB', '.progress-loader', 'getBoundingClientRect', 'mouseleave', '10000', 'touchcancel', 'getAttribute', 'active', 'click', 'setItem', 'length', 'pageFooter', 'textContent', 'getItem', 'profile-picture', 'tutorial', 'location', 'BufferAttribute', 'transparent', 'melting', 'opacity', 'href', 'material', 'scale(1.1)', 'particles-canvas', 'blocked.html', 'Timeout', 'setPixelRatio', 'shieldBadge', '2108EbCCoy', 'setSize', 'top', 'display', 'rotation', 'resize', 'AdditiveBlending', 'oncontextmenu', 'load', '27QkQkvB', 'remove', 'geometry', 'verify.svg', 'position', 'left', 'innerHeight', 'loaded', 'needsUpdate', 'middle', 'catch'];
+    _0x548e = function() {
+        return _0x134134;
+    };
+    return _0x548e();
+}
+
+function pulseParticles(_0x227b84, _0x27bccd) {
+    const _0x59a2aa = _0x29625b;
     if (!particleGeometry) return;
-
-    const particlePositions = particleGeometry.attributes.position.array;
-    const centerX = x - windowHalfX;
-    const centerY = -(y - windowHalfY);
-
-    for (let i = 0; i < particlePositions.length / 3; i++) {
-        const radius = Math.random() * 50 + 30;
-        const theta = Math.random() * Math.PI * 2;
-        const phi = Math.random() * Math.PI;
-
-        particlePositions[i * 3] = centerX + radius * Math.sin(phi) * Math.cos(theta);
-        particlePositions[i * 3 + 1] = centerY + radius * Math.sin(phi) * Math.sin(theta);
-        particlePositions[i * 3 + 2] = radius * Math.cos(phi);
+    const _0x212d3f = particleGeometry[_0x59a2aa(0x14d)][_0x59a2aa(0x13c)][_0x59a2aa(0x15e)],
+        _0x38f9b1 = _0x227b84 - windowHalfX,
+        _0xa72e07 = -(_0x27bccd - windowHalfY);
+    for (let _0x2ef02a = 0x0; _0x2ef02a < _0x212d3f[_0x59a2aa(0x1ae)] / 0x3; _0x2ef02a++) {
+        const _0x54544c = Math[_0x59a2aa(0x147)]() * 0x32 + 0x1e,
+            _0x1476ab = Math['random']() * Math['PI'] * 0x2,
+            _0x2fb653 = Math[_0x59a2aa(0x147)]() * Math['PI'];
+        _0x212d3f[_0x2ef02a * 0x3] = _0x38f9b1 + _0x54544c * Math[_0x59a2aa(0x19d)](_0x2fb653) * Math[_0x59a2aa(0x19f)](_0x1476ab), _0x212d3f[_0x2ef02a * 0x3 + 0x1] = _0xa72e07 + _0x54544c * Math[_0x59a2aa(0x19d)](_0x2fb653) * Math['sin'](_0x1476ab), _0x212d3f[_0x2ef02a * 0x3 + 0x2] = _0x54544c * Math[_0x59a2aa(0x19f)](_0x2fb653);
     }
-    particleGeometry.attributes.position.needsUpdate = true;
-
-    gsap.to(particleMaterial, {
-        opacity: 0.6,
-        duration: 0.5,
-        yoyo: true,
-        repeat: -1,
-        ease: "sine.inOut"
+    particleGeometry[_0x59a2aa(0x14d)][_0x59a2aa(0x13c)][_0x59a2aa(0x140)] = !![], gsap['to'](particleMaterial, {
+        'opacity': 0.6,
+        'duration': 0.5,
+        'yoyo': !![],
+        'repeat': -0x1,
+        'ease': _0x59a2aa(0x163)
     });
 }
 
-// Media Items Initialization
 function initMediaItems() {
-    const mediaItems = document.querySelectorAll('.media-item');
-    if (!mediaItems.length) return;
-
+    const _0x1c8ace = _0x29625b,
+        _0x499f5d = document['querySelectorAll'](_0x1c8ace(0x15f));
+    if (!_0x499f5d[_0x1c8ace(0x1ae)]) return;
     setTimeout(() => {
-        const profilePic = document.getElementById('profile-picture');
-        if (profilePic) {
-            profilePic.classList.add('loaded');
-            const img = profilePic.querySelector('img');
-            if (img) {
-                img.onload = function() {
-                    const rect = profilePic.getBoundingClientRect();
-                    explodeParticles(rect.x + profilePic.offsetWidth / 2, rect.y + profilePic.offsetHeight / 2);
-                };
-                img.src = img.src; // Trigger reload
-            }
+        const _0xcbd820 = _0x1c8ace,
+            _0x1544d6 = document['getElementById']('profile-picture');
+        if (_0x1544d6) {
+            _0x1544d6[_0xcbd820(0x169)][_0xcbd820(0x1a0)](_0xcbd820(0x13f));
+            const _0x99ed15 = _0x1544d6[_0xcbd820(0x1a2)](_0xcbd820(0x159));
+            _0x99ed15 && (_0x99ed15[_0xcbd820(0x1a3)] = function() {
+                const _0x130f4c = _0xcbd820,
+                    _0x555189 = _0x1544d6[_0x130f4c(0x1a6)]();
+                explodeParticles(_0x555189['x'] + _0x1544d6[_0x130f4c(0x145)] / 0x2, _0x555189['y'] + _0x1544d6['offsetHeight'] / 0x2);
+            }, _0x99ed15[_0xcbd820(0x148)] = _0x99ed15[_0xcbd820(0x148)]);
         }
-    }, 800);
-
-    mediaItems.forEach((item, index) => {
+    }, 0x320), _0x499f5d[_0x1c8ace(0x19c)]((_0x4b1000, _0x5d1ea7) => {
         setTimeout(() => {
-            item.classList.add('loaded');
-            const media = item.querySelector('img') || item.querySelector('video');
-            if (media) {
-                media.onload = function() {
-                    const rect = item.getBoundingClientRect();
-                    explodeParticles(rect.x + item.offsetWidth / 2, rect.y + item.offsetHeight / 2);
+            const _0x6aab22 = _0x4816;
+            _0x4b1000[_0x6aab22(0x169)]['add'](_0x6aab22(0x13f));
+            const _0x288415 = _0x4b1000[_0x6aab22(0x1a2)](_0x6aab22(0x159)) || _0x4b1000['querySelector']('video');
+            if (_0x288415) {
+                _0x288415[_0x6aab22(0x1a3)] = function() {
+                    const _0x2ed413 = _0x6aab22,
+                        _0x356f9f = _0x4b1000['getBoundingClientRect']();
+                    explodeParticles(_0x356f9f['x'] + _0x4b1000[_0x2ed413(0x145)] / 0x2, _0x356f9f['y'] + _0x4b1000[_0x2ed413(0x181)] / 0x2);
                 };
-                
-                if (media.tagName === 'IMG') {
-                    media.src = media.src;
-                } else if (media.tagName === 'VIDEO' && media.querySelector('source')) {
-                    media.querySelector('source').src = "sample-video.mp4";
-                    media.load();
-                }
+                if (_0x288415[_0x6aab22(0x182)] === _0x6aab22(0x14e)) _0x288415['src'] = _0x288415[_0x6aab22(0x148)];
+                else _0x288415[_0x6aab22(0x182)] === _0x6aab22(0x16a) && _0x288415[_0x6aab22(0x1a2)](_0x6aab22(0x15b)) && (_0x288415[_0x6aab22(0x1a2)](_0x6aab22(0x15b))[_0x6aab22(0x148)] = _0x6aab22(0x184), _0x288415[_0x6aab22(0x137)]());
             }
-
-            item.addEventListener('mouseenter', function() {
-                if (this.classList.contains('loaded')) {
-                    const rect = this.getBoundingClientRect();
-                    pulseParticles(rect.x + this.offsetWidth / 2, rect.y + this.offsetHeight / 2);
+            _0x4b1000['addEventListener']('mouseenter', function() {
+                const _0x56a302 = _0x6aab22;
+                if (this['classList'][_0x56a302(0x19b)](_0x56a302(0x13f))) {
+                    const _0x2c9d8b = this[_0x56a302(0x1a6)]();
+                    pulseParticles(_0x2c9d8b['x'] + this[_0x56a302(0x145)] / 0x2, _0x2c9d8b['y'] + this[_0x56a302(0x181)] / 0x2);
                 }
             });
-        }, 1000 + index * 300);
+        }, 0x3e8 + _0x5d1ea7 * 0x12c);
     });
 }
 
-// Link Items Initialization
 function initLinkItems() {
-    const linkItems = document.querySelectorAll('.link-item');
-    linkItems.forEach((item, index) => {
+    const _0x5a2030 = _0x29625b,
+        _0x2d0cde = document[_0x5a2030(0x153)](_0x5a2030(0x158));
+    _0x2d0cde[_0x5a2030(0x19c)]((_0x13c668, _0x5ae2a1) => {
+        const _0x2b1094 = _0x5a2030;
         setTimeout(() => {
-            item.classList.add('loaded');
-        }, 2000 + index * 200);
-
-        item.addEventListener('mouseenter', function() {
-            const rect = this.getBoundingClientRect();
-            explodeParticles(rect.x + this.offsetWidth / 2, rect.y + this.offsetHeight / 2, 5, 0.5);
+            const _0x8a7f5e = _0x4816;
+            _0x13c668[_0x8a7f5e(0x169)]['add'](_0x8a7f5e(0x13f));
+        }, 0x7d0 + _0x5ae2a1 * 0xc8), _0x13c668[_0x2b1094(0x173)](_0x2b1094(0x1a1), function() {
+            const _0x2d5c27 = _0x2b1094,
+                _0x24ceb4 = this[_0x2d5c27(0x1a6)]();
+            explodeParticles(_0x24ceb4['x'] + this[_0x2d5c27(0x145)] / 0x2, _0x24ceb4['y'] + this[_0x2d5c27(0x181)] / 0x2, 0x5, 0.5);
         });
     });
 }
 
-// Buttons Initialization
 function initButtons() {
-    const initButton = (selector) => {
-        const button = document.getElementById(selector);
-        if (!button) return;
-
-        button.addEventListener('click', function(e) {
-            if (this.getAttribute('href') === '#') {
-                e.preventDefault();
-                return;
-            }
-
-            e.preventDefault();
-            const loader = this.querySelector('.progress-loader');
-            const progressCircle = this.querySelector('.progress-circle');
-            const checkmark = this.querySelector('.checkmark');
-
-            if (loader) loader.classList.add('active');
-            if (progressCircle) progressCircle.style.display = 'flex';
-            if (checkmark) checkmark.style.display = 'none';
-
-            setTimeout(() => {
-                if (progressCircle) progressCircle.style.display = 'none';
-                if (checkmark) checkmark.classList.add('show');
-
-                setTimeout(() => {
-                    window.location.href = this.getAttribute('href');
-                }, 1000);
-            }, 1500);
-        });
-    };
-
-    initButton('email-button');
-    initButton('call-button');
-
-    // Shield badge
-    const shieldBadge = document.getElementById('shieldBadge');
-    if (shieldBadge) {
-        shieldBadge.addEventListener('click', function() {
-            gsap.to(this, {
-                scale: 0.8,
-                duration: 0.2,
-                yoyo: true,
-                repeat: 1,
-                ease: "power1.inOut",
-                onComplete: () => {
-                    window.location.href = 'load.html';
+    const _0x4da09e = _0x29625b,
+        _0x3951a1 = _0x465102 => {
+            const _0x57df84 = _0x4816,
+                _0x2240d1 = document['getElementById'](_0x465102);
+            if (!_0x2240d1) return;
+            _0x2240d1[_0x57df84(0x173)](_0x57df84(0x1ac), function(_0x1c1358) {
+                const _0x587043 = _0x57df84;
+                if (this[_0x587043(0x1aa)]('href') === '#') {
+                    _0x1c1358[_0x587043(0x16c)]();
+                    return;
                 }
+                _0x1c1358[_0x587043(0x16c)]();
+                const _0x5c10a4 = this['querySelector'](_0x587043(0x1a5)),
+                    _0x233c12 = this[_0x587043(0x1a2)](_0x587043(0x187)),
+                    _0x2ff67c = this[_0x587043(0x1a2)]('.checkmark');
+                if (_0x5c10a4) _0x5c10a4[_0x587043(0x169)][_0x587043(0x1a0)](_0x587043(0x1ab));
+                if (_0x233c12) _0x233c12[_0x587043(0x199)][_0x587043(0x132)] = 'flex';
+                if (_0x2ff67c) _0x2ff67c[_0x587043(0x199)][_0x587043(0x132)] = 'none';
+                setTimeout(() => {
+                    const _0x3aaf6d = _0x587043;
+                    if (_0x233c12) _0x233c12[_0x3aaf6d(0x199)]['display'] = _0x3aaf6d(0x164);
+                    if (_0x2ff67c) _0x2ff67c[_0x3aaf6d(0x169)][_0x3aaf6d(0x1a0)]('show');
+                    setTimeout(() => {
+                        const _0x208124 = _0x3aaf6d;
+                        window[_0x208124(0x122)]['href'] = this[_0x208124(0x1aa)](_0x208124(0x127));
+                    }, 0x3e8);
+                }, 0x5dc);
             });
+        };
+    _0x3951a1(_0x4da09e(0x16d)), _0x3951a1('call-button');
+    const _0x5e26c8 = document[_0x4da09e(0x155)](_0x4da09e(0x12e));
+    _0x5e26c8 && (_0x5e26c8[_0x4da09e(0x173)](_0x4da09e(0x1ac), function() {
+        gsap['to'](this, {
+            'scale': 0.8,
+            'duration': 0.2,
+            'yoyo': !![],
+            'repeat': 0x1,
+            'ease': 'power1.inOut',
+            'onComplete': () => {
+                const _0x1266e2 = _0x4816;
+                window[_0x1266e2(0x122)][_0x1266e2(0x127)] = _0x1266e2(0x143);
+            }
         });
-
-        // Tutorial for first-time visitors
-        if (!localStorage.getItem('shieldTutorialSeen')) {
-            shieldBadge.classList.add('tutorial');
-            localStorage.setItem('shieldTutorialSeen', 'true');
-            setTimeout(() => shieldBadge.classList.remove('tutorial'), 5000);
-        }
-
-        // Hover effects
-        shieldBadge.addEventListener('mouseenter', () => {
-            shieldBadge.style.transform = 'scale(1.1)';
-            shieldBadge.style.filter = 'drop-shadow(0 0 8px rgba(81, 203, 238, 0.8))';
-        });
-
-        shieldBadge.addEventListener('mouseleave', () => {
-            shieldBadge.style.transform = 'scale(1)';
-            shieldBadge.style.filter = 'none';
-        });
-    }
+    }), !localStorage[_0x4da09e(0x1b1)](_0x4da09e(0x17f)) && (_0x5e26c8[_0x4da09e(0x169)]['add'](_0x4da09e(0x1b3)), localStorage[_0x4da09e(0x1ad)](_0x4da09e(0x17f), _0x4da09e(0x14a)), setTimeout(() => _0x5e26c8['classList'][_0x4da09e(0x139)](_0x4da09e(0x1b3)), 0x1388)), _0x5e26c8[_0x4da09e(0x173)]('mouseenter', () => {
+        const _0x2e706d = _0x4da09e;
+        _0x5e26c8[_0x2e706d(0x199)]['transform'] = _0x2e706d(0x129), _0x5e26c8[_0x2e706d(0x199)][_0x2e706d(0x185)] = 'drop-shadow(0\x200\x208px\x20rgba(81,\x20203,\x20238,\x200.8))';
+    }), _0x5e26c8[_0x4da09e(0x173)](_0x4da09e(0x1a7), () => {
+        const _0x3054ef = _0x4da09e;
+        _0x5e26c8[_0x3054ef(0x199)]['transform'] = _0x3054ef(0x167), _0x5e26c8[_0x3054ef(0x199)][_0x3054ef(0x185)] = 'none';
+    }));
 }
 
-// Name Hover Effect
 function initNameHoverEffect() {
-    const nameElement = document.getElementById('dust-name');
-    if (!nameElement) return;
-
-    let scene, camera, renderer, particleSystem;
-    let isAnimating = false;
-    const particleParams = {
-        count: 2500,
-        size: 0.8,
-        dispersion: 1.5,
-        windStrength: 0.5,
-        turbulence: 0.3
+    const _0x53f53a = _0x29625b,
+        _0x3d4309 = document[_0x53f53a(0x155)]('dust-name');
+    if (!_0x3d4309) return;
+    let _0x1e4ded, _0x117d2d, _0x2255cb, _0x5a0104, _0x8d4220 = ![];
+    const _0x3ffae1 = {
+        'count': 0x9c4,
+        'size': 0.8,
+        'dispersion': 1.5,
+        'windStrength': 0.5,
+        'turbulence': 0.3
     };
-
-    nameElement.addEventListener('mouseenter', function() {
-        if (isAnimating || !nameElement.textContent.trim()) return;
-        initPremiumEffect();
+    _0x3d4309[_0x53f53a(0x173)](_0x53f53a(0x1a1), function() {
+        const _0x1dc615 = _0x53f53a;
+        if (_0x8d4220 || !_0x3d4309[_0x1dc615(0x1b0)][_0x1dc615(0x152)]()) return;
+        _0x276146();
     });
 
-    function initPremiumEffect() {
-        const originalStyles = {
-            color: nameElement.style.color,
-            position: nameElement.style.position,
-            zIndex: nameElement.style.zIndex
-        };
-
-        // Create Three.js scene
-        scene = new THREE.Scene();
-        camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.z = 400;
-
-        renderer = new THREE.WebGLRenderer({
-            alpha: true,
-            antialias: true,
-            powerPreference: "high-performance"
-        });
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.domElement.style.position = 'fixed';
-        renderer.domElement.style.top = '0';
-        renderer.domElement.style.left = '0';
-        renderer.domElement.style.zIndex = '10000';
-        renderer.domElement.style.pointerEvents = 'none';
-        document.body.appendChild(renderer.domElement);
-
-        createPrecisionParticles();
-        animateParticles();
-
-        gsap.to(nameElement, {
-            color: 'transparent',
-            duration: 0.3,
-            ease: 'power2.out'
+    function _0x276146() {
+        const _0x510c7e = _0x53f53a,
+            _0x330a76 = {
+                'color': _0x3d4309[_0x510c7e(0x199)][_0x510c7e(0x175)],
+                'position': _0x3d4309[_0x510c7e(0x199)][_0x510c7e(0x13c)],
+                'zIndex': _0x3d4309[_0x510c7e(0x199)][_0x510c7e(0x190)]
+            };
+        _0x1e4ded = new THREE[(_0x510c7e(0x165))](), _0x117d2d = new THREE['PerspectiveCamera'](0x3c, window['innerWidth'] / window[_0x510c7e(0x13e)], 0.1, 0x3e8), _0x117d2d['position']['z'] = 0x190, _0x2255cb = new THREE[(_0x510c7e(0x19e))]({
+            'alpha': !![],
+            'antialias': !![],
+            'powerPreference': _0x510c7e(0x150)
+        }), _0x2255cb['setPixelRatio'](Math['min'](window[_0x510c7e(0x198)], 0x2)), _0x2255cb['setSize'](window['innerWidth'], window[_0x510c7e(0x13e)]), _0x2255cb[_0x510c7e(0x176)][_0x510c7e(0x199)][_0x510c7e(0x13c)] = _0x510c7e(0x18c), _0x2255cb['domElement'][_0x510c7e(0x199)][_0x510c7e(0x131)] = '0', _0x2255cb[_0x510c7e(0x176)][_0x510c7e(0x199)][_0x510c7e(0x13d)] = '0', _0x2255cb['domElement']['style'][_0x510c7e(0x190)] = _0x510c7e(0x1a8), _0x2255cb[_0x510c7e(0x176)][_0x510c7e(0x199)][_0x510c7e(0x188)] = _0x510c7e(0x164), document[_0x510c7e(0x197)][_0x510c7e(0x17c)](_0x2255cb[_0x510c7e(0x176)]), _0x5aadea(), _0xdfda2(), gsap['to'](_0x3d4309, {
+            'color': _0x510c7e(0x124),
+            'duration': 0.3,
+            'ease': _0x510c7e(0x195)
         });
     }
 
-    function createPrecisionParticles() {
-        const rect = nameElement.getBoundingClientRect();
-        const textWidth = rect.width;
-        const textHeight = rect.height;
-
-        const geometry = new THREE.BufferGeometry();
-        const positions = new Float32Array(particleParams.count * 3);
-        const sizes = new Float32Array(particleParams.count);
-        const velocities = new Float32Array(particleParams.count * 3);
-        const delays = new Float32Array(particleParams.count);
-
-        const centerX = (rect.left + rect.width / 2 - window.innerWidth / 2) * 0.8;
-        const centerY = (window.innerHeight / 2 - rect.top - rect.height / 2) * 0.8;
-
-        for (let i = 0; i < particleParams.count; i++) {
-            const x = centerX + (Math.random() - 0.5) * textWidth * 0.8;
-            const y = centerY + (Math.random() - 0.5) * textHeight * 0.8;
-            const z = (Math.random() - 0.5) * 20;
-
-            positions[i * 3] = x;
-            positions[i * 3 + 1] = y;
-            positions[i * 3 + 2] = z;
-
-            velocities[i * 3] = (Math.random() * 2 - 1) * particleParams.turbulence;
-            velocities[i * 3 + 1] = (Math.random() * 2 - 1) * particleParams.turbulence;
-            velocities[i * 3 + 2] = (Math.random() * 2 - 1) * particleParams.turbulence;
-
-            sizes[i] = Math.random() * particleParams.size * 2;
-            delays[i] = Math.random() * 1.5;
+    function _0x5aadea() {
+        const _0x11ec11 = _0x53f53a,
+            _0xac8026 = _0x3d4309[_0x11ec11(0x1a6)](),
+            _0x4923ad = _0xac8026['width'],
+            _0x5add0a = _0xac8026[_0x11ec11(0x171)],
+            _0x373b90 = new THREE['BufferGeometry'](),
+            _0x235782 = new Float32Array(_0x3ffae1[_0x11ec11(0x183)] * 0x3),
+            _0xddb853 = new Float32Array(_0x3ffae1[_0x11ec11(0x183)]),
+            _0x55e6f6 = new Float32Array(_0x3ffae1[_0x11ec11(0x183)] * 0x3),
+            _0x10f8db = new Float32Array(_0x3ffae1['count']),
+            _0x596132 = (_0xac8026[_0x11ec11(0x13d)] + _0xac8026[_0x11ec11(0x16b)] / 0x2 - window[_0x11ec11(0x194)] / 0x2) * 0.8,
+            _0x3e4f54 = (window['innerHeight'] / 0x2 - _0xac8026[_0x11ec11(0x131)] - _0xac8026['height'] / 0x2) * 0.8;
+        for (let _0x45ffc8 = 0x0; _0x45ffc8 < _0x3ffae1[_0x11ec11(0x183)]; _0x45ffc8++) {
+            const _0x2d7bfb = _0x596132 + (Math[_0x11ec11(0x147)]() - 0.5) * _0x4923ad * 0.8,
+                _0x29dd6b = _0x3e4f54 + (Math[_0x11ec11(0x147)]() - 0.5) * _0x5add0a * 0.8,
+                _0x4e038c = (Math[_0x11ec11(0x147)]() - 0.5) * 0x14;
+            _0x235782[_0x45ffc8 * 0x3] = _0x2d7bfb, _0x235782[_0x45ffc8 * 0x3 + 0x1] = _0x29dd6b, _0x235782[_0x45ffc8 * 0x3 + 0x2] = _0x4e038c, _0x55e6f6[_0x45ffc8 * 0x3] = (Math['random']() * 0x2 - 0x1) * _0x3ffae1[_0x11ec11(0x170)], _0x55e6f6[_0x45ffc8 * 0x3 + 0x1] = (Math[_0x11ec11(0x147)]() * 0x2 - 0x1) * _0x3ffae1[_0x11ec11(0x170)], _0x55e6f6[_0x45ffc8 * 0x3 + 0x2] = (Math['random']() * 0x2 - 0x1) * _0x3ffae1[_0x11ec11(0x170)], _0xddb853[_0x45ffc8] = Math[_0x11ec11(0x147)]() * _0x3ffae1[_0x11ec11(0x15a)] * 0x2, _0x10f8db[_0x45ffc8] = Math[_0x11ec11(0x147)]() * 1.5;
         }
-
-        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-        geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
-        geometry.setAttribute('velocity', new THREE.BufferAttribute(velocities, 3));
-        geometry.setAttribute('delay', new THREE.BufferAttribute(delays, 1));
-
-        const material = new THREE.PointsMaterial({
-            size: particleParams.size,
-            color: 0xffffff,
-            transparent: true,
-            opacity: 1,
-            blending: THREE.AdditiveBlending,
-            sizeAttenuation: true,
-            alphaTest: 0.01
+        _0x373b90[_0x11ec11(0x151)]('position', new THREE[(_0x11ec11(0x123))](_0x235782, 0x3)), _0x373b90[_0x11ec11(0x151)]('size', new THREE[(_0x11ec11(0x123))](_0xddb853, 0x1)), _0x373b90[_0x11ec11(0x151)]('velocity', new THREE[(_0x11ec11(0x123))](_0x55e6f6, 0x3)), _0x373b90[_0x11ec11(0x151)](_0x11ec11(0x180), new THREE[(_0x11ec11(0x123))](_0x10f8db, 0x1));
+        const _0x282fa5 = new THREE[(_0x11ec11(0x157))]({
+            'size': _0x3ffae1[_0x11ec11(0x15a)],
+            'color': 0xffffff,
+            'transparent': !![],
+            'opacity': 0x1,
+            'blending': THREE[_0x11ec11(0x135)],
+            'sizeAttenuation': !![],
+            'alphaTest': 0.01
         });
-
-        particleSystem = new THREE.Points(geometry, material);
-        scene.add(particleSystem);
+        _0x5a0104 = new THREE[(_0x11ec11(0x186))](_0x373b90, _0x282fa5), _0x1e4ded[_0x11ec11(0x1a0)](_0x5a0104);
     }
 
-    function animateParticles() {
-        isAnimating = true;
-        let startTime = Date.now();
-
-        const positionAttribute = particleSystem.geometry.getAttribute('position');
-        const velocityAttribute = particleSystem.geometry.getAttribute('velocity');
-        const delayAttribute = particleSystem.geometry.getAttribute('delay');
-        const positions = positionAttribute.array;
-        const velocities = velocityAttribute.array;
-
-        const windDirection = new THREE.Vector3(
-            particleParams.windStrength,
-            particleParams.windStrength * 0.3,
-            0
-        );
-        const gravity = -0.01;
-        const drag = 0.98;
-
-        const render = () => {
-            if (!isAnimating) return;
-
-            const elapsed = (Date.now() - startTime) / 1000;
-
-            for (let i = 0; i < particleParams.count; i++) {
-                const delay = delayAttribute.array[i];
-                if (elapsed < delay) continue;
-
-                const i3 = i * 3;
-                const windFactor = Math.min(1, (elapsed - delay) * 0.5);
-                velocities[i3] += windDirection.x * windFactor;
-                velocities[i3 + 1] += windDirection.y * windFactor;
-                velocities[i3 + 2] += windDirection.z * windFactor;
-
-                velocities[i3 + 1] += gravity;
-                velocities[i3] *= drag;
-                velocities[i3 + 1] *= drag;
-                velocities[i3 + 2] *= drag;
-
-                positions[i3] += velocities[i3];
-                positions[i3 + 1] += velocities[i3 + 1];
-                positions[i3 + 2] += velocities[i3 + 2];
-            }
-
-            positionAttribute.needsUpdate = true;
-
-            const fadeStart = 2.5;
-            if (elapsed > fadeStart) {
-                particleSystem.material.opacity = 1 - ((elapsed - fadeStart) / 3);
-            }
-
-            renderer.render(scene, camera);
-
-            if (elapsed > 6 || particleSystem.material.opacity <= 0) {
-                cleanup();
-            } else {
-                requestAnimationFrame(render);
-            }
-        };
-
-        render();
+    function _0xdfda2() {
+        const _0x16b947 = _0x53f53a;
+        _0x8d4220 = !![];
+        let _0x2313dd = Date['now']();
+        const _0x43dd75 = _0x5a0104[_0x16b947(0x13a)][_0x16b947(0x1aa)](_0x16b947(0x13c)),
+            _0x352c08 = _0x5a0104[_0x16b947(0x13a)]['getAttribute']('velocity'),
+            _0x58ff6d = _0x5a0104[_0x16b947(0x13a)][_0x16b947(0x1aa)](_0x16b947(0x180)),
+            _0x526ae1 = _0x43dd75['array'],
+            _0x27d499 = _0x352c08['array'],
+            _0x538ff0 = new THREE['Vector3'](_0x3ffae1['windStrength'], _0x3ffae1['windStrength'] * 0.3, 0x0),
+            _0x44e92f = -0.01,
+            _0x141e4c = 0.98,
+            _0x54aed8 = () => {
+                const _0x1d2553 = _0x16b947;
+                if (!_0x8d4220) return;
+                const _0x31b104 = (Date[_0x1d2553(0x196)]() - _0x2313dd) / 0x3e8;
+                for (let _0x160da5 = 0x0; _0x160da5 < _0x3ffae1[_0x1d2553(0x183)]; _0x160da5++) {
+                    const _0x2937f5 = _0x58ff6d[_0x1d2553(0x15e)][_0x160da5];
+                    if (_0x31b104 < _0x2937f5) continue;
+                    const _0x21d609 = _0x160da5 * 0x3,
+                        _0x336034 = Math[_0x1d2553(0x18a)](0x1, (_0x31b104 - _0x2937f5) * 0.5);
+                    _0x27d499[_0x21d609] += _0x538ff0['x'] * _0x336034, _0x27d499[_0x21d609 + 0x1] += _0x538ff0['y'] * _0x336034, _0x27d499[_0x21d609 + 0x2] += _0x538ff0['z'] * _0x336034, _0x27d499[_0x21d609 + 0x1] += _0x44e92f, _0x27d499[_0x21d609] *= _0x141e4c, _0x27d499[_0x21d609 + 0x1] *= _0x141e4c, _0x27d499[_0x21d609 + 0x2] *= _0x141e4c, _0x526ae1[_0x21d609] += _0x27d499[_0x21d609], _0x526ae1[_0x21d609 + 0x1] += _0x27d499[_0x21d609 + 0x1], _0x526ae1[_0x21d609 + 0x2] += _0x27d499[_0x21d609 + 0x2];
+                }
+                _0x43dd75[_0x1d2553(0x140)] = !![];
+                const _0x369bf6 = 2.5;
+                _0x31b104 > _0x369bf6 && (_0x5a0104[_0x1d2553(0x128)][_0x1d2553(0x126)] = 0x1 - (_0x31b104 - _0x369bf6) / 0x3), _0x2255cb['render'](_0x1e4ded, _0x117d2d), _0x31b104 > 0x6 || _0x5a0104[_0x1d2553(0x128)][_0x1d2553(0x126)] <= 0x0 ? _0x405cb6() : requestAnimationFrame(_0x54aed8);
+            };
+        _0x54aed8();
     }
 
-    function cleanup() {
-        isAnimating = false;
-        gsap.to(nameElement, {
-            color: '',
-            duration: 0.5,
-            ease: 'power2.inOut'
-        });
-
-        if (renderer && renderer.domElement.parentNode) {
-            document.body.removeChild(renderer.domElement);
-        }
-
-        scene = null;
-        camera = null;
-        renderer = null;
-        particleSystem = null;
+    function _0x405cb6() {
+        const _0x42feb8 = _0x53f53a;
+        _0x8d4220 = ![], gsap['to'](_0x3d4309, {
+            'color': '',
+            'duration': 0.5,
+            'ease': _0x42feb8(0x168)
+        }), _0x2255cb && _0x2255cb['domElement']['parentNode'] && document[_0x42feb8(0x197)]['removeChild'](_0x2255cb[_0x42feb8(0x176)]), _0x1e4ded = null, _0x117d2d = null, _0x2255cb = null, _0x5a0104 = null;
     }
 }
 
-// Connection Check
+function _0x4816(_0x1ed7c2, _0x3414ae) {
+    const _0x548e70 = _0x548e();
+    return _0x4816 = function(_0x4816c0, _0x3cf686) {
+        _0x4816c0 = _0x4816c0 - 0x122;
+        let _0x1384fc = _0x548e70[_0x4816c0];
+        return _0x1384fc;
+    }, _0x4816(_0x1ed7c2, _0x3414ae);
+}
+
 function initConnectionCheck() {
-    checkConnection();
-    setInterval(checkConnection, 10000);
+    checkConnection(), setInterval(checkConnection, 0x2710);
 }
 
 function checkConnection() {
-    Promise.race([
-            fetch('https://www.google.com/favicon.ico', {
-                method: 'HEAD',
-                mode: 'no-cors',
-                cache: 'no-store'
-            }),
-            new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 3000))
-        ])
-        .then(() => {
-            if (window.location.pathname.endsWith('no.html')) {
-                document.body.classList.add('page-exit-animation');
-                setTimeout(() => {
-                    window.location.href = 'index.html';
-                }, 800);
-            }
-        })
-        .catch(() => {
-            if (!window.location.pathname.endsWith('no.html')) {
-                document.body.classList.add('page-exit-animation');
-                setTimeout(() => {
-                    window.location.href = 'no.html';
-                }, 800);
-            }
-        });
+    const _0x22f10e = _0x29625b;
+    Promise[_0x22f10e(0x161)]([fetch('https://www.google.com/favicon.ico', {
+        'method': 'HEAD',
+        'mode': _0x22f10e(0x18b),
+        'cache': 'no-store'
+    }), new Promise((_0x328389, _0x3fcd28) => setTimeout(() => _0x3fcd28(new Error(_0x22f10e(0x12c))), 0xbb8))])[_0x22f10e(0x14c)](() => {
+        const _0x2dde14 = _0x22f10e;
+        window[_0x2dde14(0x122)]['pathname'][_0x2dde14(0x14f)]('no.html') && (document[_0x2dde14(0x197)][_0x2dde14(0x169)][_0x2dde14(0x1a0)](_0x2dde14(0x18e)), setTimeout(() => {
+            const _0x309611 = _0x2dde14;
+            window[_0x309611(0x122)]['href'] = 'index.html';
+        }, 0x320));
+    })[_0x22f10e(0x142)](() => {
+        const _0x5ec94c = _0x22f10e;
+        !window['location']['pathname'][_0x5ec94c(0x14f)](_0x5ec94c(0x191)) && (document['body'][_0x5ec94c(0x169)]['add']('page-exit-animation'), setTimeout(() => {
+            const _0x53ee06 = _0x5ec94c;
+            window['location']['href'] = _0x53ee06(0x191);
+        }, 0x320));
+    });
 }
 
-// Profile Picture
 function initProfilePicture() {
-    const profilePicture = document.getElementById('profile-picture');
-    if (!profilePicture) return;
+    const _0x596f1b = _0x29625b,
+        _0x10ce3c = document[_0x596f1b(0x155)](_0x596f1b(0x1b2));
+    if (!_0x10ce3c) return;
+    const _0x259cbb = _0x10ce3c[_0x596f1b(0x1a2)](_0x596f1b(0x159));
+    if (!_0x259cbb) return;
+    const _0x4b1ca6 = [_0x596f1b(0x16e), _0x596f1b(0x17a), 'https://ucarecdn.com/c07a4845-c61a-4ab8-9408-77c7300191fc/-/preview/1000x1000/'];
+    let _0x56e5c0 = 0x0;
 
-    const imgElement = profilePicture.querySelector('img');
-    if (!imgElement) return;
-
-    const images = [
-        "https://ucarecdn.com/f7a97b92-31bd-4e03-a3f4-af5c99c95453/-/preview/750x1000/",
-        "https://ucarecdn.com/16d4d51c-3864-4320-a393-d6af0e9d0e98/-/preview/617x588/",
-        "https://ucarecdn.com/c07a4845-c61a-4ab8-9408-77c7300191fc/-/preview/1000x1000/"
-    ];
-
-    let currentImageIndex = 0;
-
-    function transitionToNextImage() {
-        imgElement.classList.add('melting');
-
-        setTimeout(() => {
-            currentImageIndex = (currentImageIndex + 1) % images.length;
-            imgElement.src = images[currentImageIndex];
-            imgElement.classList.remove('melting');
-            imgElement.classList.add('appearing');
-
-            setTimeout(() => {
-                imgElement.classList.remove('appearing');
-            }, 1000);
-        }, 1500);
+    function _0x5d8ac7() {
+        const _0x181f77 = _0x596f1b;
+        _0x259cbb['classList'][_0x181f77(0x1a0)](_0x181f77(0x125)), setTimeout(() => {
+            const _0x2c9375 = _0x181f77;
+            _0x56e5c0 = (_0x56e5c0 + 0x1) % _0x4b1ca6[_0x2c9375(0x1ae)], _0x259cbb['src'] = _0x4b1ca6[_0x56e5c0], _0x259cbb[_0x2c9375(0x169)][_0x2c9375(0x139)](_0x2c9375(0x125)), _0x259cbb[_0x2c9375(0x169)][_0x2c9375(0x1a0)]('appearing'), setTimeout(() => {
+                const _0xa000fe = _0x2c9375;
+                _0x259cbb[_0xa000fe(0x169)][_0xa000fe(0x139)](_0xa000fe(0x177));
+            }, 0x3e8);
+        }, 0x5dc);
     }
-
-    // Auto-transition every 8 seconds
-    const intervalId = setInterval(transitionToNextImage, 8000);
-
-    // Hover transition
-    let hoverTimer;
-    profilePicture.addEventListener('mouseenter', () => {
-        hoverTimer = setTimeout(transitionToNextImage, 2000);
-    });
-
-    profilePicture.addEventListener('mouseleave', () => {
-        clearTimeout(hoverTimer);
-    });
-
-    // Right-click protection
-    imgElement.addEventListener('contextmenu', (e) => {
-        e.preventDefault();
-        window.location.href = "blocked.html";
-    });
-
-    imgElement.setAttribute('draggable', 'false');
+    const _0x53968d = setInterval(_0x5d8ac7, 0x1f40);
+    let _0x41a075;
+    _0x10ce3c[_0x596f1b(0x173)](_0x596f1b(0x1a1), () => {
+        _0x41a075 = setTimeout(_0x5d8ac7, 0x7d0);
+    }), _0x10ce3c[_0x596f1b(0x173)]('mouseleave', () => {
+        clearTimeout(_0x41a075);
+    }), _0x259cbb[_0x596f1b(0x173)](_0x596f1b(0x189), _0x1ff1c8 => {
+        const _0x5d7a49 = _0x596f1b;
+        _0x1ff1c8['preventDefault'](), window['location'][_0x5d7a49(0x127)] = _0x5d7a49(0x12b);
+    }), _0x259cbb['setAttribute']('draggable', 'false');
 }
 
-// Enhanced Card
 function initEnhancedCard() {
-    const card = document.querySelector('.enhanced-image-card');
-    if (!card) return;
-
-    const minimizeBtn = card.querySelector('.minimize-btn');
-    const restoreBtn = card.querySelector('.restore-btn');
-    const imageContainer = card.querySelector('.image-container');
-
+    const _0x3c5a88 = _0x29625b,
+        _0x4644a4 = document[_0x3c5a88(0x1a2)]('.enhanced-image-card');
+    if (!_0x4644a4) return;
+    const _0x341382 = _0x4644a4[_0x3c5a88(0x1a2)](_0x3c5a88(0x17b)),
+        _0x4f1672 = _0x4644a4[_0x3c5a88(0x1a2)](_0x3c5a88(0x179)),
+        _0x432415 = _0x4644a4['querySelector']('.image-container');
     setTimeout(() => {
-        card.classList.add('loaded');
-        if (imageContainer) imageContainer.style.display = 'block';
-    }, 1500);
-
-    if (minimizeBtn) {
-        minimizeBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            card.classList.add('hidden');
-        });
-    }
-
-    if (restoreBtn) {
-        restoreBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            card.classList.remove('hidden');
-        });
-    }
+        const _0x58658b = _0x3c5a88;
+        _0x4644a4[_0x58658b(0x169)][_0x58658b(0x1a0)]('loaded');
+        if (_0x432415) _0x432415[_0x58658b(0x199)][_0x58658b(0x132)] = 'block';
+    }, 0x5dc), _0x341382 && _0x341382[_0x3c5a88(0x173)](_0x3c5a88(0x1ac), function(_0x3bdb01) {
+        const _0x43a988 = _0x3c5a88;
+        _0x3bdb01[_0x43a988(0x16c)](), _0x3bdb01[_0x43a988(0x174)](), _0x4644a4[_0x43a988(0x169)][_0x43a988(0x1a0)](_0x43a988(0x166));
+    }), _0x4f1672 && _0x4f1672[_0x3c5a88(0x173)](_0x3c5a88(0x1ac), function(_0x3ad640) {
+        const _0x4e37b1 = _0x3c5a88;
+        _0x3ad640[_0x4e37b1(0x16c)](), _0x3ad640['stopPropagation'](), _0x4644a4['classList']['remove'](_0x4e37b1(0x166));
+    });
 }
 
-// Verification Icon
 function initVerificationIcon() {
-    const container = document.getElementById('verify-icon-container');
-    if (!container) return;
-
-    const img = document.createElement("img");
-    img.src = "verify.svg";
-    img.alt = "Verified";
-    img.style.width = "1em";
-    img.style.height = "5em";
-    img.style.verticalAlign = "middle";
-    img.style.userSelect = "none";
-    img.style.pointerEvents = "auto";
-    img.draggable = false;
-
-    // Event handlers
-    img.oncontextmenu = (e) => {
-        e.preventDefault();
-        return false;
+    const _0x30391e = _0x29625b,
+        _0x2a845b = document['getElementById']('verify-icon-container');
+    if (!_0x2a845b) return;
+    const _0x3bfb48 = document[_0x30391e(0x193)](_0x30391e(0x159));
+    _0x3bfb48[_0x30391e(0x148)] = _0x30391e(0x13b), _0x3bfb48[_0x30391e(0x146)] = _0x30391e(0x172), _0x3bfb48[_0x30391e(0x199)]['width'] = '1em', _0x3bfb48[_0x30391e(0x199)][_0x30391e(0x171)] = _0x30391e(0x192), _0x3bfb48[_0x30391e(0x199)]['verticalAlign'] = _0x30391e(0x141), _0x3bfb48[_0x30391e(0x199)]['userSelect'] = _0x30391e(0x164), _0x3bfb48[_0x30391e(0x199)][_0x30391e(0x188)] = 'auto', _0x3bfb48['draggable'] = ![], _0x3bfb48[_0x30391e(0x136)] = _0x52f5c9 => {
+        const _0x94835b = _0x30391e;
+        return _0x52f5c9[_0x94835b(0x16c)](), ![];
+    }, _0x3bfb48[_0x30391e(0x162)] = _0x562738 => {
+        const _0x4c0029 = _0x30391e;
+        return window[_0x4c0029(0x122)][_0x4c0029(0x127)] = _0x4c0029(0x12b), ![];
     };
-    img.ondragstart = (e) => {
-        window.location.href = "blocked.html";
-        return false;
-    };
-
-    let pressTimer;
-    const clearPressTimer = () => clearTimeout(pressTimer);
-
-    img.addEventListener("mousedown", () => {
-        pressTimer = setTimeout(() => {
-            window.location.href = "blocked.html";
-        }, 500);
-    });
-    img.addEventListener("mouseup", clearPressTimer);
-    img.addEventListener("mouseleave", clearPressTimer);
-
-    img.addEventListener("touchstart", () => {
-        pressTimer = setTimeout(() => {
-            window.location.href = "blocked.html";
-        }, 500);
-    });
-    img.addEventListener("touchend", clearPressTimer);
-    img.addEventListener("touchcancel", clearPressTimer);
-
-    container.appendChild(img);
+    let _0x5fdf4b;
+    const _0x3b7173 = () => clearTimeout(_0x5fdf4b);
+    _0x3bfb48[_0x30391e(0x173)]('mousedown', () => {
+        _0x5fdf4b = setTimeout(() => {
+            const _0x276dd5 = _0x4816;
+            window['location']['href'] = _0x276dd5(0x12b);
+        }, 0x1f4);
+    }), _0x3bfb48['addEventListener']('mouseup', _0x3b7173), _0x3bfb48[_0x30391e(0x173)](_0x30391e(0x1a7), _0x3b7173), _0x3bfb48[_0x30391e(0x173)](_0x30391e(0x144), () => {
+        _0x5fdf4b = setTimeout(() => {
+            const _0x1837c9 = _0x4816;
+            window[_0x1837c9(0x122)]['href'] = _0x1837c9(0x12b);
+        }, 0x1f4);
+    }), _0x3bfb48[_0x30391e(0x173)](_0x30391e(0x160), _0x3b7173), _0x3bfb48[_0x30391e(0x173)](_0x30391e(0x1a9), _0x3b7173), _0x2a845b[_0x30391e(0x17c)](_0x3bfb48);
 }
 
-// Footer Animation
 function initFooterAnimation() {
-    window.addEventListener('load', () => {
-        const footer = document.getElementById('pageFooter');
-        if (!footer) return;
-
-        gsap.to(footer, {
-            y: 0,
-            opacity: 1,
-            duration: 1,
-            delay: 1.5,
-            ease: "power2.out"
+    const _0x51dc0d = _0x29625b;
+    window['addEventListener'](_0x51dc0d(0x137), () => {
+        const _0x3419ec = _0x51dc0d,
+            _0x500dc8 = document[_0x3419ec(0x155)](_0x3419ec(0x1af));
+        if (!_0x500dc8) return;
+        gsap['to'](_0x500dc8, {
+            'y': 0x0,
+            'opacity': 0x1,
+            'duration': 0x1,
+            'delay': 1.5,
+            'ease': _0x3419ec(0x195)
         });
-
-        const footerLogo = document.querySelector(".footer-logo");
-        if (footerLogo) {
-            footerLogo.addEventListener("mouseenter", () => {
-                gsap.to(footerLogo, {
-                    scale: 1.1,
-                    opacity: 1,
-                    duration: 0.3,
-                    yoyo: true,
-                    repeat: 1
-                });
+        const _0x5adb6b = document[_0x3419ec(0x1a2)]('.footer-logo');
+        _0x5adb6b && _0x5adb6b[_0x3419ec(0x173)]('mouseenter', () => {
+            gsap['to'](_0x5adb6b, {
+                'scale': 1.1,
+                'opacity': 0x1,
+                'duration': 0.3,
+                'yoyo': !![],
+                'repeat': 0x1
             });
-        }
+        });
     });
 }
