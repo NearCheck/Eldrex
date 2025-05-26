@@ -1,5 +1,5 @@
 function _0x4d1d() {
-    const _0x237fdb = ['930042HfKCVG', 'location', 'continue-btn', 'includes', '450760SaKaIn', 'preventDefault', 'hostname', '1735044SxsRAl', 'toString', 'https://eldrexdelosreyesbula.github.io/Eldrex/unauthorized.html', '284517BWAkdA', 'selectstart', 'join', 'key', 'getElementById', 'contextmenu', 'html', 'innerHTML', 'keydown', 'protected-content', '1977684TAHjua', '2025624tdXIZt', 'index', 'href', '200OqiOZq', 'addEventListener', '6510410WuDtve', 'top', '35fTqBdH'];
+    const _0x237fdb = ['930042HfKCVG', 'location', 'continue-btn', 'includes', '450760SaKaIn', 'preventDefault', 'hostname', '1735044SxsRAl', 'toString', 'https://eldrexdelosreyesbula.github.io/Eldrex', '284517BWAkdA', 'selectstart', 'join', 'key', 'getElementById', 'contextmenu', 'html', 'innerHTML', 'keydown', 'protected-content', '1977684TAHjua', '2025624tdXIZt', 'index', 'href', '200OqiOZq', 'addEventListener', '6510410WuDtve', 'top', '35fTqBdH'];
     _0x4d1d = function() {
         return _0x237fdb;
     };
