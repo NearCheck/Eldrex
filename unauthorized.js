@@ -19,7 +19,7 @@ const _0x57eefc = _0x4885;
         }
     }
 }(_0x4d1d, 0xafbcf));
-const allowedDomains = ['https://eldrexdelosreyesbula.github.io/Eldrex, https://eldrexdelosreyesbula.github.io/Eldrex/load.html'],
+const allowedDomains = ['https://eldrexdelosreyesbula.github.io'],
     currentDomain = window[_0x57eefc(0xf7)][_0x57eefc(0xfc)];
 !allowedDomains[_0x57eefc(0xf9)](currentDomain) && (window['location'][_0x57eefc(0xf0)] = _0x57eefc(0xff));
 const protectedContent = document[_0x57eefc(0x104)](_0x57eefc(0xec));
