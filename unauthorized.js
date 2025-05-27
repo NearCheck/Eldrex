@@ -1,1 +1,112 @@
-const _0x2f78a2=_0xf73c;(function(_0x1cd4f3,_0x4c0090){const _0x3daf8a=_0xf73c,_0x5a48ba=_0x1cd4f3();while(!![]){try{const _0x1bc6e4=-parseInt(_0x3daf8a(0x1d0))/0x1+parseInt(_0x3daf8a(0x1b8))/0x2*(-parseInt(_0x3daf8a(0x1ba))/0x3)+-parseInt(_0x3daf8a(0x1c9))/0x4+parseInt(_0x3daf8a(0x1cb))/0x5*(-parseInt(_0x3daf8a(0x1b4))/0x6)+parseInt(_0x3daf8a(0x1c8))/0x7*(parseInt(_0x3daf8a(0x1d1))/0x8)+-parseInt(_0x3daf8a(0x1cc))/0x9*(-parseInt(_0x3daf8a(0x1d6))/0xa)+parseInt(_0x3daf8a(0x1c2))/0xb*(parseInt(_0x3daf8a(0x1d9))/0xc);if(_0x1bc6e4===_0x4c0090)break;else _0x5a48ba['push'](_0x5a48ba['shift']());}catch(_0xfedf3a){_0x5a48ba['push'](_0x5a48ba['shift']());}}}(_0x510f,0x50f1c));function hi(){const _0x5d6a9a=_0xf73c;console[_0x5d6a9a(0x1c1)](_0x5d6a9a(0x1b7));}function _0xf73c(_0x4a8ffc,_0x3e136c){const _0x510f90=_0x510f();return _0xf73c=function(_0xf73ce7,_0x5cbdb0){_0xf73ce7=_0xf73ce7-0x1b4;let _0x56b696=_0x510f90[_0xf73ce7];return _0x56b696;},_0xf73c(_0x4a8ffc,_0x3e136c);}hi();function _0x510f(){const _0x30b122=['contextmenu','DOMContentLoaded','35PjVDaG','76660TYEyPm','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<img\x20src=\x2220250526_172947_0001.gif\x22\x20class=\x22gif-protected\x22\x20alt=\x22Animated\x20GIF\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<h1>Verified\x20by\x20LanDecs</h1>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p>This\x20website\x20is\x20the\x20official\x20online\x20space\x20of\x20<strong>Eldrex\x20Delos\x20Reyes\x20Bula</strong>,\x20proudly\x20verified\x20by\x20<strong>LanDecs</strong>.\x20Everything\x20you\x20see\x20here—from\x20the\x20content\x20to\x20the\x20updates—reflects\x20who\x20Eldrex\x20is\x20and\x20what\x20he\x20stands\x20for.\x20LanDecs\x20has\x20confirmed\x20that\x20this\x20is\x20his\x20genuine\x20website,\x20so\x20you\x20can\x20trust\x20that\x20the\x20information\x20is\x20real\x20and\x20thoughtfully\x20shared.</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22continue-btn\x22>Return</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22copyright\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20©\x202025\x20landecs\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20','7835iBwYyR','4732839uYzVgw','innerWidth','location','selectstart','244275jPhfnD','778072PqKqMR','keyCode','shiftKey','horizontal','href','10MMjFZp','copy','querySelector','72GglvgQ','hostname','Firebug','endsWith','getElementById','1662wNFksu','some','innerHTML','Hello\x20World!','98398AFpfro','addEventListener','9ozMKDa','outerHeight','.continue-btn','top','keydown','chrome','https://eldrexdelosreyesbula.github.io/Eldrex/unauthorized.html','log','301543NSaDCu','preventDefault','eldrexdelosreyesbula.github.io','metaKey'];_0x510f=function(){return _0x30b122;};return _0x510f();}const allowedDomains=[_0x2f78a2(0x1c4)],currentDomain=window[_0x2f78a2(0x1ce)][_0x2f78a2(0x1da)];!allowedDomains[_0x2f78a2(0x1b5)](_0x2873ba=>currentDomain===_0x2873ba||currentDomain[_0x2f78a2(0x1dc)]('.'+_0x2873ba))&&(window[_0x2f78a2(0x1ce)][_0x2f78a2(0x1d5)]=_0x2f78a2(0x1c0));document[_0x2f78a2(0x1b9)](_0x2f78a2(0x1c7),function(){const _0x5b6444=_0x2f78a2,_0x56b924=document[_0x5b6444(0x1dd)]('protected-content');if(_0x56b924){_0x56b924[_0x5b6444(0x1b6)]=_0x5b6444(0x1ca);const _0x4aca96=_0x56b924[_0x5b6444(0x1d8)](_0x5b6444(0x1bc));_0x4aca96&&_0x4aca96[_0x5b6444(0x1b9)]('click',function(){const _0x496991=_0x5b6444;window[_0x496991(0x1ce)]['href']='index.html';});}protectContent();});function protectContent(){const _0x40b6d4=_0x2f78a2;document[_0x40b6d4(0x1b9)](_0x40b6d4(0x1c6),function(_0x1c127c){const _0x2efaf6=_0x40b6d4;return _0x1c127c[_0x2efaf6(0x1c3)](),![];}),document['addEventListener'](_0x40b6d4(0x1cf),function(_0x42ff99){const _0xda516a=_0x40b6d4;return _0x42ff99[_0xda516a(0x1c3)](),![];}),document[_0x40b6d4(0x1b9)](_0x40b6d4(0x1d7),function(_0x4e650a){const _0x470e55=_0x40b6d4;return _0x4e650a[_0x470e55(0x1c3)](),![];}),document[_0x40b6d4(0x1b9)](_0x40b6d4(0x1be),function(_0x1a9376){const _0x370334=_0x40b6d4;if(_0x1a9376['ctrlKey']||_0x1a9376[_0x370334(0x1c5)]){if(_0x1a9376['keyCode']===0x41||_0x1a9376[_0x370334(0x1d2)]===0x43||_0x1a9376['keyCode']===0x58||_0x1a9376[_0x370334(0x1d2)]===0x53||_0x1a9376[_0x370334(0x1d2)]===0x55||_0x1a9376[_0x370334(0x1d2)]===0x49||_0x1a9376[_0x370334(0x1d2)]===0x4a||_0x1a9376['keyCode']===0x7b||_0x1a9376[_0x370334(0x1d3)]&&(_0x1a9376[_0x370334(0x1d2)]===0x49||_0x1a9376[_0x370334(0x1d2)]===0x4a||_0x1a9376[_0x370334(0x1d2)]===0x43))return _0x1a9376['preventDefault'](),![];}});window!==window[_0x40b6d4(0x1bd)]&&(window['top']['location']=window[_0x40b6d4(0x1ce)]);let _0x3886e7=![];const _0x54d8ca=0xa0,_0x4a2820=setInterval(function(){const _0x421eff=_0x40b6d4,_0x18f3af=window['outerWidth']-window[_0x421eff(0x1cd)]>_0x54d8ca,_0x5a2db1=window[_0x421eff(0x1bb)]-window['innerHeight']>_0x54d8ca,_0x110d0e=_0x18f3af?'vertical':_0x421eff(0x1d4);!(_0x5a2db1&&_0x18f3af)&&(window[_0x421eff(0x1db)]&&window[_0x421eff(0x1db)][_0x421eff(0x1bf)]&&window[_0x421eff(0x1db)]['chrome']['isInitialized']||_0x18f3af||_0x5a2db1)&&(_0x3886e7=!![],clearInterval(_0x4a2820),window[_0x421eff(0x1ce)][_0x421eff(0x1d5)]=_0x421eff(0x1c0));},0x1f4);setInterval(function(){const _0x18c589=_0x40b6d4;!allowedDomains[_0x18c589(0x1b5)](_0x27bdca=>window['location'][_0x18c589(0x1da)]===_0x27bdca||window[_0x18c589(0x1ce)][_0x18c589(0x1da)][_0x18c589(0x1dc)]('.'+_0x27bdca))&&(window[_0x18c589(0x1ce)][_0x18c589(0x1d5)]='https://eldrexdelosreyesbula.github.io/Eldrex/unauthorized.html');},0xbb8);}(function(){const _0x2463df=function(){const _0x287200=_0xf73c,_0x2faa60=_0x287200(0x1c7),_0x2aa0b5=_0x287200(0x1b9);window[_0x2aa0b5](_0x2faa60,function(){protectContent();});};_0x2463df();}());
+const _0x331a2a = _0x8adc;
+
+function _0x1df3() {
+const _0x390192 = [
+  '119094svPIgA',
+  'continue-btn',
+  '5958491DnjehD',
+  'keyCode',
+  'selectstart',
+  'keydown',
+  'html',
+  'top',
+  '98028uPdNOb',
+  '16LIMotm',
+  'https://eldrexdelosreyesbula.github.io',
+  'index',
+  'protected-content',
+  'preventDefault',
+  'href',
+  '2wStJpV',
+  'join',
+  'includes',
+  'getElementsByClassName',
+  'getElementById',
+  '\x0a\x20\x20\x20\x20<img\x20src=\x2220250526_172947_0001.gif\x22\x20class=\x22gif-protected\x22\x20alt=\x22Animated\x20GIF\x22>\x0a\x20\x20\x20\x20<h1>Verified\x20by\x20LanDecs</h1>\x0a\x20\x20\x20\x20<p>This\x20website\x20serves\x20as\x20the\x20official\x20online\x20platform\x20for\x20<strong>Eldrex\x20Delos\x20Reyes\x20Bula</strong>.\x20It\x20has\x20been\x20thoroughly\x20verified\x20by\x20<strong>LanDecs</strong>,\x20assuring\x20you\x20that\x20all\x20updates\x20and\x20information\x20provided\x20are\x20authentic\x20and\x20accurately\x20represent\x20Eldrex\'s\x20views.\x20We\x20encourage\x20you\x20to\x20explore\x20with\x20confidence,\x20knowing\x20the\x20content\x20is\x20reliable\x20and\x20thoughtfully\x20shared.</p>\x0a\x20\x20\x20\x20<button\x20class=\x22continue-btn\x22>Return</button>\x0a\x20\x20\x20\x20<div\x20class=\x22copyright\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20©\x202025\x20landecs\x0a\x20\x20\x20\x20</div>\x0a',
+  'contextmenu',
+  'DOMContentLoaded',
+  '805149RsZjzh',
+  'https://eldrexdelosreyesbula.github.io/Eldrex/unauthorized.html',
+  'toString',
+  'click',
+  'location',
+  '878750Fzifek',
+  'addEventListener',
+  '23299xZgZqW',
+  'log',
+  'hostname',
+  '10nGYdcv',
+  '97160ChQBPE',
+  '18uLCEGY'
+];
+    _0x1df3 = function() {
+        return _0x390192;
+    };
+    return _0x1df3();
+}(function(_0x1e4b3b, _0x39f9cb) {
+    const _0x9bf169 = _0x8adc,
+        _0x364634 = _0x1e4b3b();
+    while (!![]) {
+        try {
+            const _0x49af0e = parseInt(_0x9bf169(0x1de)) / 0x1 * (-parseInt(_0x9bf169(0x1cf)) / 0x2) + -parseInt(_0x9bf169(0x1e4)) / 0x3 + parseInt(_0x9bf169(0x1e2)) / 0x4 + -parseInt(_0x9bf169(0x1dc)) / 0x5 + parseInt(_0x9bf169(0x1e3)) / 0x6 * (-parseInt(_0x9bf169(0x1c8)) / 0x7) + parseInt(_0x9bf169(0x1c9)) / 0x8 * (-parseInt(_0x9bf169(0x1d7)) / 0x9) + -parseInt(_0x9bf169(0x1e1)) / 0xa * (-parseInt(_0x9bf169(0x1e6)) / 0xb);
+            if (_0x49af0e === _0x39f9cb) break;
+            else _0x364634['push'](_0x364634['shift']());
+        } catch (_0x133c40) {
+            _0x364634['push'](_0x364634['shift']());
+        }
+    }
+}(_0x1df3, 0x19f32));
+
+function hi() {
+    const _0x11c59f = _0x8adc;
+    console[_0x11c59f(0x1df)]('Hello\x20World!');
+}
+hi();
+const allowedDomains = [_0x331a2a(0x1ca)],
+    currentDomain = window[_0x331a2a(0x1db)][_0x331a2a(0x1e0)];
+!allowedDomains['includes'](currentDomain) && (window['location'][_0x331a2a(0x1ce)] = _0x331a2a(0x1d8));
+const protectedContent = document[_0x331a2a(0x1d3)](_0x331a2a(0x1cc));
+
+function _0x8adc(_0x13b016, _0x215de7) {
+    const _0x1df30a = _0x1df3();
+    return _0x8adc = function(_0x8adcce, _0x225549) {
+        _0x8adcce = _0x8adcce - 0x1c6;
+        let _0xb9aecc = _0x1df30a[_0x8adcce];
+        return _0xb9aecc;
+    }, _0x8adc(_0x13b016, _0x215de7);
+}
+protectedContent['innerHTML'] = _0x331a2a(0x1d4), document[_0x331a2a(0x1dd)](_0x331a2a(0x1d5), function(_0x411b73) {
+    return _0x411b73['preventDefault'](), ![];
+}), document[_0x331a2a(0x1dd)](_0x331a2a(0x1e8), function(_0x3dab6e) {
+    const _0x2e66a2 = _0x331a2a;
+    return _0x3dab6e[_0x2e66a2(0x1cd)](), ![];
+}), document[_0x331a2a(0x1dd)]('copy', function(_0x44605f) {
+    const _0x1aa619 = _0x331a2a;
+    return _0x44605f[_0x1aa619(0x1cd)](), ![];
+}), document[_0x331a2a(0x1dd)](_0x331a2a(0x1e9), function(_0x381987) {
+    const _0x354ec6 = _0x331a2a;
+    if (_0x381987['ctrlKey'] && (_0x381987['keyCode'] === 0x41 || _0x381987['keyCode'] === 0x43 || _0x381987['keyCode'] === 0x58 || _0x381987[_0x354ec6(0x1e7)] === 0x53 || _0x381987[_0x354ec6(0x1e7)] === 0x55)) return _0x381987[_0x354ec6(0x1cd)](), ![];
+    if (_0x381987['keyCode'] === 0x7b) return _0x381987[_0x354ec6(0x1cd)](), ![];
+});
+window !== window[_0x331a2a(0x1c7)] && (window['top']['location'] = window[_0x331a2a(0x1db)]);
+document[_0x331a2a(0x1dd)](_0x331a2a(0x1d6), function() {
+    const _0x2ca56c = _0x331a2a,
+        _0x142496 = document[_0x2ca56c(0x1d2)](_0x2ca56c(0x1e5));
+    for (let _0x296ecd of _0x142496) {
+        _0x296ecd[_0x2ca56c(0x1dd)](_0x2ca56c(0x1da), function() {
+            const _0x3a2f8a = _0x2ca56c,
+                _0x1be392 = [_0x3a2f8a(0x1cb), '.', _0x3a2f8a(0x1c6)];
+            window[_0x3a2f8a(0x1db)][_0x3a2f8a(0x1ce)] = _0x1be392[_0x3a2f8a(0x1d0)]('');
+        });
+    }
+}), (function() {
+    const _0x10c26d = _0x331a2a,
+        _0x4c353f = /./;
+    _0x4c353f[_0x10c26d(0x1d9)] = function() {
+        const _0x433e20 = _0x10c26d;
+        return window['location']['href'] = _0x433e20(0x1d8), '';
+    }, console[_0x10c26d(0x1df)]('%c', _0x4c353f);
+}()), setInterval(function() {
+    const _0x588efd = _0x331a2a;
+    !allowedDomains[_0x588efd(0x1d1)](window[_0x588efd(0x1db)][_0x588efd(0x1e0)]) && (window[_0x588efd(0x1db)][_0x588efd(0x1ce)] = 'https://eldrexdelosreyesbula.github.io/Eldrex/unauthorized.html');
+}, 0x1388);
