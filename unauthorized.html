@@ -2,44 +2,159 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unauthorized Access | LanDecs</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-.warning-icon,p{margin-bottom:30px}*{margin:0;padding:0;box-sizing:border-box}body{font-family:Poppins,sans-serif;background-color:#f8f9fa;color:#343a40;height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:20px;line-height:1.6}.warning-icon{font-size:72px;color:#dc3545;animation:1.5s infinite pulse}h1{font-size:28px;margin-bottom:20px;color:#dc3545;font-weight:700}p{max-width:600px}.official-link{display:inline-block;margin-top:20px;padding:12px 24px;background-color:#1776ff;color:#fff;text-decoration:none;border-radius:100px;font-weight:500;transition:background-color .3s}.official-link:hover{background-color:#145edc}.copyright{position:absolute;bottom:20px;font-size:12px;color:#6c757d}@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}@media (max-width:480px){.warning-icon{font-size:48px}h1{font-size:22px}p{font-size:14px}}img{width:200px;height:auto;display:block;margin:0 auto;pointer-events:none;user-select:none;-webkit-user-drag:none}
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    img-src 'self' https://eldrexdelosrsbula.github.io;
+    style-src 'self' https://fonts.googleapis.com;
+    font-src https://fonts.gstatic.com;
+    script-src 'self';
+  ">
+  <meta http-equiv="X-Frame-Options" content="DENY" />
+  <meta name="referrer" content="no-referrer" />
+  <title>Unauthorized Access | LanDecs</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* Global Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f8f9fa;
+      color: #343a40;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+      line-height: 1.6;
+      user-select: none;
+    }
+
+    /* Warning Icon & Image */
+    .warning-icon {
+      font-size: 72px;
+      color: #dc3545;
+      animation: pulse 1.5s infinite;
+      margin-bottom: 30px;
+    }
+
+    img {
+      width: 200px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+      pointer-events: none;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    /* Text */
+    h1 {
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: #dc3545;
+      font-weight: 700;
+    }
+
+    p {
+      max-width: 600px;
+      margin-bottom: 30px;
+    }
+
+    /* Button Link */
+    .official-link {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 12px 24px;
+      background-color: #1776ff;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 100px;
+      font-weight: 500;
+      transition: background-color 0.3s;
+    }
+
+    .official-link:hover {
+      background-color: #145edc;
+    }
+
+    /* Footer */
+    .copyright {
+      position: absolute;
+      bottom: 20px;
+      font-size: 12px;
+      color: #6c757d;
+    }
+
+    /* Animation */
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.1);
+      }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 480px) {
+      .warning-icon {
+        font-size: 48px;
+      }
+
+      h1 {
+        font-size: 22px;
+      }
+
+      p {
+        font-size: 14px;
+      }
+    }
+  </style>
+
+  <script>
+    // Disable right-click
+    document.addEventListener('contextmenu', event => event.preventDefault());
+
+    // Redirect unauthorized hostnames
+    const allowedHostnames = ['eldrexdelosreyesbula.github.io'];
+    if (!allowedHostnames.includes(window.location.hostname)) {
+      window.location.href = 'https://eldrexdelosreyesbula.github.io/Eldrex';
+    }
+  </script>
 </head>
 
 <body>
-    <div class="warning-icon">
-        <img src="Untitled design_20250526_175903_0000.svg">
-    </div>
 
-    <h1>Unauthorized Access Detected</h1>
+  <div class="warning-icon">
+    <img src="Untitled design_20250526_175903_0000.svg" alt="Warning Icon" />
+  </div>
 
-    <p>
-        You're attempting to access protected content from an unauthorized location.
-        This site and its materials are the exclusive property of <strong>Eldrex Delos Reyes Bula</strong>
-        and protected under LanDecs security policies.
-    </p>
+  <h1>Unauthorized Access Detected</h1>
 
-    <p>
-        To access this content, please use the official link provided below.
-        Any unauthorized distribution or use is strictly prohibited.
-    </p>
+  <p>
+    You are attempting to access protected content from an unauthorized location.<br>
+    All content on this site is the exclusive property of <strong>Eldrex Delos Reyes Bula</strong> and is safeguarded under LanDecs intellectual property rights.
+    Unauthorized access, distribution, or reproduction is strictly prohibited.
+  </p>
 
-    <a href="https://eldrexdelosreyesbula.github.io/Eldrex" class="official-link">
-        Proceed
-    </a>
+  <a href="https://eldrexdelosreyesbula.github.io/Eldrex" class="official-link">Return to Safety</a>
 
-    <div class="copyright">
-        © 2025 landecs
-    </div>
+  <div class="copyright">
+    © 2025 LanDecs
+  </div>
 
-    <script>
-var _0x8b01c5=_0x585c;function _0x5f4f(){var _0x565e70=['top','keydown','9DelPiY','preventDefault','24172RGPgVa','20QrAYpJ','contextmenu','F12','6iWOiyC','addEventListener','href','65vGykHu','4XmOPFI','3298168xMHiBS','242572JAixUj','ctrlKey','key','841812wizHPq','location','https://eldrexdelosreyesbula.github.io/Eldrex','3946716JUQKXI','168502igiRYH','2604637cjuZCy'];_0x5f4f=function(){return _0x565e70;};return _0x5f4f();}(function(_0x177a3a,_0x364541){var _0x4a65cc=_0x585c,_0xb1d741=_0x177a3a();while(!![]){try{var _0x1c96e6=parseInt(_0x4a65cc(0xbf))/0x1*(parseInt(_0x4a65cc(0xcd))/0x2)+parseInt(_0x4a65cc(0xd2))/0x3+-parseInt(_0x4a65cc(0xc5))/0x4*(parseInt(_0x4a65cc(0xcc))/0x5)+parseInt(_0x4a65cc(0xc9))/0x6*(parseInt(_0x4a65cc(0xc0))/0x7)+-parseInt(_0x4a65cc(0xce))/0x8*(parseInt(_0x4a65cc(0xc3))/0x9)+parseInt(_0x4a65cc(0xc6))/0xa*(parseInt(_0x4a65cc(0xcf))/0xb)+-parseInt(_0x4a65cc(0xd5))/0xc;if(_0x1c96e6===_0x364541)break;else _0xb1d741['push'](_0xb1d741['shift']());}catch(_0x4232ef){_0xb1d741['push'](_0xb1d741['shift']());}}}(_0x5f4f,0x34440),document[_0x8b01c5(0xca)](_0x8b01c5(0xc7),function(_0x10d6ee){var _0xf6045c=_0x8b01c5;_0x10d6ee[_0xf6045c(0xc4)]();}),document[_0x8b01c5(0xca)](_0x8b01c5(0xc2),function(_0x5af85f){var _0x38530a=_0x8b01c5;_0x5af85f[_0x38530a(0xd0)]&&(_0x5af85f['key']==='u'||_0x5af85f[_0x38530a(0xd1)]==='U'||_0x5af85f['key']==='s'||_0x5af85f['key']==='S')&&_0x5af85f[_0x38530a(0xc4)](),_0x5af85f['key']===_0x38530a(0xc8)&&_0x5af85f[_0x38530a(0xc4)]();}));window!==window[_0x8b01c5(0xc1)]&&(window[_0x8b01c5(0xc1)][_0x8b01c5(0xd3)]=window[_0x8b01c5(0xd3)]);function _0x585c(_0x4c875a,_0x46df10){var _0x5f4fde=_0x5f4f();return _0x585c=function(_0x585ce4,_0x1e0323){_0x585ce4=_0x585ce4-0xbf;var _0xb2b5c5=_0x5f4fde[_0x585ce4];return _0xb2b5c5;},_0x585c(_0x4c875a,_0x46df10);}setTimeout(function(){var _0x47aff2=_0x8b01c5;window['location'][_0x47aff2(0xcb)]=_0x47aff2(0xd4);},0x2710);
-    </script>
 </body>
 
 </html>
