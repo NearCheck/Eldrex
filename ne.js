@@ -1,39 +1,29 @@
-import {
-    initializeApp
-} from "https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js";
-import {
-    getAuth,
-    signInAnonymously,
-    onAuthStateChanged
+// Import configuration from separate file
+import { firebaseConfig } from './config.js';
+
+// Firebase imports
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js";
+import { 
+    getAuth, 
+    signInAnonymously, 
+    onAuthStateChanged 
 } from "https://www.gstatic.com/firebasejs/9.6.0/firebase-auth.js";
-import {
-    getFirestore,
-    doc,
-    setDoc,
-    getDoc,
-    enableIndexedDbPersistence
+import { 
+    getFirestore, 
+    doc, 
+    setDoc, 
+    getDoc, 
+    enableIndexedDbPersistence 
 } from "https://www.gstatic.com/firebasejs/9.6.0/firebase-firestore.js";
-import {
-    getDatabase,
-    ref,
-    onValue,
-    runTransaction,
-    off
+import { 
+    getDatabase, 
+    ref, 
+    onValue, 
+    runTransaction, 
+    off 
 } from "https://www.gstatic.com/firebasejs/9.6.0/firebase-database.js";
 
-// config.js
-export const firebaseConfig = {
-    apiKey: "AIzaSyBRcN1Uwv9g5SYQzfdofc0T8UgYkOAipMY",
-    authDomain: "barkada-3c8c5.firebaseapp.com",
-    databaseURL: "https://barkada-3c8c5-default-rtdb.firebaseio.com",
-    projectId: "barkada-3c8c5",
-    storageBucket: "barkada-3c8c5.firebasestorage.app",
-    messagingSenderId: "484579003166",
-    appId: "1:484579003166:web:e1ab0da6c9f4d6f739570f",
-    measurementId: "G-NQ4JR7CC2T"
-};
-
-// Initialize Firebase with error handling
+// Firebase initialization with error handling
 let app, auth, firestore, database;
 try {
     app = initializeApp(firebaseConfig);
@@ -51,9 +41,7 @@ try {
     });
 } catch (error) {
     console.error("Firebase initialization failed:", error);
-    // Fallback UI for when Firebase fails
-    document.getElementById('connectButton').style.display = 'none';
-    document.getElementById('connectionCount').textContent = '5.5K+';
+    showFallbackUI();
     throw error;
 }
 
@@ -66,19 +54,23 @@ if (!connectButton || !connectText || !countElement) {
     throw new Error('Required DOM elements not found');
 }
 
+// Fallback UI when Firebase fails
+function showFallbackUI() {
+    connectButton.style.display = 'none';
+    countElement.textContent = '5.5K+';
+}
+
 // Generate a persistent but privacy-conscious identifier
 const getBrowserId = () => {
     const storageKey = 'barkada_browserId';
     let browserId = localStorage.getItem(storageKey);
 
     if (!browserId) {
-        // Generate a v4 UUID-like identifier without external dependencies
         browserId = 'br-' + crypto.getRandomValues(new Uint32Array(1))[0].toString(16) +
             '-' + Date.now().toString(16);
         try {
             localStorage.setItem(storageKey, browserId);
         } catch (e) {
-            // Fallback to session storage if localStorage is full/blocked
             sessionStorage.setItem(storageKey, browserId);
         }
     }
@@ -111,7 +103,6 @@ const checkUserConnection = async () => {
         }
     } catch (error) {
         console.error("Connection check failed:", error);
-        // Proceed as if not connected to avoid blocking the user
     }
 };
 
@@ -122,7 +113,7 @@ const updateUI = (isConnected) => {
     connectButton.disabled = isConnected;
 };
 
-// Connection handler with cleanup
+// Connection count management
 let connectionCountListener;
 const setupConnectionCountListener = () => {
     if (connectionCountListener) off(connectionCountListener);
@@ -131,26 +122,22 @@ const setupConnectionCountListener = () => {
     connectionCountListener = onValue(countRef, (snapshot) => {
         const count = snapshot.val() || 5500;
         updateCountUI(count);
-    }, {
-        onlyOnce: false // Keep listening for updates
-    });
+    }, { onlyOnce: false });
 };
 
-// Optimized count UI update with requestAnimationFrame
+// Optimized count UI update
 let lastCountUpdate = 0;
 const updateCountUI = (count) => {
     const now = performance.now();
-    if (now - lastCountUpdate < 500) return; // Throttle updates
+    if (now - lastCountUpdate < 500) return;
 
     lastCountUpdate = now;
 
     requestAnimationFrame(() => {
-        // Format number with proper rounding
         const formattedCount = count >= 1000 ?
             (Math.round(count / 100) / 10).toFixed(1) + 'K' :
             count.toString();
 
-        // Only update if changed
         if (countElement.textContent !== formattedCount) {
             countElement.classList.add('count-update');
             setTimeout(() => {
@@ -161,39 +148,33 @@ const updateCountUI = (count) => {
     });
 };
 
-// Initialize with auth state observer for better reliability
+// Auth state observer
 onAuthStateChanged(auth, (user) => {
     if (user) {
-        console.log("User authenticated");
         checkUserConnection();
         setupConnectionCountListener();
     } else {
-        console.log("No user signed in");
-        // Attempt silent sign-in
         signInAnonymously(auth).catch(error => {
             console.error("Silent sign-in failed:", error);
-            // Show fallback count
             updateCountUI(5500);
         });
     }
 });
 
-// Connect button handler with proper cleanup
+// Connect button handler
 connectButton.addEventListener('click', async () => {
     const browserId = getBrowserId();
     updateUI(false);
     connectText.textContent = 'Connecting...';
 
     try {
-        // Record connection with timestamp
         await withRetry(() => setDoc(doc(firestore, 'connections', browserId), {
             connectedAt: new Date(),
             browserId: browserId,
-            userAgent: navigator.userAgent.substring(0, 100), // Truncated for privacy
+            userAgent: navigator.userAgent.substring(0, 100),
             screenResolution: `${window.screen.width}x${window.screen.height}`
         }));
 
-        // Increment count with transaction
         const countRef = ref(database, 'connectionCount');
         await runTransaction(countRef, (currentCount) => {
             return (currentCount || 5500) + 1;
@@ -207,14 +188,14 @@ connectButton.addEventListener('click', async () => {
     }
 });
 
-// Cleanup on page unload
+// Cleanup
 window.addEventListener('beforeunload', () => {
     if (connectionCountListener) {
         off(connectionCountListener);
     }
 });
 
-// Service Worker registration for better caching
+// Service Worker registration
 if ('serviceWorker' in navigator && location.hostname !== 'localhost') {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('/sw.js').then(registration => {
